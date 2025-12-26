@@ -1,6 +1,8 @@
 // Configuration
-const YOUTUBE_CHANNEL_URL = '@gjriversideraceway'; // Replace with actual channel handle
-const YOUTUBE_CHANNEL_ID = 'UCxXxXxXxXxXxXxXxXxXxXxX'; // Replace with actual channel ID
+// IMPORTANT: Replace these placeholder values with your actual YouTube channel information
+// See README.md for instructions on finding your channel ID and handle
+const YOUTUBE_CHANNEL_URL = '@gjriversideraceway'; // Your channel handle (find at youtube.com/account)
+const YOUTUBE_CHANNEL_ID = 'UCxXxXxXxXxXxXxXxXxXxXxX'; // Your channel ID (find at youtube.com/account_advanced)
 const API_BASE_URL = window.location.origin;
 
 // Fetch and display racing schedule
