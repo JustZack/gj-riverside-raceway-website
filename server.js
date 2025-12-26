@@ -35,6 +35,13 @@ app.get('/api/schedule', (req, res) => {
 // API endpoint to add schedule entry (for future admin functionality)
 app.post('/api/schedule', (req, res) => {
   const { day_of_week, time, description } = req.body;
+  
+  // Validate required fields
+  if (!day_of_week || !time || !description) {
+    res.status(400).json({ error: 'Missing required fields: day_of_week, time, and description are required' });
+    return;
+  }
+  
   db.run(
     'INSERT INTO schedule (day_of_week, time, description) VALUES (?, ?, ?)',
     [day_of_week, time, description],
@@ -52,6 +59,18 @@ app.post('/api/schedule', (req, res) => {
 app.put('/api/schedule/:id', (req, res) => {
   const { day_of_week, time, description, active } = req.body;
   const { id } = req.params;
+  
+  // Validate ID is a number
+  if (isNaN(id)) {
+    res.status(400).json({ error: 'Invalid ID: must be a number' });
+    return;
+  }
+  
+  // Validate required fields
+  if (!day_of_week || !time || !description || active === undefined) {
+    res.status(400).json({ error: 'Missing required fields: day_of_week, time, description, and active are required' });
+    return;
+  }
   
   db.run(
     'UPDATE schedule SET day_of_week = ?, time = ?, description = ?, active = ? WHERE id = ?',
