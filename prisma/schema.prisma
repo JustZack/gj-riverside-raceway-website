@@ -1,0 +1,33 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model ScheduleType {
+    id          Int      @id @default(autoincrement())
+    name        String
+    description String?
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+    schedules   TrackSchedule[]
+}
+
+model TrackSchedule {
+    id          Int      @id @default(autoincrement())
+    type        ScheduleType @relation(fields: [typeId], references: [id])
+    typeId      Int
+    start       DateTime
+    end         DateTime
+    title       String
+    description String?
+    visible     Boolean  @default(true)
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+}
