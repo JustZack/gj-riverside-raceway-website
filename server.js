@@ -81,9 +81,38 @@ app.put('/api/schedule/:id', (req, res) => {
     return;
   }
   
+  // Validate active field is 0 or 1
+  if (active !== 0 && active !== 1) {
+    res.status(400).json({ error: 'Invalid value for active: must be 0 or 1' });
+    return;
+  }
+  
   db.run(
     'UPDATE schedule SET day_of_week = ?, time = ?, description = ?, active = ? WHERE id = ?',
     [day_of_week, time, description, active, id],
+    function(err) {
+      if (err) {
+        res.status(500).json({ error: err.message });
+        return;
+      }
+      res.json({ changes: this.changes });
+    }
+  );
+});
+
+// API endpoint to delete schedule entry
+app.delete('/api/schedule/:id', (req, res) => {
+  const { id } = req.params;
+  
+  // Validate ID is a number
+  if (isNaN(id)) {
+    res.status(400).json({ error: 'Invalid ID: must be a number' });
+    return;
+  }
+  
+  db.run(
+    'DELETE FROM schedule WHERE id = ?',
+    [id],
     function(err) {
       if (err) {
         res.status(500).json({ error: err.message });

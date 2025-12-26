@@ -64,12 +64,19 @@ http://localhost:3000
 To display your actual YouTube channel and live streams:
 
 1. Edit `public/script.js`
-2. Replace the placeholder channel ID with your actual YouTube channel ID:
+2. Update the configuration at the top of the file:
 ```javascript
-const channelEmbedUrl = 'https://www.youtube.com/embed/live_stream?channel=YOUR_CHANNEL_ID';
+const YOUTUBE_CHANNEL_URL = '@yourchannelhandle'; // Your channel handle (e.g., @gjriversideraceway)
+const YOUTUBE_CHANNEL_ID = 'UCyourChannelID123456'; // Your channel ID
 ```
 
-You can find your channel ID at: https://www.youtube.com/account_advanced
+**Finding your YouTube Channel ID:**
+- Go to https://www.youtube.com/account_advanced
+- Your channel ID will be displayed under "Channel ID"
+
+**Finding your YouTube Channel Handle:**
+- Your handle is the @username visible on your channel page
+- Example: `@gjriversideraceway`
 
 ### External Links
 To update the external links, edit `public/index.html` and modify the href attributes:
@@ -82,7 +89,7 @@ You can update the schedule by:
 
 1. **Directly in the database**: Use any SQLite browser tool to edit `schedule.db`
 2. **Using the API**: Send PUT requests to `/api/schedule/:id`
-3. **Re-initialize**: Modify `init-db.js` and run `npm run init-db` (will reset all data)
+3. **Re-initialize**: Modify `init-db.js` and run `npm run init-db` (safe to run multiple times)
 
 Example API usage to update a schedule entry:
 ```bash
@@ -109,8 +116,30 @@ gj-riverside-raceway-website/
 ## API Endpoints
 
 - `GET /api/schedule` - Get all active schedule entries
-- `POST /api/schedule` - Add a new schedule entry
-- `PUT /api/schedule/:id` - Update a schedule entry
+- `POST /api/schedule` - Add a new schedule entry (requires: day_of_week, time, description)
+- `PUT /api/schedule/:id` - Update a schedule entry (requires: day_of_week, time, description, active)
+- `DELETE /api/schedule/:id` - Delete a schedule entry
+
+### API Examples
+
+**Add a new schedule entry:**
+```bash
+curl -X POST http://localhost:3000/api/schedule \
+  -H "Content-Type: application/json" \
+  -d '{"day_of_week":"Friday","time":"7:00 PM - 10:00 PM","description":"Special Event Racing"}'
+```
+
+**Update an existing entry:**
+```bash
+curl -X PUT http://localhost:3000/api/schedule/1 \
+  -H "Content-Type: application/json" \
+  -d '{"day_of_week":"Saturday","time":"10:00 AM - 6:00 PM","description":"Weekend Racing","active":1}'
+```
+
+**Delete an entry:**
+```bash
+curl -X DELETE http://localhost:3000/api/schedule/3
+```
 
 ## Deployment
 

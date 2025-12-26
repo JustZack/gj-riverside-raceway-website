@@ -17,11 +17,12 @@ db.serialize(() => {
   `);
 
   // Insert default schedule (Saturdays and Tuesdays)
+  // Use INSERT OR IGNORE to avoid duplicate entries on re-runs
   db.run(`
-    INSERT INTO schedule (day_of_week, time, description, active)
+    INSERT OR IGNORE INTO schedule (id, day_of_week, time, description, active)
     VALUES 
-      ('Saturday', '10:00 AM - 5:00 PM', 'Weekend Racing - All Classes', 1),
-      ('Tuesday', '6:00 PM - 10:00 PM', 'Weeknight Racing - Open Practice', 1)
+      (1, 'Saturday', '10:00 AM - 5:00 PM', 'Weekend Racing - All Classes', 1),
+      (2, 'Tuesday', '6:00 PM - 10:00 PM', 'Weeknight Racing - Open Practice', 1)
   `, (err) => {
     if (err) {
       console.error('Error inserting schedule:', err);
