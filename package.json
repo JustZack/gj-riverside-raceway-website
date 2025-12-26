@@ -10,7 +10,7 @@
     "prisma:generate": "npx prisma generate",
     "prisma:push": "npx prisma db push",
     "prisma:seed": "npx prisma db seed",
-    "prisma:init": "npm run prisma:generate && npm run prisma:push && npm run prisma:seed",
+    "prisma:init": "npm run prisma:generate && npm run prisma:push && npm run prisma:seed"
   },
   "prisma": {
     "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
