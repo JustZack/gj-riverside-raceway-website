@@ -8,7 +8,7 @@ export default class API {
     }
 
     static async getSchedule() {
-        const route = API.route('schedules')
+        const route = API.route('schedule')
         console.log(`Fetching schedule from API... ${route}`);
         return await HTTP.GET(route)
     }
