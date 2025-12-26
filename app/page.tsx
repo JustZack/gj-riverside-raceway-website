@@ -1,9 +1,11 @@
 'use client'
 
-import API from '@/lib/api/API'
+import API from '@/lib/api/api'
 import SocialCard from '@/components/socials/social.card'
 import Row from '@/components/ui/row'
 import { useState, useEffect } from 'react'
+import {faFacebook, faYoutube} from '@fortawesome/free-brands-svg-icons'
+import { faClock } from '@fortawesome/free-solid-svg-icons'
 
 export default function Home() {
     const [scheduleTypes, setScheduleTypes] = useState<any[]>([])
@@ -12,11 +14,13 @@ export default function Home() {
     const socials = [
         {
             name: "Facebook",
-            url: "https://www.facebook.com/gjriversideraceway",
+            url: "https://www.facebook.com/share/g/1bRsCDdtpa/",
             urlText: "Visit our Facebook Page",
             primaryColor: "#3b5998",
             backgroundColor: "#dfe3ee",
             imageSrc: "/images/facebook-logo.png",
+            buttonIcon: faFacebook,
+            buttonText: "Visit our Facebook Page",
             description: "Stay connected with us on Facebook for the latest updates and events!"
         }, {
             name: "Youtube",
@@ -25,6 +29,8 @@ export default function Home() {
             primaryColor: "#ff0000",
             backgroundColor: "#dfe3ee",
             imageSrc: "/images/youtube-logo.png",
+            buttonIcon: faYoutube,
+            buttonText: "See our Youtube Channel",
             description: "See live & recorded racing action on our Youtube channel!"
         }, {
             name: "LiveTime RC",
@@ -33,6 +39,8 @@ export default function Home() {
             primaryColor: "#ff0000",
             backgroundColor: "#dfe3ee",
             imageSrc: "/images/livetimerc-logo.png",
+            buttonIcon: faClock,
+            buttonText: "Visit LiveTime RC",
             description: "See live & recorded racing action on our LiveTime RC page!"
         }
     ]

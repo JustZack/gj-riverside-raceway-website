@@ -1,6 +1,8 @@
 'use client'
 import Image from 'next/image'
 import Card from '@/components/ui/card'
+import Button from '@/components/ui/button'
+import { IconDefinition } from '@fortawesome/free-solid-svg-icons'
 
 type Social = {
     name: string,
@@ -10,11 +12,13 @@ type Social = {
     description: string,
     primaryColor: string,
     backgroundColor: string,
+    buttonIcon: IconDefinition
+    buttonText: string
 }
 
 export default function SocialCard({ social }: { social: Social }) {
   const CARD_WIDTH = 300
-  const CARD_HEIGHT = 200
+  const CARD_HEIGHT = 215
 
   return (
     <div style={{ width: `${CARD_WIDTH}px`, height: `${CARD_HEIGHT}px`, flexShrink: 0 }}>
@@ -33,10 +37,11 @@ export default function SocialCard({ social }: { social: Social }) {
         <p className="mb-4 flex-grow overflow-auto" style={{ color: social.primaryColor }}>
           {social.description}
         </p>
-        <a href={social.url} target="_blank" rel="noopener noreferrer" 
-          className="underline mt-auto" style={{ color: social.primaryColor }}>
-          {social.urlText}
-        </a>
+        <Button text={social.buttonText} icon={social.buttonIcon}
+          textColor="#ffffff"               backgroundColor={social.primaryColor} borderColor={social.primaryColor}
+          hoverTextColor={social.primaryColor}  hoverBackgroundColor="#ffffff"   hoverBorderColor={social.primaryColor}
+          onClick={() => window.open(social.url, '_blank')}
+          />
       </Card>
     </div>
   )

@@ -15,7 +15,7 @@ export default function Card({
   borderColor = '#e5e7eb',
   borderWidth = 1,
   className = '',
-  borderRadius = "10px"
+  borderRadius = 10
 }: CardProps) {
   return (
     <div 
@@ -23,7 +23,7 @@ export default function Card({
       style={{ 
         backgroundColor,
         border: `${borderWidth}px solid ${borderColor}`,
-        borderRadius: borderRadius
+        borderRadius: `${borderRadius}px`
       }}
     >
       {children}
