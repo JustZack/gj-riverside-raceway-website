@@ -1,0 +1,19 @@
+{
+  "name": "gj-riverside-raceway-website",
+  "version": "1.0.0",
+  "description": "A basic, informational website for the Riverside Raceway RC Track",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "init-db": "node init-db.js",
+    "dev": "node server.js"
+  },
+  "keywords": ["racing", "rc-track", "website"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "sqlite3": "^5.1.6",
+    "cors": "^2.8.5"
+  }
+}
