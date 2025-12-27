@@ -36,9 +36,10 @@ export default function TableRow<T extends Record<string, any>>({
         if (column.width) {
           style.width = column.width
         }
+        const hideClass = column.hideOnSmall ? 'hidden md:table-cell' : ''
 
         return (
-          <td key={colIndex} className="px-4 py-3" style={style}>
+          <td key={colIndex} className={`px-4 py-3 ${hideClass}`} style={style}>
             {content}
           </td>
         )

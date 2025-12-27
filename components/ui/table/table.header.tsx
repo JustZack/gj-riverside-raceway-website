@@ -23,12 +23,13 @@ export default function TableHeader<T>({
           if (column.width) {
             style.width = column.width
           }
+          const hideClass = column.hideOnSmall ? 'hidden md:table-cell' : ''
           return (
           <th
             key={index}
             className={`px-4 py-3 font-semibold ${
               column.sortable ? 'cursor-pointer select-none hover:bg-gray-50' : ''
-            }`}
+            } ${hideClass}`}
             style={style}
             onClick={() => column.sortable && onSort(column.key)}
           >

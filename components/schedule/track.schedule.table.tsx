@@ -75,7 +75,8 @@ export default function TrackScheduleTable() {
       sortable: true,
       sortType: 'numeric',
       width: '75px',
-      align: 'center'
+      align: 'center',
+      hideOnSmall: true
     },
     {
       key: 'drivers',
@@ -83,7 +84,8 @@ export default function TrackScheduleTable() {
       sortable: true,
       sortType: 'numeric',
       width: '75px',
-      align: 'center'
+      align: 'center',
+      hideOnSmall: true
     },
     {
       key: 'status',
@@ -101,10 +103,10 @@ export default function TrackScheduleTable() {
       key: 'updatedAt',
       header: 'Updated',
       sortable: true,
-      width: '225px',
+      width: '150px',
       sortType: 'date',
       render: (value) => (
-        <span>{new Date(value).toLocaleString() }</span>
+        <span>{new Date(value).toDateString() }</span>
       )
     },
   ]
@@ -118,7 +120,7 @@ export default function TrackScheduleTable() {
         <Table
           data={events}
           columns={columns}
-          pageSize={10}
+          pageSize={5}
           showPagination={true}
           striped={true}
           hover={true}

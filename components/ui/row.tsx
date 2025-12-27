@@ -60,13 +60,13 @@ export default function Row({
   // Get gap class or use inline style as fallback
   const gapClass = gapClasses[gap as keyof typeof gapClasses] || ''
 
-  // Base classes
-  const baseClasses = `flex ${gapClass} ${heightClass} ${justifyClasses[justify]} ${fullWidth ? 'w-full' : ''}`
+  // Base classes - don't include heightClass if collapsible (will be handled in responsiveClasses)
+  const baseClasses = `flex ${gapClass} ${!collapsible ? heightClass : ''} ${justifyClasses[justify]} ${fullWidth ? 'w-full max-w-full' : ''}`
   
   // Collapsible: flex-row on desktop, flex-col on mobile
   // When collapsed (mobile), center items horizontally
   const responsiveClasses = collapsible 
-    ? 'flex-col items-center md:flex-row md:items-stretch' 
+    ? `flex-col items-center md:flex-row md:${heightClass}` 
     : 'flex-row'
 
   return (

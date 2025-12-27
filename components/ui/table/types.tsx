@@ -6,6 +6,7 @@ export type ColumnDef<T> = {
   sortFn?: (a: T, b: T) => number
   width?: string | number
   align?: 'left' | 'center' | 'right'
+  hideOnSmall?: boolean
   render?: (value: any, row: T) => React.ReactNode
 }
 
