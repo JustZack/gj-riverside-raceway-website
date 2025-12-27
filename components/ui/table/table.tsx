@@ -42,16 +42,43 @@ export default function Table<T extends Record<string, any>>({
   const sortedData = React.useMemo(() => {
     if (!sortConfig) return data
 
+    const column = columns.find(col => col.key === sortConfig.key)
+    if (!column) return data
+
     return [...data].sort((a, b) => {
+      // Use custom sort function if provided
+      if (column.sortFn) {
+        const comparison = column.sortFn(a, b)
+        return sortConfig.direction === 'asc' ? comparison : -comparison
+      }
+
       const aValue = a[sortConfig.key]
       const bValue = b[sortConfig.key]
 
-      if (aValue === bValue) return 0
+      // Handle null/undefined values
+      if (aValue == null && bValue == null) return 0
+      if (aValue == null) return 1
+      if (bValue == null) return -1
 
-      const comparison = aValue < bValue ? -1 : 1
+      let comparison = 0
+      const sortType = column.sortType || 'lexicographic'
+
+      switch (sortType) {
+        case 'numeric':
+          comparison = Number(aValue) - Number(bValue)
+          break
+        case 'date':
+          comparison = new Date(aValue).getTime() - new Date(bValue).getTime()
+          break
+        case 'lexicographic':
+        default:
+          comparison = String(aValue).localeCompare(String(bValue))
+          break
+      }
+
       return sortConfig.direction === 'asc' ? comparison : -comparison
     })
-  }, [data, sortConfig])
+  }, [data, sortConfig, columns])
 
   // Pagination logic
   const totalPages = Math.ceil(sortedData.length / pageSize)
