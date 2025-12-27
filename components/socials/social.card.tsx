@@ -19,6 +19,10 @@ export default function SocialCard({ social }: { social: Social }) {
   const CARD_WIDTH = 300
   const CARD_HEIGHT = 215
 
+  function openLinkInNewTab(social: Social) {
+    window.open(social.url, '_blank')
+  }
+
   return (
     <div style={{ width: `${CARD_WIDTH}px`, height: `${CARD_HEIGHT}px`, flexShrink: 0 }}>
       <Card 
@@ -31,16 +35,20 @@ export default function SocialCard({ social }: { social: Social }) {
           alt={social.name} 
           width={CARD_WIDTH} 
           height={0}
-          className="w-full h-auto mb-2" 
+          className="w-full h-auto mb-2"
         />
         <p className="mb-4 flex-grow overflow-auto" style={{ color: social.primaryColor }}>
           {social.description}
         </p>
-        <Button text={social.buttonText} icon={social.buttonIcon}
-          textColor="#ffffff"               backgroundColor={social.primaryColor} borderColor={social.primaryColor}
-          hoverTextColor={social.primaryColor}  hoverBackgroundColor="#ffffff"   hoverBorderColor={social.primaryColor}
-          onClick={() => window.open(social.url, '_blank')}
-          />
+        <Button icon={social.buttonIcon} onClick={() => openLinkInNewTab(social)}
+          textColor="#ffffff"
+          backgroundColor={social.primaryColor}
+          borderColor={social.primaryColor}
+          hoverTextColor={social.primaryColor}
+          hoverBackgroundColor="#ffffff"
+          hoverBorderColor={social.primaryColor}>
+            {social.buttonText}
+          </Button>
       </Card>
     </div>
   )

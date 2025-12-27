@@ -2,7 +2,7 @@
 import React from 'react'
 
 type ButtonProps = {
-  text: string
+  children?: React.ReactNode
   onClick?: () => void
   icon?: string  // Change to string like "fa-solid fa-plus"
   iconPosition?: 'left' | 'right'
@@ -15,11 +15,14 @@ type ButtonProps = {
   borderWidth?: number
   borderRadius?: string
   className?: string
-  disabled?: boolean
+  disabled?: boolean,
+  visible?: boolean,
+  width?: number,
+  height?: number
 }
 
 export default function Button({
-  text,
+  children,
   onClick,
   icon,
   iconPosition = 'left',
@@ -32,7 +35,10 @@ export default function Button({
   borderWidth = 1,
   borderRadius = '0.375rem',
   className = '',
-  disabled = false
+  disabled = false,
+  visible = true,
+  width,
+  height
 }: ButtonProps) {
   const [isHovered, setIsHovered] = React.useState(false)
 
@@ -43,25 +49,30 @@ export default function Button({
     borderRadius,
     cursor: disabled ? 'not-allowed' : 'pointer',
     opacity: disabled ? 0.5 : 1,
-    transition: 'all 0.2s ease-in-out'
+    transition: 'all 0.2s ease-in-out',
+    width: width ? `${width}px` : 'auto',
+    height: height ? `${height}px` : 'auto',
   }
 
   return (
-    <button
-      onClick={disabled ? undefined : onClick}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      disabled={disabled}
-      className={`px-4 py-2 font-medium inline-flex items-center gap-2 ${className}`}
-      style={buttonStyle}
-    >
-      {icon && iconPosition === 'left' && (
-        <i className={icon}></i>
-      )}
-      <span>{text}</span>
-      {icon && iconPosition === 'right' && (
-        <i className={icon}></i>
-      )}
-    </button>
+    (visible && (
+      <button
+        onClick={disabled ? undefined : onClick}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        disabled={disabled}
+        className={`px-4 py-2 font-medium inline-flex items-center gap-2 ${className}`}
+        style={buttonStyle}
+      >
+        {icon && iconPosition === 'left' && (
+          <i className={icon}></i>
+        )}
+        {children && <span>{children}</span>}
+        {icon && iconPosition === 'right' && (
+          <i className={icon}></i>
+        )}
+      </button>
+      )
+    )
   )
 }
