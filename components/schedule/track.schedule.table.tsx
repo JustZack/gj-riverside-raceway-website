@@ -106,7 +106,7 @@ export default function TrackScheduleTable() {
       sortType: 'date',
       render: (value) => (
         <span className={`text-sm`}>
-          {new Date(value).toDateString() }
+          {new Date(value).toLocaleDateString()}
         </span>
       )
     },
