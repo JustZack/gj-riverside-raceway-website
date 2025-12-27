@@ -16,6 +16,9 @@ npm install
 echo "🔧 Generating Prisma client..."
 npm run prisma:generate
 
+echo "🔧 Pushing Database Schema..."
+npm run prisma:push
+
 # Build the app
 echo "🏗️ Building Next.js app..."
 npm run build
