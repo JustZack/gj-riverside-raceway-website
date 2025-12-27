@@ -11,7 +11,7 @@ type Social = {
     description: string,
     primaryColor: string,
     backgroundColor: string,
-    buttonIcon: String
+    buttonIcon: string
     buttonText: string
 }
 
