@@ -1,5 +1,5 @@
+import Events from '@/lib/db/events'
 import Responses from '@/lib/api/responses'
-import Schedule from '@/lib/db/schedule'
 
 export async function GET(
   request: Request,
@@ -10,7 +10,7 @@ export async function GET(
   
   if (isNaN(id)) return Responses.badRequest('Invalid ID');
   
-  const scheduleType = await Schedule.getTrackScheduleById(id)
+  const scheduleType = await Events.getEventById(id)
   if (!scheduleType) return Responses.notFound('Schedule not found');
   return Responses.ok(scheduleType)
 }

@@ -3,6 +3,7 @@
 import API from '@/lib/api/api'
 import SocialCard from '@/components/socials/social.card'
 import Row from '@/components/ui/row'
+import ExampleTablePage from '@/components/schedule/schedule'
 import { useState, useEffect } from 'react'
 
 export default function Home() {
@@ -56,38 +57,39 @@ export default function Home() {
     return (
         <main className="flex min-h-screen flex-col items-center justify-center p-24">
             <div className="text-center">
-            <h1 className="text-4xl font-bold mb-4">
-                Hello World
-            </h1>
-            <p className="text-xl text-gray-600">
-                Welcome to GJ Riverside Raceway Website
-            </p>
-            
-            <Row collapsible gap={4} align="center" justify="center" equalHeight>
-                {socials.map((social) => (
-                    <SocialCard key={social.name} social={social} />
-                ))}
-            </Row>
-            <div className="mt-8">
-                {loading 
-                    ? (<span>Loading schedule...</span>) 
-                    : (
-                    <div>
-                        <h2 className="text-2xl font-semibold mb-4">Track Schedule:</h2>
-                        <ul className="space-y-2">
-                        {scheduleTypes?.map((track) => (
-                            <li key={track.id} className="text-lg">
-                            <strong>{track.name}</strong>
-                            {track.description && (
-                                <span className="text-gray-500"> - {track.description}</span>
-                            )}
-                            </li>
-                        ))}
-                        </ul>
-                    </div>
-                    )
-                }
-            </div>
+                <h1 className="text-4xl font-bold mb-4">
+                    Hello World
+                </h1>
+                <p className="text-xl text-gray-600">
+                    Welcome to GJ Riverside Raceway Website
+                </p>
+                
+                <Row collapsible gap={4} align="center" justify="center" equalHeight>
+                    {socials.map((social) => (
+                        <SocialCard key={social.name} social={social} />
+                    ))}
+                </Row>
+                <div className="mt-8">
+                    {loading 
+                        ? (<span>Loading schedule...</span>) 
+                        : (
+                        <div>
+                            <h2 className="text-2xl font-semibold mb-4">Track Schedule:</h2>
+                            <ul className="space-y-2">
+                            {scheduleTypes?.map((track) => (
+                                <li key={track.id} className="text-lg">
+                                <strong>{track.name}</strong>
+                                {track.description && (
+                                    <span className="text-gray-500"> - {track.description}</span>
+                                )}
+                                </li>
+                            ))}
+                            </ul>
+                        </div>
+                        )
+                    }
+                </div>
+                <ExampleTablePage />
             </div>
         </main>
     )

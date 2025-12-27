@@ -1,8 +1,7 @@
-import { NextResponse } from 'next/server'
-import Schedule from '@/lib/db/schedule'
+import Events from '@/lib/db/events'
 import Responses from '@/lib/api/responses'
 
 export async function GET() {
-  const schedules = await Schedule.getTypes()
-  return Responses.ok(schedules);
+  const eventTypes = await Events.getTypes()
+  return Responses.ok(eventTypes);
 }
