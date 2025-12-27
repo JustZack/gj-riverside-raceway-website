@@ -29,7 +29,7 @@ export default function TrackScheduleTable() {
   function determineStatusClass(event: any): string {
     if (event.cancelled) return 'bg-red-100 text-red-800'
     else if (new Date(event.end) < new Date()) return 'bg-green-100 text-green-800'
-    else if (new Date(event.start) <= new Date()) return 'bg-gray-100 text-gray-800'
+    else if (new Date(event.start) <= new Date()) return 'bg-gray-300 text-gray-900'
     else return 'bg-blue-100 text-blue-800'
   }
 
@@ -104,7 +104,7 @@ export default function TrackScheduleTable() {
       width: '225px',
       sortType: 'date',
       render: (value) => (
-        <span>{new Date(value).toLocaleString()}</span>
+        <span>{new Date(value).toLocaleString() }</span>
       )
     },
   ]

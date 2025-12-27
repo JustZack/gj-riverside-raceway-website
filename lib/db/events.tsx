@@ -4,7 +4,7 @@ import { TrackEvent, LiveTimeEvent, Prisma } from '@prisma/client'
 
 export default class Events {
     //Track Event CRUD
-    static async getMany(sort: SortOrder = 'desc', orderBy: TrackEventOrderBy = 'id', limit?: number, includeType: boolean = true): Promise<TrackEvent[] | TrackEventWithLiveTime[]> {
+    static async getMany(sort: SortOrder = 'desc', orderBy: TrackEventOrderBy = 'start', limit?: number, includeType: boolean = true): Promise<TrackEvent[] | TrackEventWithLiveTime[]> {
         return prisma.trackEvent.findMany({ 
             orderBy: { [orderBy]: sort }, 
             take: limit,
