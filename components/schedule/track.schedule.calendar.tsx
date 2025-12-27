@@ -46,50 +46,40 @@ function EventPopup({ event, position, onClose }: EventPopupProps) {
     ? `https://jjsraceway.liverc.com/results/?p=view_event&id=${event.liveTimeEvent.id}`
     : null
 
+  const handleOverlayClick = (e: React.MouseEvent) => {
+    // Only close if clicking the overlay itself, not if clicking propagates from calendar events
+    if (e.target === e.currentTarget) {
+      onClose()
+    }
+  }
+
   return (
     <>
       <div 
         className="fixed inset-0 z-40"
-        onClick={onClose}
+        onClick={handleOverlayClick}
       />
       <div 
-        className="absolute bg-white rounded-lg shadow-2xl border-2 border-gray-200 p-5 z-50"
+        className="absolute bg-white rounded-md shadow-lg border border-gray-300 p-3 z-50"
         style={{
           left: `${position.x}px`,
           top: `${position.y}px`,
-          maxWidth: '400px',
-          minWidth: '320px'
+          maxWidth: '280px',
+          minWidth: '240px'
         }}
       >
-        <div className="flex justify-between items-start mb-3">
-          <h3 className="text-xl font-bold pr-4">{event.title}</h3>
-          <button 
-            onClick={onClose}
-            className="text-gray-400 hover:text-gray-600 text-xl leading-none flex-shrink-0"
-          >
-            &times;
-          </button>
-        </div>
+        <button 
+          onClick={onClose}
+          className="absolute top-2 right-2 text-gray-400 hover:text-gray-600 text-lg leading-none"
+        >
+          &times;
+        </button>
 
-        <div className="space-y-2 text-sm">
-          <div>
-            <span className="font-semibold">Start:</span>{' '}
-            {format(event.start, 'PPpp')}
-          </div>
-          <div>
-            <span className="font-semibold">End:</span>{' '}
-            {format(event.end, 'PPpp')}
-          </div>
-
-          {event.description && (
-            <div>
-              <span className="font-semibold">Description:</span>{' '}
-              {event.description}
-            </div>
-          )}
-
-          <div>
-            <span className={`px-2 py-1 rounded text-xs ${
+        <div className="space-y-1.5 text-xs pr-4">
+          <div className="font-semibold text-sm mb-2">{event.title}</div>
+          
+          <div className="flex items-center gap-1">
+            <span className={`px-1.5 py-0.5 rounded text-xs ${
               event.cancelled ? 'bg-red-100 text-red-800' :
               event.status === 'finished' ? 'bg-green-100 text-green-800' :
               event.status === 'running' ? 'bg-gray-300 text-gray-900' :
@@ -99,31 +89,40 @@ function EventPopup({ event, position, onClose }: EventPopupProps) {
             </span>
           </div>
 
+          <div className="text-gray-600">
+            {format(event.start, 'MMM d, yyyy h:mm a')}
+          </div>
+
+          {event.description && (
+            <div className="text-gray-700 pt-1">
+              {event.description}
+            </div>
+          )}
+
           {event.liveTimeEvent && (
-            <div className="border-t pt-2 mt-2">
-              <div className="font-semibold mb-1">Race Statistics</div>
-              {event.liveTimeEvent.entries && (
-                <div>Entries: {event.liveTimeEvent.entries}</div>
+            <div className="border-t pt-1.5 mt-1.5 space-y-0.5">
+              {event.liveTimeEvent.entries !== undefined && (
+                <div><span className="font-medium">Entries:</span> {event.liveTimeEvent.entries}</div>
               )}
-              {event.liveTimeEvent.drivers && (
-                <div>Drivers: {event.liveTimeEvent.drivers}</div>
+              {event.liveTimeEvent.drivers !== undefined && (
+                <div><span className="font-medium">Drivers:</span> {event.liveTimeEvent.drivers}</div>
               )}
-              {event.liveTimeEvent.laps && (
-                <div>Laps: {event.liveTimeEvent.laps}</div>
+              {event.liveTimeEvent.laps !== undefined && (
+                <div><span className="font-medium">Laps:</span> {event.liveTimeEvent.laps}</div>
               )}
             </div>
           )}
 
           {liveTimeLink && (
-            <div className="pt-2">
+            <div className="pt-1.5">
               <a 
                 href={liveTimeLink}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-block bg-blue-600 text-white px-3 py-1.5 rounded hover:bg-blue-700 text-xs"
+                className="inline-flex items-center text-blue-600 hover:text-blue-800 hover:underline"
               >
-                <i className="fa-solid fa-arrow-up-right-from-square mr-1"></i>
-                View on LiveRC
+                <i className="fa-solid fa-arrow-up-right-from-square mr-1 text-xs"></i>
+                View Results
               </a>
             </div>
           )}
@@ -167,8 +166,8 @@ export default function TrackScheduleCalendar() {
     const target = e.target as HTMLElement
     const rect = target.getBoundingClientRect()
     
-    const popupWidth = 400
-    const popupHeight = 300 // Approximate height
+    const popupWidth = 280
+    const popupHeight = 250 // Approximate height for smaller popup
     const offset = 8 // Gap between event and popup
     
     // Determine if we should position on left or right side

@@ -9,12 +9,14 @@ export default function TrackSocialsContainer() {
             name: "Facebook",
             url: "https://www.facebook.com/share/g/1bRsCDdtpa/",
             urlText: "Visit our Facebook Page",
+            textColor: "#ffffff",
             primaryColor: "#3b5998",
-            backgroundColor: "#dfe3ee",
+            backgroundColor: "#000000",
             imageSrc: "/images/facebook.png",
             buttonIcon: "fa-brands fa-facebook fa-xl",
-            buttonText: "Visit our Facebook Page",
-            description: "Stay connected with us on Facebook for the latest updates and events!"
+            buttonText: "GV RC Oval Racing",
+            description: "Join the conversation and stay updated with the latest news!",
+            backgroundImage: "/images/gv-rc-oval.jpg",
         }, {
             name: "Youtube",
             url: "https://www.youtube.com/@gjriversideraceway",
@@ -23,18 +25,19 @@ export default function TrackSocialsContainer() {
             backgroundColor: "#dfe3ee",
             imageSrc: "/images/youtube.png",
             buttonIcon: "fa-brands fa-youtube fa-xl",
-            buttonText: "See our Youtube Channel",
-            description: "See live & recorded racing action on our Youtube channel!"
+            buttonText: "@GJRiversideRaceway",
+            description: "See live & recorded racing action on our Youtube channel!",
         }, {
             name: "LiveTime RC",
             url: "https://jjsraceway.liverc.com/",
             urlText: "Visit our LiveTime RC Page",
             primaryColor: "#ff0000",
-            backgroundColor: "#dfe3ee",
+            backgroundColor: "#000000",
             imageSrc: "/images/livetimerc.png",
             buttonIcon: "fa-solid fa-clock fa-xl",
             buttonText: "Visit LiveTime RC",
-            description: "See live & recorded racing action on our LiveTime RC page!"
+            description: "See live & recorded racing action on our LiveTime RC page!",
+            backgroundImage: "/images/jjs-raceway.png",
         }
     ]
 

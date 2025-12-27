@@ -130,7 +130,7 @@ export default function TrackScheduleTable() {
           showPagination={true}
           striped={true}
           hover={true}
-          borderColor="#3b82f6"
+          borderColor="#ff0000"
         />
       </Row>
     </div>
