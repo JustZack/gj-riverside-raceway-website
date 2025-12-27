@@ -18,6 +18,7 @@ type TableProps<T> = {
   showPagination?: boolean
   striped?: boolean
   hover?: boolean
+  maintainHeight?: boolean
 }
 
 
@@ -33,7 +34,8 @@ export default function Table<T extends Record<string, any>>({
   pageSize = 10,
   showPagination = true,
   striped = true,
-  hover = true
+  hover = true,
+  maintainHeight = true
 }: TableProps<T>) {
   const [currentPage, setCurrentPage] = useState(1)
   const [sortConfig, setSortConfig] = useState<SortConfig<T>>(null)
@@ -88,6 +90,9 @@ export default function Table<T extends Record<string, any>>({
     ? sortedData.slice(startIndex, endIndex)
     : sortedData
 
+  // Fill empty rows to maintain consistent table height
+  const emptyRowsCount = (maintainHeight && showPagination) ? Math.max(0, pageSize - paginatedData.length) : 0
+
   // Handle sorting
   const handleSort = (key: keyof T | string) => {
     const column = columns.find(col => col.key === key)
@@ -138,6 +143,24 @@ export default function Table<T extends Record<string, any>>({
                 hover={hover}
                 borderColor={borderColor}
               />
+            ))}
+            {/* Empty rows to maintain consistent height */}
+            {Array.from({ length: emptyRowsCount }).map((_, index) => (
+              <tr
+                key={`empty-${index}`}
+                className={striped && (paginatedData.length + index) % 2 === 1 ? 'bg-gray-50' : ''}
+                style={{ borderBottom: `1px solid ${borderColor}` }}
+              >
+                {columns.map((column, colIndex) => (
+                  <td
+                    key={colIndex}
+                    className={`px-4 py-3 ${column.hideOnSmall ? 'hidden md:table-cell' : ''}`}
+                    style={{ height: '53px' }}
+                  >
+                    &nbsp;
+                  </td>
+                ))}
+              </tr>
             ))}
           </tbody>
         </table>

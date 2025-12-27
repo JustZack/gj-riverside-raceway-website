@@ -63,10 +63,10 @@ export default function Row({
   // Base classes - don't include heightClass if collapsible (will be handled in responsiveClasses)
   const baseClasses = `flex ${gapClass} ${!collapsible ? heightClass : ''} ${justifyClasses[justify]} ${fullWidth ? 'w-full max-w-full' : ''}`
   
-  // Collapsible: flex-row on desktop, flex-col on mobile
+  // Collapsible: flex-row with wrap on desktop, flex-col on mobile
   // When collapsed (mobile), center items horizontally
   const responsiveClasses = collapsible 
-    ? `flex-col items-center md:flex-row md:${heightClass}` 
+    ? `flex-col items-center md:flex-row md:flex-wrap md:${heightClass}` 
     : 'flex-row'
 
   return (

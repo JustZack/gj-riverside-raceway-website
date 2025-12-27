@@ -33,7 +33,7 @@ export default function TableHeader<T>({
             style={style}
             onClick={() => column.sortable && onSort(column.key)}
           >
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2" style={{ justifyContent: textAlign === 'center' ? 'center' : textAlign === 'right' ? 'flex-end' : 'flex-start' }}>
               <span>{column.header}</span>
               {column.sortable && (
                 <SortIcon

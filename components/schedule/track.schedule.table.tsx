@@ -63,8 +63,9 @@ export default function TrackScheduleTable() {
       sortable: true,
       align: 'left',
       render: (value, row) => (
-      <a className="text-blue-600 hover:underline" href={row.liveTimeLink} target='_blank'>
-        <i className="fa-solid fa-arrow-up-right-from-square mr-2"></i>
+      <a className="text-blue-600 hover:underline" href={row.liveTimeLink} 
+        target='_blank' style={{ cursor: 'pointer' }} rel="noreferrer">
+        <i className="fa-solid fa-arrow-up-right-from-square mr-1 fa-xs"></i>
         {value}
       </a>
     )
@@ -83,7 +84,6 @@ export default function TrackScheduleTable() {
       header: 'Drivers',
       sortable: true,
       sortType: 'numeric',
-      width: '75px',
       align: 'center',
       hideOnSmall: true
     },
@@ -91,7 +91,6 @@ export default function TrackScheduleTable() {
       key: 'status',
       header: 'Status',
       sortable: true,
-      width: '120px',
       align: 'center',
       render: (value, row) => (
         <span className={`px-2 py-1 rounded text-sm ${row.statusClass}`}>
@@ -106,7 +105,9 @@ export default function TrackScheduleTable() {
       width: '150px',
       sortType: 'date',
       render: (value) => (
-        <span>{new Date(value).toDateString() }</span>
+        <span className={`text-sm`}>
+          {new Date(value).toDateString() }
+        </span>
       )
     },
   ]
