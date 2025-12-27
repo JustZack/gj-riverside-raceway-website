@@ -17,13 +17,19 @@ export default function TableHeader<T>({
   return (
     <thead>
       <tr style={{ borderBottom: `2px solid ${borderColor}` }}>
-        {columns.map((column, index) => (
+        {columns.map((column, index) => {
+          const textAlign = column.align || 'left'
+          const style: React.CSSProperties = { textAlign }
+          if (column.width) {
+            style.width = column.width
+          }
+          return (
           <th
             key={index}
-            className={`px-4 py-3 text-left font-semibold ${
+            className={`px-4 py-3 font-semibold ${
               column.sortable ? 'cursor-pointer select-none hover:bg-gray-50' : ''
             }`}
-            style={{ width: column.width }}
+            style={style}
             onClick={() => column.sortable && onSort(column.key)}
           >
             <div className="flex items-center gap-2">
@@ -36,7 +42,7 @@ export default function TableHeader<T>({
               )}
             </div>
           </th>
-        ))}
+        )})}
       </tr>
     </thead>
   )

@@ -31,9 +31,14 @@ export default function TableRow<T extends Record<string, any>>({
       {columns.map((column, colIndex) => {
         const value = row[column.key]
         const content = column.render ? column.render(value, row) : value
+        const textAlign = column.align || 'left'
+        const style: React.CSSProperties = { textAlign }
+        if (column.width) {
+          style.width = column.width
+        }
 
         return (
-          <td key={colIndex} className="px-4 py-3" style={{ width: column.width }}>
+          <td key={colIndex} className="px-4 py-3" style={style}>
             {content}
           </td>
         )

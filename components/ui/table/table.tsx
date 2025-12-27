@@ -84,7 +84,7 @@ export default function Table<T extends Record<string, any>>({
 
   return (
     <div 
-      className={`rounded overflow-hidden ${className}`}
+      className={`w-full rounded overflow-hidden ${className}`}
       style={{ 
         backgroundColor,
         border: `${borderWidth}px solid ${borderColor}`,

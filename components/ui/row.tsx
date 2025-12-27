@@ -7,6 +7,7 @@ type RowProps = {
   align?: 'start' | 'center' | 'end' | 'stretch'
   justify?: 'start' | 'center' | 'end' | 'between' | 'around' | 'evenly'
   equalHeight?: boolean
+  fullWidth?: boolean
   className?: string
 }
 
@@ -17,6 +18,7 @@ export default function Row({
   align = 'stretch',
   justify = 'start',
   equalHeight = false,
+  fullWidth = false,
   className = ''
 }: RowProps) {
   // Map align prop to Tailwind classes
@@ -59,7 +61,7 @@ export default function Row({
   const gapClass = gapClasses[gap as keyof typeof gapClasses] || ''
 
   // Base classes
-  const baseClasses = `flex ${gapClass} ${heightClass} ${justifyClasses[justify]}`
+  const baseClasses = `flex ${gapClass} ${heightClass} ${justifyClasses[justify]} ${fullWidth ? 'w-full' : ''}`
   
   // Collapsible: flex-row on desktop, flex-col on mobile
   // When collapsed (mobile), center items horizontally

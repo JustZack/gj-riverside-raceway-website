@@ -3,7 +3,7 @@
 import API from '@/lib/api/api'
 import SocialCard from '@/components/socials/social.card'
 import Row from '@/components/ui/row'
-import ExampleTablePage from '@/components/schedule/schedule'
+import TrackScheduleTable from '@/components/schedule/track.schedule.table'
 import { useState, useEffect } from 'react'
 
 export default function Home() {
@@ -48,6 +48,7 @@ export default function Home() {
         API.getSchedule().then((data) => {
             setScheduleTypes(data)
             setLoading(false)
+            console.log(data)
         }).catch((error) => {
             console.error('Error fetching schedules:', error)
             setLoading(false)
@@ -69,27 +70,7 @@ export default function Home() {
                         <SocialCard key={social.name} social={social} />
                     ))}
                 </Row>
-                <div className="mt-8">
-                    {loading 
-                        ? (<span>Loading schedule...</span>) 
-                        : (
-                        <div>
-                            <h2 className="text-2xl font-semibold mb-4">Track Schedule:</h2>
-                            <ul className="space-y-2">
-                            {scheduleTypes?.map((track) => (
-                                <li key={track.id} className="text-lg">
-                                <strong>{track.name}</strong>
-                                {track.description && (
-                                    <span className="text-gray-500"> - {track.description}</span>
-                                )}
-                                </li>
-                            ))}
-                            </ul>
-                        </div>
-                        )
-                    }
-                </div>
-                <ExampleTablePage />
+                <TrackScheduleTable />
             </div>
         </main>
     )
