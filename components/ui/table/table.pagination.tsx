@@ -42,7 +42,7 @@ export default function TablePagination({
                     icon="fa-solid fa-backward-fast" 
                     iconPosition='right'
                     disabled={currentPage === 1}
-                    visible={totalPages > 1}
+                    visible={totalPages > 2}
                     onClick={() => onPageChange(1)}
                     textColor="#ffffff"
                     backgroundColor={borderColor}
@@ -84,7 +84,7 @@ export default function TablePagination({
                     icon="fa-solid fa-forward-fast" 
                     iconPosition='right'
                     disabled={currentPage === totalPages}
-                    visible={totalPages > 1}
+                    visible={totalPages > 2}
                     onClick={() => onPageChange(totalPages)}
                     textColor="#ffffff"
                     backgroundColor={borderColor}
