@@ -1,7 +1,10 @@
 'use client'
 
 import TrackScheduleTable from '@/components/schedule/track.schedule.table'
+import TrackScheduleCalendar from '@/components/schedule/track.schedule.calendar'
 import TrackSocialsContainer from '@/components/socials/track.socials.container'
+import Card from '@/components/ui/card'
+import Row from '@/components/ui/row'
 
 export default function Home() {
 
@@ -15,6 +18,7 @@ export default function Home() {
                     Welcome to GJ Riverside Raceway Website
                 </p>
 
+                <TrackScheduleCalendar />
                 <TrackScheduleTable />
                 <TrackSocialsContainer />
             </div>

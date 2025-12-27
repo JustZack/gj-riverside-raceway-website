@@ -1,5 +1,6 @@
 import bs4, requests, json
 from datetime import datetime
+from zoneinfo import ZoneInfo
 
 
 class EventBrief():
@@ -13,9 +14,12 @@ class EventBrief():
 
         # the date is formatted like: <span class="hidden">2025-12-02 00:00:00</span>Dec 2, 2025
         date_str = cols[1].find("span").text.strip()
-        # Convert to ISO 8601 format: "2024-07-15T18:00:00.000Z"
+        # Convert MST to UTC and format as ISO 8601: "2024-07-15T18:00:00.000Z"
         date_obj = datetime.strptime(date_str, "%Y-%m-%d %H:%M:%S")
-        self.date = date_obj.strftime("%Y-%m-%dT%H:%M:%S.000Z")
+        # Make timezone-aware as MST, then convert to UTC
+        date_mst = date_obj.replace(tzinfo=ZoneInfo("America/Denver"))
+        date_utc = date_mst.astimezone(ZoneInfo("UTC"))
+        self.date = date_utc.strftime("%Y-%m-%dT%H:%M:%S.000Z")
 
         # These values are just numeric in the table
         self.entries = int(cols[2].text.strip())
