@@ -2,7 +2,6 @@
 import Image from 'next/image'
 import Card from '@/components/ui/card'
 import Button from '@/components/ui/button'
-import { IconDefinition } from '@fortawesome/free-solid-svg-icons'
 
 type Social = {
     name: string,
@@ -12,7 +11,7 @@ type Social = {
     description: string,
     primaryColor: string,
     backgroundColor: string,
-    buttonIcon: IconDefinition
+    buttonIcon: String
     buttonText: string
 }
 
