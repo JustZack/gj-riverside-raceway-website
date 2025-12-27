@@ -18,7 +18,7 @@ export default function Home() {
             urlText: "Visit our Facebook Page",
             primaryColor: "#3b5998",
             backgroundColor: "#dfe3ee",
-            imageSrc: "/images/facebook-logo.png",
+            imageSrc: "/images/facebook.png",
             buttonIcon: faFacebook,
             buttonText: "Visit our Facebook Page",
             description: "Stay connected with us on Facebook for the latest updates and events!"
@@ -28,7 +28,7 @@ export default function Home() {
             urlText: "Visit our Youtube Channel",
             primaryColor: "#ff0000",
             backgroundColor: "#dfe3ee",
-            imageSrc: "/images/youtube-logo.png",
+            imageSrc: "/images/youtube.png",
             buttonIcon: faYoutube,
             buttonText: "See our Youtube Channel",
             description: "See live & recorded racing action on our Youtube channel!"
@@ -38,7 +38,7 @@ export default function Home() {
             urlText: "Visit our LiveTime RC Page",
             primaryColor: "#ff0000",
             backgroundColor: "#dfe3ee",
-            imageSrc: "/images/livetimerc-logo.png",
+            imageSrc: "/images/livetimerc.png",
             buttonIcon: faClock,
             buttonText: "Visit LiveTime RC",
             description: "See live & recorded racing action on our LiveTime RC page!"
