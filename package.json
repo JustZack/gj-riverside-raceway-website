@@ -10,7 +10,9 @@
     "prisma:generate": "npx prisma generate",
     "prisma:push": "npx prisma db push",
     "prisma:seed": "npx prisma db seed",
-    "prisma:init": "npm run prisma:generate && npm run prisma:push && npm run prisma:seed"
+    "prisma:init": "npm run prisma:generate && npm run prisma:push && npm run prisma:seed",
+    "tools:scrape": "python ./tools/livetime_scraper/livetime.rc.scraper.py && mv seed.data.json prisma/seed.data.json",
+    "scrape-and-init-db": "npm run tools:scrape && npm run prisma:init"
   },
   "prisma": {
     "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"

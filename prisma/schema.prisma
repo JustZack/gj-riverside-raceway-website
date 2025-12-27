@@ -10,25 +10,30 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model ScheduleType {
-    id          Int             @id @default(autoincrement())
+model TrackEvent {
+    id          Int               @id @default(autoincrement())
+    start       DateTime          @default(now())
+    end         DateTime          @default(now())
     name        String
     description String?
-    createdAt   DateTime        @default(now())
-    updatedAt   DateTime        @default(now()) @updatedAt
-    schedules   TrackSchedule[]
+    livetimeID  Int?              @unique
+    liveTimeEvent LiveTimeEvent?  @relation(fields: [livetimeID], references: [id])
+    youtubeID   String?
+    visible     Boolean           @default(true)
+    cancelled   Boolean           @default(false)
+    createdAt   DateTime          @default(now())
+    updatedAt   DateTime          @default(now()) @updatedAt
 }
 
-model TrackSchedule {
-    id          Int             @id @default(autoincrement())
-    type        ScheduleType    @relation(fields: [typeId], references: [id])
-    typeId      Int
-    start       DateTime        @default(now())
-    end         DateTime        @default(now())
-    name        String
-    description String?
-    visible     Boolean         @default(true)
-    cancelled   Boolean         @default(false)
+//Live Time Data represents data scraped from Live Time
+model LiveTimeEvent {
+    id          Int             @id
+    trackEvent  TrackEvent?
+    name        String?
+    entries     Int?
+    drivers     Int?
+    laps        Int?
+    startedAt   DateTime?
     createdAt   DateTime        @default(now())
     updatedAt   DateTime        @default(now()) @updatedAt
 }
