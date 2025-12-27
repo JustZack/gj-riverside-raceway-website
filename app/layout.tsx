@@ -1,19 +1,20 @@
-import type { Metadata } from 'next'
-import './globals.css'
+import type { Metadata } from "next";
+import "./globals.css";
+import "@fortawesome/fontawesome-free/css/all.min.css";
 
 export const metadata: Metadata = {
-  title: 'GJ Riverside Raceway',
-  description: 'GJ Riverside Raceway Website',
-}
+  title: "GJ Riverside Raceway",
+  description: "RC Racing Track",
+};
 
 export default function RootLayout({
   children,
-}: {
-  children: React.ReactNode
-}) {
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   return (
     <html lang="en">
       <body>{children}</body>
     </html>
-  )
+  );
 }

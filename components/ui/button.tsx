@@ -1,12 +1,10 @@
 'use client'
 import React from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 
 type ButtonProps = {
   text: string
   onClick?: () => void
-  icon?: IconDefinition
+  icon?: string  // Change to string like "fa-solid fa-plus"
   iconPosition?: 'left' | 'right'
   backgroundColor?: string
   textColor?: string
@@ -58,11 +56,11 @@ export default function Button({
       style={buttonStyle}
     >
       {icon && iconPosition === 'left' && (
-        <FontAwesomeIcon icon={icon} />
+        <i className={icon}></i>
       )}
       <span>{text}</span>
       {icon && iconPosition === 'right' && (
-        <FontAwesomeIcon icon={icon} />
+        <i className={icon}></i>
       )}
     </button>
   )
