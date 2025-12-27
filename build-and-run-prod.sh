@@ -10,7 +10,7 @@ git pull origin main
 
 # Install dependencies
 echo "📦 Installing dependencies..."
-npm install --production
+npm install
 
 # Generate Prisma client
 echo "🔧 Generating Prisma client..."
