@@ -37,6 +37,7 @@ export default function TrackScheduleTable() {
     if (event.liveTimeEvent) {
       return `https://jjsraceway.liverc.com/results/?p=view_event&id=${event.liveTimeEvent.id}`
     }
+    return undefined
   }
 
   useEffect(() => {
@@ -63,11 +64,15 @@ export default function TrackScheduleTable() {
       sortable: true,
       align: 'left',
       render: (value, row) => (
-      <a className="text-blue-600 hover:underline" href={row.liveTimeLink} 
-        target='_blank' style={{ cursor: 'pointer' }} rel="noreferrer">
-        <i className="fa-solid fa-arrow-up-right-from-square mr-1 fa-xs"></i>
-        {value}
-      </a>
+        <>
+          {row.liveTimeLink ? (
+            <a className="text-blue-600 hover:underline" href={row.liveTimeLink} 
+              target='_blank' style={{ cursor: 'pointer' }} rel="noreferrer">
+              <i className="fa-solid fa-arrow-up-right-from-square mr-1 fa-xs"></i>
+              {value}
+            </a>
+          ) : (<>{value}</>)}
+        </>
     )
     },
     {
