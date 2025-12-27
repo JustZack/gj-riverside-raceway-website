@@ -10,7 +10,7 @@ export async function GET(
   
   if (isNaN(id)) return Responses.badRequest('Invalid ID');
   
-  const scheduleType = await Events.getEventById(id)
+  const scheduleType = await Events.getById(id)
   if (!scheduleType) return Responses.notFound('Schedule not found');
   return Responses.ok(scheduleType)
 }

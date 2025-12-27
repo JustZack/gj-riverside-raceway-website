@@ -7,11 +7,11 @@ import { Prisma } from "@prisma/client"
 export type SortOrder = 'asc' | 'desc'
 
 //Possible fields to order EventType by
-export type EventTypeOrderBy = 'id' | 'name' | 'createdAt' | 'updatedAt'
+export type LiveTimeEventOrderBy = 'id' | 'name' | 'entries' | 'drivers' | 'laps' | 'startedAt' | 'createdAt' | 'updatedAt'
 //Possible fields to order TrackEvent by
 export type TrackEventOrderBy = 'id' | 'typeId' | 'name' | 'createdAt' | 'updatedAt' | 'start' | 'end'
 
 // Type for event with its type relation included
-export type TrackEventWithType = Prisma.TrackEventGetPayload<{
-    include: { type: true }
+export type TrackEventWithLiveTime = Prisma.TrackEventGetPayload<{
+    include: { liveTimeEvent: true }
 }>
