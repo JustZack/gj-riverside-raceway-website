@@ -102,7 +102,7 @@ export default function TrackScheduleTable() {
       key: 'updatedAt',
       header: 'Updated',
       sortable: true,
-      width: '150px',
+      width: '100px',
       sortType: 'date',
       render: (value) => (
         <span className={`text-sm`}>
