@@ -7,9 +7,6 @@ import TrackScheduleTable from '@/components/schedule/track.schedule.table'
 import { useState, useEffect } from 'react'
 
 export default function Home() {
-    const [scheduleTypes, setScheduleTypes] = useState<any[]>([])
-    const [loading, setLoading] = useState(true)
-
     const socials = [
         {
             name: "Facebook",
@@ -43,17 +40,6 @@ export default function Home() {
             description: "See live & recorded racing action on our LiveTime RC page!"
         }
     ]
-
-    useEffect(() => {
-        API.getSchedule().then((data) => {
-            setScheduleTypes(data)
-            setLoading(false)
-            console.log(data)
-        }).catch((error) => {
-            console.error('Error fetching schedules:', error)
-            setLoading(false)
-        });
-    }, [])
 
     return (
         <main className="flex min-h-screen flex-col items-center justify-center p-24">
