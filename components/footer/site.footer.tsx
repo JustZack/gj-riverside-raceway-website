@@ -42,7 +42,7 @@ export default function SiteFooter() {
     }
 
     return (
-        <Row fullWidth shadowTop style={{ backgroundColor: "#ffffff" }} justify="center" align="center" className="py-8">
+        <Row fullWidth shadowTop justify="center" align="center" className="py-8" style={{ backgroundColor: "#ffffff" }}>
             {footerColumns.map((footerItems, index) => (
                 <Column key={index} className={footerItems.className} align="center" gap={2}>
                     {renderFooterColumn(footerItems.items)}
