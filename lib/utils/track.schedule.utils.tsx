@@ -1,4 +1,6 @@
-export default class TrackEventUtils {
+import API from "@/lib/api/api"
+import { Event } from "react-big-calendar"
+export default class TrackScheduleUtils {
     static eventIsCancelled(event: any): boolean {
         return event.cancelled === true
     }
@@ -39,4 +41,47 @@ export default class TrackEventUtils {
         }
         return undefined
     }
+
+    static fetchEvents(formatAndSetCallback: (events: any[]) => void): void {
+        API.getSchedule().then(formatAndSetCallback).catch((error) => {
+            console.error('Error fetching schedule data:', error)
+        });
+    }
+
+    static fetchAndFormatEvents(setterCallback: (events: ScheduleEvent[]) => void): void {
+        TrackScheduleUtils.fetchEvents((data) => {
+          const formattedEvents: ScheduleEvent[] = data.map((event: any) => ({
+            id: event.id,
+            title: event.name,
+            start: new Date(event.start),
+            end: new Date(event.end),
+            cancelled: event.cancelled,
+            description: event.description,
+            status: TrackScheduleUtils.getEventStatus(event),
+            statusColor: TrackScheduleUtils.getEventStatusColor(event),
+            statusClass: TrackScheduleUtils.getEventStatusClass(event),
+            ...event.liveTimeEvent,
+            link: TrackScheduleUtils.getEventLiveTimeLink(event)
+          }))
+          console.log(formattedEvents);
+          setterCallback(formattedEvents)
+        })
+    }
+}
+
+export interface ScheduleEvent extends Event {
+    id: number
+    title: string
+    start: Date
+    end: Date
+    cancelled: boolean
+    description?: string
+    status: 'cancelled' | 'finished' | 'upcoming' | 'running'
+    statusColor: string
+    statusClass: string
+    liveTimeId: number
+    entries?: number
+    drivers?: number
+    laps?: number
+    link: string | undefined
 }

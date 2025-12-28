@@ -1,10 +1,9 @@
 'use client'
 import { useState, useEffect, useCallback } from 'react'
-import { Calendar, dateFnsLocalizer, Event } from 'react-big-calendar'
+import { Calendar, dateFnsLocalizer } from 'react-big-calendar'
 import { format, parse, startOfWeek, getDay } from 'date-fns'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
-import API from '@/lib/api/api'
-import TrackEventUtils from '@/lib/utils/track.schedule.utils'
+import TrackScheduleUtils, { ScheduleEvent } from '@/lib/utils/track.schedule.utils'
 
 const locales = {
   'en-US': require('date-fns/locale/en-US')
@@ -12,56 +11,21 @@ const locales = {
 
 const localizer = dateFnsLocalizer({ format, parse, startOfWeek, getDay, locales })
 
-interface CalendarEvent extends Event {
-  id: number
-  title: string
-  start: Date
-  end: Date
-  cancelled: boolean
-  description?: string
-  liveTimeEvent?: {
-    id: number
-    entries?: number
-    drivers?: number
-    laps?: number
-  }
-  status: 'cancelled' | 'finished' | 'upcoming' | 'running'
-}
-
 export default function TrackScheduleCalendar() {
-  const [events, setEvents] = useState<CalendarEvent[]>([])
-  const [selectedEvent, setSelectedEvent] = useState<CalendarEvent | null>(null)
+  const [events, setEvents] = useState<ScheduleEvent[]>([])
+  const [selectedEvent, setSelectedEvent] = useState<ScheduleEvent | null>(null)
   const [popupPosition, setPopupPosition] = useState<{ x: number; y: number } | null>(null)
 
-  useEffect(() => {
-    API.getSchedule().then((data) => {
-      const formattedEvents: CalendarEvent[] = data.map((event: any) => ({
-        id: event.id,
-        title: event.name,
-        start: new Date(event.start),
-        end: new Date(event.end),
-        cancelled: event.cancelled,
-        description: event.description,
-        liveTimeEvent: event.liveTimeEvent,
-        status: TrackEventUtils.getEventStatus(event)
-      }))
-      // Only show the first event
-      setEvents(formattedEvents.length > 0 ? [formattedEvents[0]] : [])
-    }).catch((error) => {
-      console.error('Error fetching schedule data:', error)
-    })
-  }, [])
+  useEffect(TrackScheduleUtils.fetchAndFormatEvents.bind(null, setEvents), [])
 
-  const handleSelectEvent = useCallback((event: CalendarEvent, e: React.SyntheticEvent) => {}, [])
+  const handleSelectEvent = useCallback((event: ScheduleEvent, e: React.SyntheticEvent) => {}, [])
 
   const handleClosePopup = useCallback(() => {}, [])
 
-  const eventStyleGetter = (event: CalendarEvent) => {
-    let backgroundColor = TrackEventUtils.getEventStatusColor(event)
-
+  const eventStyleGetter = (event: ScheduleEvent) => {
     return {
       style: {
-        backgroundColor,
+        backgroundColor: event.statusColor,
         borderRadius: '4px',
         opacity: 0.9,
         color: 'white',

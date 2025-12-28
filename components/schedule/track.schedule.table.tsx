@@ -1,52 +1,26 @@
 'use client'
-import API from '@/lib/api/api'
 import Table from '@/components/ui/table/table'
 import { ColumnDef } from '@/components/ui/table/types'
 import Row from '@/components/ui/row'
 import { useState, useEffect } from 'react'
-import TrackEventUtils from '@/lib/utils/track.schedule.utils'
-
-type ScheduleRow = {
-  name: string
-  liveTimeLink: string | undefined
-  entries: number
-  drivers: number  
-  status: 'cancelled' | 'finished' | 'upcoming' | 'running'
-  statusClass: string
-  updatedAt: string
-}
+import TrackScheduleUtils, { ScheduleEvent } from '@/lib/utils/track.schedule.utils'
 
 export default function TrackScheduleTable() {
 
-  const [events, setEvents] = useState<ScheduleRow[]>([])
+  const [events, setEvents] = useState<ScheduleEvent[]>([])
 
-  useEffect(() => {
-    API.getSchedule().then((data) => {
-      const formattedData = data.map((event: any) => ({
-        name: event.name,
-        liveTimeLink: TrackEventUtils.getEventLiveTimeLink(event),
-        entries: event.liveTimeEvent ? event.liveTimeEvent.entries : undefined,
-        drivers: event.liveTimeEvent ? event.liveTimeEvent.drivers : undefined,
-        status: TrackEventUtils.getEventStatus(event),
-        statusClass: TrackEventUtils.getEventStatusClass(event),
-        updatedAt: event.updatedAt
-      }))
-      setEvents(formattedData)
-    }).catch((error) => {
-      console.error('Error fetching schedule data:', error)
-    });
-  }, [])
+  useEffect(TrackScheduleUtils.fetchAndFormatEvents.bind(null, setEvents), [])
 
-  const columns: ColumnDef<ScheduleRow>[] = [
+  const columns: ColumnDef<ScheduleEvent>[] = [
     {
-      key: 'name',
+      key: 'title',
       header: 'Name',
       sortable: true,
       align: 'left',
       render: (value, row) => (
         <>
-          {row.liveTimeLink ? (
-            <a className="text-blue-600 hover:underline" href={row.liveTimeLink} 
+          {row.link ? (
+            <a className="text-blue-600 hover:underline" href={row.link} 
               target='_blank' style={{ cursor: 'pointer' }} rel="noreferrer">
               <i className="fa-solid fa-arrow-up-right-from-square mr-1 fa-xs"></i>
               {value}
