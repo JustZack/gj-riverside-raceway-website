@@ -1,9 +1,8 @@
 import { prisma } from '@/lib/prisma'
 import { SortOrder, TrackEventOrderBy, TrackEventWithLiveTime } from './types'
-import { TrackEvent, LiveTimeEvent, Prisma } from '@prisma/client'
+import { TrackEvent, Prisma } from '@prisma/client'
 
 export default class Events {
-    //Track Event CRUD
     static async getMany(sort: SortOrder = 'desc', orderBy: TrackEventOrderBy = 'start', limit?: number, includeType: boolean = true): Promise<TrackEvent[] | TrackEventWithLiveTime[]> {
         return prisma.trackEvent.findMany({ 
             orderBy: { [orderBy]: sort }, 
@@ -22,6 +21,22 @@ export default class Events {
     }
     static async update(id: number, data: Prisma.TrackEventUpdateInput): Promise<TrackEvent> {
         return prisma.trackEvent.update({ where: { id }, data })
+    }
+    static async updateByLiveTimeId(livetimeID: number, data: Prisma.TrackEventUpdateInput): Promise<TrackEvent> {
+        return prisma.trackEvent.update({
+            where: { livetimeID },
+            data
+        })
+    }
+    static async upsert(id: number, data: Prisma.TrackEventCreateInput): Promise<TrackEvent> {
+        return prisma.trackEvent.upsert({ where: { id }, create: data, update: data })
+    }
+    static async upsertByLiveTimeId(livetimeID: number, data: Prisma.TrackEventCreateInput): Promise<TrackEvent> {
+        return prisma.trackEvent.upsert({
+            where: { livetimeID },
+            create: data,
+            update: data
+        })
     }
     static async delete(id: number): Promise<TrackEvent> {
         return prisma.trackEvent.delete({ where: { id } })
