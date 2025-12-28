@@ -76,13 +76,4 @@ export default class HTTP {
         const response = await HTTP.doFetch(route, {method: 'DELETE'})
         return await HTTP.handleResponse(route, 'DELETE', response)
     }
-
-    //UPLOAD route (file)
-    static async UPLOAD(route: string, file: File) {
-        const formData = new FormData()
-        formData.append('file', file)
-
-        const response = await fetch(route, { method: 'POST', body: formData, })
-        return await HTTP.handleResponse(route, 'UPLOAD', response)
-    }
 }
