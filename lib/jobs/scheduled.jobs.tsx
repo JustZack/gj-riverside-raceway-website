@@ -1,7 +1,10 @@
 import SyncLiveTimeContentJob from '@/lib/jobs/sync.livetimerc.content.job';
 import { RunnableJob } from '@/lib/jobs/runnable.job';
+import Logger from '@/lib/utils/logger';
 
 export default class ScheduledJobs {
+    static logger: Logger = new Logger('ScheduledJobs');
+
     private static jobs = [
         new RunnableJob("sync_livetimerc_content", SyncLiveTimeContentJob),
     ]
@@ -20,7 +23,7 @@ export default class ScheduledJobs {
         let interval = ScheduledJobs.DEFAULT_SYNC_INTERVAL_MS;
 
         if (numJobs === 0) return;
-        console.log(`Starting progressive job sync for ${numJobs} jobs every ${interval / 1000} seconds.`);
+        ScheduledJobs.logger.info(`Starting progressive job sync for ${numJobs} jobs every ${interval / 1000} seconds.`);
 
         //We will run the job every DEFAULT_SYNC_INTERVAL_MS
         // BUT, we want the job to start running at the next interval boundary
@@ -28,7 +31,7 @@ export default class ScheduledJobs {
         let now = Date.now();
         let timeSinceLastInterval = now % interval;
         let timeUntilNextInterval = interval - timeSinceLastInterval;
-        console.log(`First job run will start in ${timeUntilNextInterval / 1000} seconds.`);
+        ScheduledJobs.logger.info(`First job run will start in ${timeUntilNextInterval / 1000} seconds.`);
 
         //Set a timeout to start at the next interval boundary
         setTimeout(async () => {
@@ -48,17 +51,17 @@ export default class ScheduledJobs {
     }
 
     private static onNoJobToRun() {
-        console.log("No job to run for progressive sync step.");
+        ScheduledJobs.logger.info("No job to run for progressive sync step.");
     }
 
     private static onJobRunComplete(job?: RunnableJob) {
         this.lastSyncIndex++;
         this.jobsRun++;
-        console.log(`Completed job run #${this.jobsRun} for job: ${job?.name}`);
+        ScheduledJobs.logger.info(`Completed job run #${this.jobsRun} for job: ${job?.name}`);
     }
     
     private static onJobRunStarted(job?: RunnableJob) {
-        console.log(`Starting job run #${this.jobsRun + 1} for job: ${job?.name}`);
+        ScheduledJobs.logger.info(`Starting job run #${this.jobsRun + 1} for job: ${job?.name}`);
     }
 
     static async runNextJob() {

@@ -1,7 +1,10 @@
-import HTTP from "./http";
+import HTTP from "@/lib/utils/http";
+import Logger from "@/lib/utils/logger";
 
 export default class API {
-    static BASE_URL = '/api/'  // Remove getter, make it a static property
+    static logger: Logger = new Logger('API');
+
+    static BASE_URL = '/api/'
 
     static route(route: string) {
         return `${API.BASE_URL}${route}`
@@ -9,7 +12,7 @@ export default class API {
 
     static async getSchedule() {
         const route = API.route('schedule')
-        console.log(`Fetching schedule from API... ${route}`);
+        API.logger.info(`Fetching schedule from API... ${route}`);
         return await HTTP.GET(route)
     }
 }

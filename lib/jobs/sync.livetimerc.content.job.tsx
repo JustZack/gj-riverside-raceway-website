@@ -3,9 +3,12 @@ import LiveTimeEvents from "@/lib/db/livetime";
 import * as cheerio from 'cheerio';
 import { DateTime } from "luxon";
 import { Prisma }  from "@prisma/client";
+import Logger from "@/lib/utils/logger";
 
 
 export default async function SyncLiveTimeContentJob() {
+    const logger: Logger = new Logger('SyncLiveTimeContentJob');
+
     const LIVE_TIME_BASE_URL = "https://jjsraceway.liverc.com/"
     function getLivetimeUrl(path: string): string { return `${LIVE_TIME_BASE_URL}${path}` }
 
@@ -38,29 +41,29 @@ export default async function SyncLiveTimeContentJob() {
 
     //Extracts events from the livetime page
     function extractEventsFromPage(html: string): ScrapedLiveTimeEvent[] {
-        console.log(`Scraping LiveTimeRC events page...`);
+        logger.info(`Scraping LiveTimeRC events page...`);
         let events: ScrapedLiveTimeEvent[] = [];
         const $ = parseHTML(html);
         const events_table = $('table#events');
         const event_rows = events_table.find('tbody tr');
         event_rows.each((index: number, element: cheerio.Element) => {
             const event = new ScrapedLiveTimeEvent($(element));
-            console.log(`Scraped ${event.name} (LiveTime ID: ${event.event_id})`);
+            logger.info(`Scraped ${event.name} (LiveTime ID: ${event.event_id})`);
             events.push(event);
         });
-        console.log(`Scraped ${events.length} events from ${LIVE_TIME_BASE_URL}`);
+        logger.info(`Scraped ${events.length} events from ${LIVE_TIME_BASE_URL}`);
         return events;
     }
 
     //Upserts all scraped events into the database
     async function upsertEvents(events: ScrapedLiveTimeEvent[]): Promise<void> {
-        console.log(`Upserting events into database...`);
+        logger.info(`Upserting events into database...`);
         for (const event of events) {
             await upsertLiveTimeEvent(event);
             await upsertTrackEvent(event);
-            console.log(`Upserted ${event.name} (LiveTime ID: ${event.event_id})`);
+            logger.info(`Upserted ${event.name} (LiveTime ID: ${event.event_id})`);
         }
-        console.log(`Upserted ${events.length} events into database`);
+        logger.info(`Upserted ${events.length} events into database`);
     }
 
     //Perform the scrape and upsert for events on livetime
@@ -74,10 +77,10 @@ export default async function SyncLiveTimeContentJob() {
     }
 
     let startedAt = Date.now();
-    console.log(`Starting SyncLiveTimeContentJob...`);
+    logger.info(`Starting SyncLiveTimeContentJob...`);
     await scrapeAndUpsertEvents();
     let endedAt = Date.now();
-    console.log(`Completed SyncLiveTimeContentJob in ${(endedAt - startedAt) / 1000} seconds.`);
+    logger.info(`Completed SyncLiveTimeContentJob in ${(endedAt - startedAt) / 1000} seconds.`);
 }
 
 class ScrapedLiveTimeEvent {
