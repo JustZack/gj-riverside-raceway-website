@@ -1,13 +1,13 @@
 import React from 'react'
 
-type RowProps = {
+type ColumnProps = {
   children: React.ReactNode
   gap?: number
   collapsible?: boolean
   align?: 'start' | 'center' | 'end' | 'stretch'
   justify?: 'start' | 'center' | 'end' | 'between' | 'around' | 'evenly'
-  equalHeight?: boolean
-  fullWidth?: boolean
+  equalWidth?: boolean
+  fullHeight?: boolean
   className?: string
   style?: React.CSSProperties
   shadowTop?: boolean
@@ -16,40 +16,40 @@ type RowProps = {
   shadowRight?: boolean
 }
 
-export default function Row({ 
-  children, 
+export default function Column({
+  children,
   gap = 4,
   collapsible = false,
   align = 'stretch',
   justify = 'start',
-  equalHeight = false,
-  fullWidth = false,
+  equalWidth = false,
+  fullHeight = false,
   className = '',
   style = {},
   shadowTop = false,
   shadowBottom = false,
   shadowLeft = false,
   shadowRight = false
-}: RowProps) {
-  // Map align prop to Tailwind classes
+}: ColumnProps) {
+  // Map align prop to Tailwind classes (for horizontal alignment)
   const alignClasses = {
-    start: 'items-start',
-    center: 'items-center',
-    end: 'items-end',
-    stretch: 'items-stretch'
-  }
-
-  // Map justify prop to Tailwind classes
-  const justifyClasses = {
     start: 'justify-start',
     center: 'justify-center',
     end: 'justify-end',
-    between: 'justify-between',
-    around: 'justify-around',
-    evenly: 'justify-evenly'
+    stretch: 'justify-stretch'
   }
 
-  // Map gap to complete Tailwind classes
+  // Map justify prop to Tailwind classes (for vertical alignment)
+  const justifyClasses = {
+    start: 'items-start',
+    center: 'items-center',
+    end: 'items-end',
+    between: 'items-between',
+    around: 'items-around',
+    evenly: 'items-evenly'
+  }
+
+  // Map gap to Tailwind classes
   const gapClasses = {
     0: 'gap-0',
     1: 'gap-1',
@@ -64,20 +64,20 @@ export default function Row({
     16: 'gap-16'
   }
 
-  // Equal height: use items-stretch and children need h-full
-  const heightClass = equalHeight ? 'items-stretch' : alignClasses[align]
+  // Equal width: use justify-stretch and children need w-full
+  const widthClass = equalWidth ? 'justify-stretch' : alignClasses[align]
 
   // Get gap class or use inline style as fallback
   const gapClass = gapClasses[gap as keyof typeof gapClasses] || ''
 
-  // Base classes - don't include heightClass if collapsible (will be handled in responsiveClasses)
-  const baseClasses = `flex ${gapClass} ${!collapsible ? heightClass : ''} ${justifyClasses[justify]} ${fullWidth ? 'w-full max-w-full' : ''}`
-  
-  // Collapsible: flex-row with wrap on desktop, flex-col on mobile
-  // When collapsed (mobile), center items horizontally
-  const responsiveClasses = collapsible 
-    ? `flex-col items-center md:flex-row md:flex-wrap md:${heightClass}` 
-    : 'flex-row'
+  // Base classes
+  const baseClasses = `flex flex-col ${gapClass} ${!collapsible ? widthClass : ''} ${justifyClasses[justify]} ${fullHeight ? 'h-full max-h-full' : ''}`
+
+  // Collapsible: flex-col with wrap on desktop, flex-row on mobile
+  // When collapsed (mobile), center items vertically
+  const responsiveClasses = collapsible
+    ? `flex-row items-center md:flex-col md:flex-wrap md:${widthClass}`
+    : 'flex-col'
 
   // Shadow classes
   const shadowClasses = [
@@ -88,13 +88,13 @@ export default function Row({
   ].join(' ')
 
   return (
-    <div 
+    <div
       className={`${baseClasses} ${responsiveClasses} ${shadowClasses} ${className}`}
       style={!gapClass ? { gap: `${gap * 0.25}rem`, ...style } : style}
     >
-      {equalHeight 
+      {equalWidth
         ? React.Children.map(children, (child) => (
-            <div className="flex h-full">{child}</div>
+            <div className="flex w-full">{child}</div>
           ))
         : children
       }

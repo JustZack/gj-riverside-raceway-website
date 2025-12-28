@@ -11,6 +11,8 @@ type CardProps = {
   backgroundBlur?: number
   backgroundImageLinearGradientStart?: number
   backgroundImageLinearGradientEnd?: number
+  style?: React.CSSProperties
+  shadow?: boolean
 }
 
 export default function Card({ 
@@ -19,11 +21,13 @@ export default function Card({
   borderColor = '#e5e7eb',
   borderWidth = 1,
   className = '',
-  borderRadius = 10,
+  borderRadius = 5,
   backgroundImage,
   backgroundBlur = 0,
   backgroundImageLinearGradientStart = 0.8,
-  backgroundImageLinearGradientEnd = 0.2
+  backgroundImageLinearGradientEnd = 0.2,
+  style = {},
+  shadow = true
 }: CardProps) {
   // Convert hex color to rgba for overlay
   const hexToRgba = (hex: string, alpha: number) => {
@@ -42,11 +46,12 @@ export default function Card({
 
   return (
     <div 
-      className={`p-4 rounded h-full flex flex-col relative overflow-hidden ${className}`}
+      className={`p-4 rounded h-full flex flex-col relative overflow-hidden ${shadow ? 'shadow-lg' : ''} ${className}`}
       style={{ 
         backgroundColor: backgroundImage ? 'transparent' : backgroundColor,
         border: `${borderWidth}px solid ${borderColor}`,
-        borderRadius: `${borderRadius}px`
+        borderRadius: `${borderRadius}px`,
+        ...style
       }}
     >
       {backgroundImage && (

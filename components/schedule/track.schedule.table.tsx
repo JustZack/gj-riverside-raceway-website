@@ -2,6 +2,7 @@
 import Table from '@/components/ui/table/table'
 import { ColumnDef } from '@/components/ui/table/types'
 import Row from '@/components/ui/row'
+import Card from '@/components//ui/card'
 import { useState, useEffect } from 'react'
 import TrackScheduleUtils, { ScheduleEvent } from '@/lib/utils/track.schedule.utils'
 
@@ -28,8 +29,7 @@ export default function TrackScheduleTable() {
           ) : (<>{value}</>)}
         </>
     )
-    },
-    {
+    }, {
       key: 'entries',
       header: 'Entries',
       sortable: true,
@@ -37,16 +37,14 @@ export default function TrackScheduleTable() {
       width: '75px',
       align: 'center',
       hideOnSmall: true
-    },
-    {
+    }, {
       key: 'drivers',
       header: 'Drivers',
       sortable: true,
       sortType: 'numeric',
       align: 'center',
       hideOnSmall: true
-    },
-    {
+    }, {
       key: 'status',
       header: 'Status',
       sortable: true,
@@ -56,8 +54,7 @@ export default function TrackScheduleTable() {
           {value}
         </span>
       )
-    },
-    {
+    }, {
       key: 'updatedAt',
       header: 'Updated',
       sortable: true,
@@ -68,11 +65,11 @@ export default function TrackScheduleTable() {
           {new Date(value).toLocaleDateString()}
         </span>
       )
-    },
+    }
   ]
 
   return (
-    <div>
+    <Card>
       <Row fullWidth justify="center">
         <h1 className="text-2xl font-bold mb-4">Our Races</h1>
       </Row>
@@ -87,6 +84,6 @@ export default function TrackScheduleTable() {
           borderColor="#ff0000"
         />
       </Row>
-    </div>
+    </Card>
   )
 }

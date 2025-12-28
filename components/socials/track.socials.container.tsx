@@ -44,7 +44,7 @@ export default function TrackSocialsContainer() {
     ]
 
     return (
-        <div className="text-center">
+        <div>
             <Row align="center" justify="center">
                 <h2 className="text-2xl font-bold my-4">Connect with Us</h2>
             </Row>

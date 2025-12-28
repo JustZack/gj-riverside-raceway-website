@@ -4,6 +4,8 @@ import { Calendar, dateFnsLocalizer } from 'react-big-calendar'
 import { format, parse, startOfWeek, getDay } from 'date-fns'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 import TrackScheduleUtils, { ScheduleEvent } from '@/lib/utils/track.schedule.utils'
+import Row from '@/components/ui/row'
+import Card from '@/components/ui/card'
 
 const locales = {
   'en-US': require('date-fns/locale/en-US')
@@ -83,11 +85,11 @@ export default function TrackScheduleCalendar() {
   }
 
   return (
-    <div>
-      <div className="mb-4">
+    <Card>
+      <Row fullWidth>
         <h1 className="text-2xl font-bold text-center">Race Calendar</h1>
-      </div>
-      <div style={{ height: '600px' }}>
+      </Row>
+      <Row fullWidth>
         <Calendar
           localizer={localizer}
           events={events}
@@ -101,8 +103,9 @@ export default function TrackScheduleCalendar() {
           }}
           views={['month']}
           defaultView="month"
+          style={{ height: 600, width: '100%' }}
         />
-      </div>
-    </div>
+      </Row>
+    </Card>
   )
 }
