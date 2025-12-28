@@ -14,7 +14,7 @@ export default class ScheduledJobs {
     private static lastSyncIndex: number = -1;
     private static jobsRun: number = 0;
 
-    private static DEFAULT_SYNC_INTERVAL_MS: number = 15 * 60 * 1000; // 15 minutes
+    private static DEFAULT_SYNC_INTERVAL_MS: number = 30 * 60 * 1000; // 30 minutes
 
     static getJobs(): RunnableJob[] {
         return ScheduledJobs.jobs;
