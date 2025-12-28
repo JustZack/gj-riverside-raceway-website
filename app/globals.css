@@ -33,3 +33,10 @@ body {
   );
   */
 }
+
+/* Force FullCalendar to fill its parent */
+.fc, .fc .fc-scrollgrid, .fc .fc-view-harness {
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+}

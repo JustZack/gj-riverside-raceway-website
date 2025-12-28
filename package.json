@@ -18,6 +18,9 @@
     "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
   },
   "dependencies": {
+    "@fullcalendar/core": "^6.1.10",
+    "@fullcalendar/daygrid": "^6.1.10",
+    "@fullcalendar/react": "^6.1.10",
     "@prisma/client": "^5.22.0",
     "@types/react-big-calendar": "^1.16.3",
     "date-fns": "^4.1.0",

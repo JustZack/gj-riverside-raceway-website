@@ -35,6 +35,7 @@ export default function SocialCard({ social }: { social: Social }) {
         borderWidth={2}
         backgroundImage={social.backgroundImage}
         backgroundBlur={social.backgroundImage ? 1 : 0}
+        shadow
       >
         <Image 
           src={social.imageSrc} 

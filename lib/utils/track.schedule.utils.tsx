@@ -63,7 +63,6 @@ export default class TrackScheduleUtils {
             ...event.liveTimeEvent,
             link: TrackScheduleUtils.getEventLiveTimeLink(event)
           }))
-          console.log(formattedEvents);
           setterCallback(formattedEvents)
         })
     }
