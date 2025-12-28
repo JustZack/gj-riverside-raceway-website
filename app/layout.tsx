@@ -23,9 +23,7 @@ export default function RootLayout({
       </head>
       <body className="flex flex-col min-h-screen">
         <SiteHeader/>
-        <main className="flex-grow flex flex-col items-center justify-center p-4 md:p-5">
-          {children}
-        </main>
+        {children}
         <SiteFooter/>
       </body>
     </html>

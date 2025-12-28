@@ -71,7 +71,7 @@ export default function TrackScheduleTable() {
   return (
     <Card>
       <Row fullWidth justify="center">
-        <h1 className="text-2xl font-bold mb-4">Our Races</h1>
+        <h1 className="text-2xl font-bold mb-4">Race History</h1>
       </Row>
       <Row fullWidth>
         <Table

@@ -101,7 +101,7 @@ export default function TrackScheduleCalendar() {
           components={{
             dateCellWrapper: CustomDateCellWrapper
           }}
-          views={['month']}
+          views={['month', 'week']}
           defaultView="month"
           style={{ height: 600, width: '100%' }}
         />

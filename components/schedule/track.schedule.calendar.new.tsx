@@ -5,6 +5,7 @@ import dayGridPlugin from '@fullcalendar/daygrid'
 import TrackScheduleUtils, { ScheduleEvent } from '@/lib/utils/track.schedule.utils'
 import Row from '@/components/ui/row'
 import Card from '@/components/ui/card'
+import { EventSourceInput } from '@fullcalendar/core/index.js'
 
 export default function TrackScheduleCalendarNew() {
   const [events, setEvents] = useState<ScheduleEvent[]>([])
@@ -15,7 +16,7 @@ export default function TrackScheduleCalendarNew() {
     return (<i>{eventInfo.event.title}</i>)
     }
 
-  return (
+  /*return (
     <Card shadow>
       <Row fullWidth>
         <FullCalendar
@@ -25,5 +26,5 @@ export default function TrackScheduleCalendarNew() {
         />
       </Row>
     </Card>
-  )
+  )*/
 }
