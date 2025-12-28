@@ -118,6 +118,7 @@ class ScrapedLiveTimeEvent {
             name: this.name,
             start: new Date(this.date),
             end: new Date(this.date),
+            // @ts-ignore: livetimeID is in the schema but not in the generated type
             livetimeID: this.event_id,
         }
     }
