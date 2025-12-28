@@ -2,8 +2,9 @@
 import API from '@/lib/api/api'
 import Table from '@/components/ui/table/table'
 import { ColumnDef } from '@/components/ui/table/types'
-import Row from '../ui/row'
+import Row from '@/components/ui/row'
 import { useState, useEffect } from 'react'
+import TrackEventUtils from '@/lib/utils/track.schedule.utils'
 
 type ScheduleRow = {
   name: string
@@ -19,36 +20,15 @@ export default function TrackScheduleTable() {
 
   const [events, setEvents] = useState<ScheduleRow[]>([])
 
-  function determineStatus(event: any): 'cancelled' | 'finished' | 'upcoming' | 'running' {
-    if (event.cancelled) return 'cancelled'
-    else if (new Date(event.end) < new Date()) return 'finished'
-    else if (new Date(event.start) <= new Date()) return 'running'
-    else return 'upcoming'
-  }
-
-  function determineStatusClass(event: any): string {
-    if (event.cancelled) return 'bg-red-100 text-red-800'
-    else if (new Date(event.end) < new Date()) return 'bg-green-100 text-green-800'
-    else if (new Date(event.start) <= new Date()) return 'bg-gray-300 text-gray-900'
-    else return 'bg-blue-100 text-blue-800'
-  }
-
-  function getLiveTimeLink(event: any): string | undefined {
-    if (event.liveTimeEvent) {
-      return `https://jjsraceway.liverc.com/results/?p=view_event&id=${event.liveTimeEvent.id}`
-    }
-    return undefined
-  }
-
   useEffect(() => {
     API.getSchedule().then((data) => {
       const formattedData = data.map((event: any) => ({
         name: event.name,
-        liveTimeLink: getLiveTimeLink(event),
+        liveTimeLink: TrackEventUtils.getEventLiveTimeLink(event),
         entries: event.liveTimeEvent ? event.liveTimeEvent.entries : undefined,
         drivers: event.liveTimeEvent ? event.liveTimeEvent.drivers : undefined,
-        status: determineStatus(event),
-        statusClass: determineStatusClass(event),
+        status: TrackEventUtils.getEventStatus(event),
+        statusClass: TrackEventUtils.getEventStatusClass(event),
         updatedAt: event.updatedAt
       }))
       setEvents(formattedData)

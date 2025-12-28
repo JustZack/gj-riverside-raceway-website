@@ -4,18 +4,13 @@ import { Calendar, dateFnsLocalizer, Event } from 'react-big-calendar'
 import { format, parse, startOfWeek, getDay } from 'date-fns'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 import API from '@/lib/api/api'
+import TrackEventUtils from '@/lib/utils/track.schedule.utils'
 
 const locales = {
   'en-US': require('date-fns/locale/en-US')
 }
 
-const localizer = dateFnsLocalizer({
-  format,
-  parse,
-  startOfWeek,
-  getDay,
-  locales,
-})
+const localizer = dateFnsLocalizer({ format, parse, startOfWeek, getDay, locales })
 
 interface CalendarEvent extends Event {
   id: number
@@ -33,116 +28,10 @@ interface CalendarEvent extends Event {
   status: 'cancelled' | 'finished' | 'upcoming' | 'running'
 }
 
-interface EventPopupProps {
-  event: CalendarEvent | null
-  position: { x: number; y: number } | null
-  onClose: () => void
-}
-
-function EventPopup({ event, position, onClose }: EventPopupProps) {
-  if (!event || !position) return null
-
-  const liveTimeLink = event.liveTimeEvent 
-    ? `https://jjsraceway.liverc.com/results/?p=view_event&id=${event.liveTimeEvent.id}`
-    : null
-
-  const handleOverlayClick = (e: React.MouseEvent) => {
-    // Only close if clicking the overlay itself, not if clicking propagates from calendar events
-    if (e.target === e.currentTarget) {
-      onClose()
-    }
-  }
-
-  return (
-    <>
-      <div 
-        className="fixed inset-0 z-40"
-        onClick={handleOverlayClick}
-      />
-      <div 
-        className="absolute bg-white rounded-md shadow-lg border border-gray-300 p-3 z-50"
-        style={{
-          left: `${position.x}px`,
-          top: `${position.y}px`,
-          maxWidth: '280px',
-          minWidth: '240px'
-        }}
-      >
-        <button 
-          onClick={onClose}
-          className="absolute top-2 right-2 text-gray-400 hover:text-gray-600 text-lg leading-none"
-        >
-          &times;
-        </button>
-
-        <div className="space-y-1.5 text-xs pr-4">
-          <div className="font-semibold text-sm mb-2">{event.title}</div>
-          
-          <div className="flex items-center gap-1">
-            <span className={`px-1.5 py-0.5 rounded text-xs ${
-              event.cancelled ? 'bg-red-100 text-red-800' :
-              event.status === 'finished' ? 'bg-green-100 text-green-800' :
-              event.status === 'running' ? 'bg-gray-300 text-gray-900' :
-              'bg-blue-100 text-blue-800'
-            }`}>
-              {event.status}
-            </span>
-          </div>
-
-          <div className="text-gray-600">
-            {format(event.start, 'MMM d, yyyy h:mm a')}
-          </div>
-
-          {event.description && (
-            <div className="text-gray-700 pt-1">
-              {event.description}
-            </div>
-          )}
-
-          {event.liveTimeEvent && (
-            <div className="border-t pt-1.5 mt-1.5 space-y-0.5">
-              {event.liveTimeEvent.entries !== undefined && (
-                <div><span className="font-medium">Entries:</span> {event.liveTimeEvent.entries}</div>
-              )}
-              {event.liveTimeEvent.drivers !== undefined && (
-                <div><span className="font-medium">Drivers:</span> {event.liveTimeEvent.drivers}</div>
-              )}
-              {event.liveTimeEvent.laps !== undefined && (
-                <div><span className="font-medium">Laps:</span> {event.liveTimeEvent.laps}</div>
-              )}
-            </div>
-          )}
-
-          {liveTimeLink && (
-            <div className="pt-1.5">
-              <a 
-                href={liveTimeLink}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center text-blue-600 hover:text-blue-800 hover:underline"
-              >
-                <i className="fa-solid fa-arrow-up-right-from-square mr-1 text-xs"></i>
-                View Results
-              </a>
-            </div>
-          )}
-        </div>
-      </div>
-    </>
-  )
-}
-
 export default function TrackScheduleCalendar() {
   const [events, setEvents] = useState<CalendarEvent[]>([])
   const [selectedEvent, setSelectedEvent] = useState<CalendarEvent | null>(null)
   const [popupPosition, setPopupPosition] = useState<{ x: number; y: number } | null>(null)
-
-  function determineStatus(event: any): 'cancelled' | 'finished' | 'upcoming' | 'running' {
-    if (event.cancelled) return 'cancelled'
-    else if (new Date(event.end) < new Date()) return 'finished'
-    else if (new Date(event.start) <= new Date()) return 'running'
-    else return 'upcoming'
-  }
 
   useEffect(() => {
     API.getSchedule().then((data) => {
@@ -154,71 +43,21 @@ export default function TrackScheduleCalendar() {
         cancelled: event.cancelled,
         description: event.description,
         liveTimeEvent: event.liveTimeEvent,
-        status: determineStatus(event)
+        status: TrackEventUtils.getEventStatus(event)
       }))
-      setEvents(formattedEvents)
+      // Only show the first event
+      setEvents(formattedEvents.length > 0 ? [formattedEvents[0]] : [])
     }).catch((error) => {
       console.error('Error fetching schedule data:', error)
     })
   }, [])
 
-  const handleSelectEvent = useCallback((event: CalendarEvent, e: React.SyntheticEvent) => {
-    const target = e.target as HTMLElement
-    const rect = target.getBoundingClientRect()
-    
-    const popupWidth = 280
-    const popupHeight = 250 // Approximate height for smaller popup
-    const offset = 8 // Gap between event and popup
-    
-    // Determine if we should position on left or right side
-    const spaceOnRight = window.innerWidth - rect.right
-    const spaceOnLeft = rect.left
-    
-    // Determine if we should position above or below
-    const spaceBelow = window.innerHeight - rect.bottom
-    const spaceAbove = rect.top
-    
-    let x, y
-    
-    // Horizontal positioning - center popup horizontally with the event if possible
-    x = rect.left + window.scrollX
-    
-    // If popup would go off right edge, align right edges instead
-    if (rect.left + popupWidth > window.innerWidth) {
-      x = rect.right + window.scrollX - popupWidth
-    }
-    
-    // Vertical positioning
-    if (spaceBelow >= popupHeight + offset) {
-      // Position below the event
-      y = rect.bottom + window.scrollY + offset
-    } else if (spaceAbove >= popupHeight + offset) {
-      // Position above the event
-      y = rect.top + window.scrollY - popupHeight - offset
-    } else {
-      // Not enough space either way, just show below
-      y = rect.bottom + window.scrollY + offset
-    }
-    
-    setPopupPosition({ x, y })
-    setSelectedEvent(event)
-  }, [])
+  const handleSelectEvent = useCallback((event: CalendarEvent, e: React.SyntheticEvent) => {}, [])
 
-  const handleClosePopup = useCallback(() => {
-    setSelectedEvent(null)
-    setPopupPosition(null)
-  }, [])
+  const handleClosePopup = useCallback(() => {}, [])
 
   const eventStyleGetter = (event: CalendarEvent) => {
-    let backgroundColor = '#3b82f6' // blue for upcoming
-    
-    if (event.cancelled) {
-      backgroundColor = '#ef4444' // red
-    } else if (event.status === 'finished') {
-      backgroundColor = '#22c55e' // green
-    } else if (event.status === 'running') {
-      backgroundColor = '#6b7280' // gray
-    }
+    let backgroundColor = TrackEventUtils.getEventStatusColor(event)
 
     return {
       style: {
@@ -300,11 +139,6 @@ export default function TrackScheduleCalendar() {
           defaultView="month"
         />
       </div>
-      <EventPopup 
-        event={selectedEvent}
-        position={popupPosition}
-        onClose={handleClosePopup}
-      />
     </div>
   )
 }
