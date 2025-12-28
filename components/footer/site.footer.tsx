@@ -7,11 +7,10 @@ export default function SiteFooter() {
 
     const footerColumns = [
         {
-            className: 'items-end pr-8',
             items: [
                 {
                     icon: 'fas fa-map-marker-alt',
-                    text: '801 kimball Avenue, Grand Junction, Colorado 81501'
+                    text: '801 Kimball Avenue, GJ, Colorado 81501'
                 }, {
                     icon: 'fas fa-phone',
                     text: '970-243-2305'
@@ -19,7 +18,6 @@ export default function SiteFooter() {
             ]
         },
         {
-            className: 'items-start pl-8',
             items: [
                 {
                     icon: 'fas fa-copyright',
@@ -42,9 +40,9 @@ export default function SiteFooter() {
     }
 
     return (
-        <Row fullWidth shadowTop justify="center" align="center" className="py-8" style={{ backgroundColor: "#ffffff" }}>
+        <Row collapsible fullWidth shadowTop justify="center" align="center" className="py-8" style={{ backgroundColor: "#ffffff" }}>
             {footerColumns.map((footerItems, index) => (
-                <Column key={index} className={footerItems.className} align="center" gap={2}>
+                <Column key={index} align="center" style={{width: '375px' }}>
                     {renderFooterColumn(footerItems.items)}
                 </Column>
             ))}
