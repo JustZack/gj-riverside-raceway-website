@@ -76,11 +76,7 @@ export default async function SyncLiveTimeContentJob() {
         });
     }
 
-    let startedAt = Date.now();
-    logger.info(`Starting SyncLiveTimeContentJob...`);
     await scrapeAndUpsertEvents();
-    let endedAt = Date.now();
-    logger.info(`Completed SyncLiveTimeContentJob in ${(endedAt - startedAt) / 1000} seconds.`);
 }
 
 class ScrapedLiveTimeEvent {

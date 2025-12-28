@@ -1,4 +1,4 @@
-import HTTP from "@/lib/utils/http";
+import HTTP from "@/lib/api/http";
 import Logger from "@/lib/utils/logger";
 
 export default class API {

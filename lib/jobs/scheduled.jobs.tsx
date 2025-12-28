@@ -9,6 +9,8 @@ export default class ScheduledJobs {
         new RunnableJob("sync_livetimerc_content", SyncLiveTimeContentJob),
     ]
 
+    private static lastSyncStartTime: number = 0;
+    private static lastSyncEndTime: number = 0;
     private static lastSyncIndex: number = -1;
     private static jobsRun: number = 0;
 
@@ -54,14 +56,17 @@ export default class ScheduledJobs {
         ScheduledJobs.logger.info("No job to run for progressive sync step.");
     }
 
+    private static onJobRunStarted(job?: RunnableJob) {
+        ScheduledJobs.lastSyncStartTime = Date.now();
+        ScheduledJobs.logger.info(`Starting job run #${this.jobsRun + 1} for job: ${job?.name}`);
+    }
+
     private static onJobRunComplete(job?: RunnableJob) {
         this.lastSyncIndex++;
         this.jobsRun++;
-        ScheduledJobs.logger.info(`Completed job run #${this.jobsRun} for job: ${job?.name}`);
-    }
-    
-    private static onJobRunStarted(job?: RunnableJob) {
-        ScheduledJobs.logger.info(`Starting job run #${this.jobsRun + 1} for job: ${job?.name}`);
+        ScheduledJobs.lastSyncEndTime = Date.now();
+        let jobDuration = ScheduledJobs.lastSyncEndTime - ScheduledJobs.lastSyncStartTime;
+        ScheduledJobs.logger.info(`Completed job run #${this.jobsRun} for job: ${job?.name} in ${jobDuration / 1000} seconds.`);
     }
 
     static async runNextJob() {
