@@ -10,9 +10,7 @@
     "prisma:generate": "npx prisma generate",
     "prisma:push": "npx prisma db push",
     "prisma:seed": "npx prisma db seed",
-    "prisma:init": "npm run prisma:generate && npm run prisma:push && npm run prisma:seed",
-    "tools:scrape": "python ./tools/livetime_scraper/livetime.rc.scraper.py && mv seed.data.json prisma/seed.data.json",
-    "scrape-and-init-db": "npm run tools:scrape && npm run prisma:init"
+    "prisma:init": "npm run prisma:generate && npm run prisma:push"
   },
   "prisma": {
     "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
@@ -33,6 +31,8 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.18",
+    "@types/cheerio": "^0.22.35",
+    "@types/luxon": "^3.7.1",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
