@@ -57,6 +57,7 @@ Open [http://localhost:3000](http://localhost:3000) to see the Hello World page.
 │   ├── schedule/         # Components related to displaying the raceway socials
 │   └── ui/               # Generalized UI components
 ├── public/               # Static content next.js served by Next.js
+├── content/              # Text content/configurations for app components
 ├── lib/                  # Utility libraries
 │   ├── api/              # Frontend API library
 │   ├── db/               # Backend database library
