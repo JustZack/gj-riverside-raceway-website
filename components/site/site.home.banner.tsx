@@ -1,12 +1,8 @@
 'use client'
 
-import Row from '@/components/ui/row'
-import Image from 'next/image'
-import Banner from '@/components/ui/banner'
-import Column from '@/components/ui/column'
-import Card from '@/components/ui/card'
+import { Card, Banner } from '@/components/ui/ui'
 
-export default function HomeBanner() {
+export default function SiteHomeBanner() {
     const sideContent = {
         backgroundColor: 'rgba(0, 0, 0, 0.8)',
         borderColor: 'rgba(0, 0, 0, 1)',

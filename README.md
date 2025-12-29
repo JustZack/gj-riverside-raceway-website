@@ -51,10 +51,8 @@ Open [http://localhost:3000](http://localhost:3000) to see the Hello World page.
 │   ├── page.tsx          # Home page for the app
 │   └── globals.css       # Global styles
 ├── components/           # Various app components
-│   ├── footer/           # Footer components
-│   ├── header/           # Header components
 │   ├── schedule/         # Components related to displaying the race schedule
-│   ├── schedule/         # Components related to displaying the raceway socials
+│   ├── site/             # Specific components for this site
 │   └── ui/               # Generalized UI components
 ├── public/               # Static content next.js served by Next.js
 ├── content/              # Text content/configurations for app components
