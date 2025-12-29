@@ -15,4 +15,10 @@ export default class API {
         API.logger.info(`Fetching schedule from API... ${route}`);
         return await HTTP.GET(route)
     }
+
+    static async getUpcomingSchedule() {
+        const route = API.route('schedule/upcoming')
+        API.logger.info(`Fetching upcoming schedule from API... ${route}`);
+        return await HTTP.GET(route)
+    }
 }
