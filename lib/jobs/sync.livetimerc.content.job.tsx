@@ -4,13 +4,10 @@ import * as cheerio from 'cheerio';
 import { DateTime } from "luxon";
 import { Prisma }  from "@prisma/client";
 import Logger from "@/lib/utils/logger";
-
+import { livetime } from "@/content/content";
 
 export default async function SyncLiveTimeContentJob() {
     const logger: Logger = new Logger('SyncLiveTimeContentJob');
-
-    const LIVE_TIME_BASE_URL = "https://jjsraceway.liverc.com/"
-    function getLivetimeUrl(path: string): string { return `${LIVE_TIME_BASE_URL}${path}` }
 
     function scrapeUrl(url: string): Promise<string> {
         return new Promise((resolve, reject) => {
@@ -24,7 +21,7 @@ export default async function SyncLiveTimeContentJob() {
     }
 
     function scrapeLiveTimeUrl(path: string): Promise<string> {
-        return scrapeUrl(getLivetimeUrl(path));
+        return scrapeUrl(livetime.getLink(path));
     }
 
     function parseHTML(html: string): cheerio.Root {
@@ -51,7 +48,7 @@ export default async function SyncLiveTimeContentJob() {
             logger.info(`Scraped ${event.name} (LiveTime ID: ${event.event_id})`);
             events.push(event);
         });
-        logger.info(`Scraped ${events.length} events from ${LIVE_TIME_BASE_URL}`);
+        logger.info(`Scraped ${events.length} events from ${livetime.baseUrl}`);
         return events;
     }
 
@@ -68,7 +65,7 @@ export default async function SyncLiveTimeContentJob() {
 
     //Perform the scrape and upsert for events on livetime
     async function scrapeAndUpsertEvents(): Promise<void> {
-        await scrapeLiveTimeUrl('events/').then(async (html) => {
+        await scrapeLiveTimeUrl(livetime.eventsPath).then(async (html) => {
             //1. Extract events from the html
             const events: ScrapedLiveTimeEvent[] = extractEventsFromPage(html);
             //2. Upsert each event into the relevant tables
@@ -109,7 +106,7 @@ class ScrapedLiveTimeEvent {
         this.entries = parseInt(cols.eq(2).text().trim(), 10);
         this.drivers = parseInt(cols.eq(3).text().trim(), 10);
 
-        this.livetime_path = `/results/?p=view_event&id=${this.event_id}`;
+        this.livetime_path = `${livetime.resultsPath}${this.event_id}`;
         this.laps = 0;
     }
 

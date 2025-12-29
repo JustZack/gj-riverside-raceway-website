@@ -1,3 +1,5 @@
+import { livetime } from '@/content/livetime'
+
 export const socials = [
     {
         name: "Facebook",
@@ -25,7 +27,7 @@ export const socials = [
         backgroundImage: "/images/youtube-card-bg.png",
     }, {
         name: "LiveTime RC",
-        url: "https://jjsraceway.liverc.com/",
+        url: livetime.baseUrl,
         urlText: "Visit our LiveTime RC Page",
         primaryColor: "#ff0000",
         backgroundColor: "#000000",
