@@ -1,9 +1,11 @@
+import { facebook } from '@/content/facebook'
+import { youtube } from '@/content/youtube'
 import { livetime } from '@/content/livetime'
 
 export const socials = [
     {
         name: "Facebook",
-        url: "https://www.facebook.com/share/g/1bRsCDdtpa/",
+        url: facebook.groupUrl,
         urlText: "Visit our Facebook Page",
         hoverTextColor: "#ffffff",
         primaryColor: "#3b5998",
@@ -11,18 +13,18 @@ export const socials = [
         backgroundColor: "#000000",
         imageSrc: "/images/facebook.png",
         buttonIcon: "fa-brands fa-facebook fa-xl",
-        buttonText: "Grand Valley RC Racing",
+        buttonText: facebook.groupName,
         description: "Join the conversation and stay updated with the latest news!",
         backgroundImage: "/images/gv-rc-oval.jpg",
     }, {
         name: "Youtube",
-        url: "https://www.youtube.com/@gjriversideraceway",
+        url: youtube.getChannelLink(),
         urlText: "Visit our Youtube Channel",
         primaryColor: "#ff0000",
         backgroundColor: "#000000",
         imageSrc: "/images/youtube-white-text-logo.png",
         buttonIcon: "fa-brands fa-youtube fa-xl",
-        buttonText: "@GJRiversideRaceway",
+        buttonText: youtube.channelHandle,
         description: "See live & recorded racing action on our Youtube channel!",
         backgroundImage: "/images/youtube-card-bg.png",
     }, {

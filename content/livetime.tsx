@@ -1,5 +1,6 @@
 export const livetime = {
     baseUrl: 'https://jjsraceway.liverc.com/',
+    trackName: "JJ's Raceway",
     eventsPath: 'events/',
     resultsPath: 'results/?p=view_event&id=',
     getLink: (path: string) => `${livetime.baseUrl}${path}`,
