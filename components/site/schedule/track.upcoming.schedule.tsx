@@ -16,17 +16,19 @@ export default function TrackUpcomingSchedule() {
     function eventRow(icon: string, dayOfTheWeek: string, startDate: string, startTime: string, endTime: string, status: 'cancelled' | 'finished' | 'upcoming' | 'running') {
         let statusClass = TrackScheduleUtils.getEventStatusClassByName(status);
         return (
-            <Row>
-                <i className={`${icon} mr-2`} />
-                <span className={statusClass}>{status}</span>
-                <span className="min-w-[90px]">{dayOfTheWeek}</span>
-                <span>{startDate} {startTime} - {endTime}</span>
+            <Row className="flex items-center justify-between gap-2 w-full" gap={1}>
+                <span className="flex items-center justify-center w-6 h-6"><i className={`${icon}`} /></span>
+                <span className={`${statusClass} flex items-center justify-center w-min`}>{status}</span>
+                <span className="flex items-center justify-start w-min min-w-[40px]">{dayOfTheWeek}</span>
+                <span className="flex items-center justify-start w-min whitespace-nowrap">{startDate} {startTime} - {endTime}</span>
             </Row>
         )
     }
 
+    const dayMap: Record<string, string> = { Mon: 'Mon', Tue: 'Tues', Wed: 'Wed', Thu: 'Thurs', Fri: 'Fri', Sat: 'Sat', Sun: 'Sun', };
+
     function formatEventRow(type: 'indoor' | 'outdoor', start: Date, end: Date, name: string, status: 'cancelled' | 'finished' | 'upcoming' | 'running') {
-        let dayOfTheWeek = format(start, 'EEEE')
+        let dayOfTheWeek = dayMap[format(start, 'EEE')]
         let startDate = format(start, 'MMM dd, yyyy')
         let startTime = format(start, 'h a')
         let endTime = format(end, 'h a')
@@ -40,9 +42,11 @@ export default function TrackUpcomingSchedule() {
     return (
         <Column style={{ maxWidth: '600px', margin: '0 auto'}}>
             <h1 className="text-2xl font-bold text-center">Upcoming Events</h1>
-            <div key="practice-event" className="mb-4">
-                <i className="fa-solid fa-clock mr-2"/>
-                Call <a href={about.phoneUrl} className="text-blue-600 hover:underline">{about.phone}</a> for practice availability.
+            <div key="practice-event">
+                <Row className="flex items-center justify-between gap-2 w-full" gap={1}>
+                    <span className="flex items-center justify-center w-6 h-6"><i className="fa-solid fa-clock" /></span>
+                    Call <a href={about.phoneUrl} className="text-blue-600 hover:underline">{about.phone}</a> for practice.
+                </Row>
             </div>
             {events.length === 0 && (
                 <span>No upcoming events.</span>

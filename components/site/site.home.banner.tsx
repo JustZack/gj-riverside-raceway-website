@@ -10,10 +10,11 @@ export default function SiteHomeBanner() {
     }
     return (
         <Banner 
-            style={{height: "40vw", maxHeight: "500px", minHeight: "325px"}}
+            style={{height: "20vw", maxHeight: "500px", minHeight: "100px"}}
             media={<img src="/images/indoor-track/losi-nascar-lineup.jpg" />}
             mediaStyle={{ objectPosition: "center 80%", objectFit: "cover", width: "100%", height: "100%", }}>
             {/* Position the card at the end of the middle 50% horizontally (75% from the left, vertically centered) */}
+            {/*
             <div className="absolute top-1/2 left-[75%] -translate-y-1/2 -translate-x-1/2 z-10" style={{width: 'max-content'}}>
                 <Card 
                     style={{height: "150px", color: sideContent.textColor}} 
@@ -24,6 +25,7 @@ export default function SiteHomeBanner() {
                     <p>Stay updated with our latest events and races!</p>
                 </Card>
             </div>
+            */}
         </Banner>
     )
 }

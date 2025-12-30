@@ -23,7 +23,7 @@ export default class TrackScheduleUtils {
     }
 
     static getEventStatusClassByName(status: 'cancelled' | 'finished' | 'upcoming' | 'running'): string {
-        let base = `rounded text-sm min-w-[90px] flex items-center justify-center`
+        let base = `rounded text-sm min-w-[75px] flex items-center justify-center`
         if (status === 'cancelled')         return `${base} bg-red-100 text-red-800` 
         else if (status === 'finished')     return `${base} bg-green-100 text-green-800`
         else if (status === 'running')      return `${base} bg-gray-300 text-gray-900`
