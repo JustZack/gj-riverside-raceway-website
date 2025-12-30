@@ -10,7 +10,7 @@ import { EventSourceInput } from '@fullcalendar/core/index.js'
 export default function TrackScheduleCalendarNew() {
   const [events, setEvents] = useState<ScheduleEvent[]>([])
 
-  useEffect(TrackScheduleUtils.fetchAndFormatEvents.bind(null, setEvents), [])
+  useEffect(TrackScheduleUtils.getAllScheduleEvents.bind(null, setEvents), [])
 
     function renderEventContent(eventInfo: any) {
     return (<i>{eventInfo.event.title}</i>)

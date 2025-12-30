@@ -1,22 +1,19 @@
+import { about } from '@/content/about';
+
 export const footer = [
     {
         items: [
-            {
-                icon: 'fas fa-map-marker-alt',
-                text: '801 Kimball Avenue, GJ, Colorado 81501'
-            }, {
-                icon: 'fas fa-phone',
-                text: '970-243-2305'
-            }
+            { icon: 'fas fa-map-marker-alt', text: about.address, link: `https://www.google.com/maps/place/${about.address}` }, 
+            { icon: 'fas fa-phone', text: about.phone, link: about.phoneUrl }
         ]
     }, {
         items: [
             {
                 icon: 'fas fa-copyright',
-                text: `${new Date().getFullYear()} GJ Riverside Raceway. All rights reserved.`
+                text: `${new Date().getFullYear()} ${about.name}. All rights reserved.`
             }, {
                 icon: 'fas fa-desktop',
-                text: 'Website by Zack Jones'
+                text: `Website by ${about.websiteBy}`
             }
         ]
     }

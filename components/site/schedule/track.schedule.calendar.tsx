@@ -18,7 +18,7 @@ export default function TrackScheduleCalendar() {
   const [selectedEvent, setSelectedEvent] = useState<ScheduleEvent | null>(null)
   const [popupPosition, setPopupPosition] = useState<{ x: number; y: number } | null>(null)
 
-  useEffect(TrackScheduleUtils.fetchAndFormatEvents.bind(null, setEvents), [])
+  useEffect(TrackScheduleUtils.getAllScheduleEvents.bind(null, setEvents), [])
 
   const handleSelectEvent = useCallback((event: ScheduleEvent, e: React.SyntheticEvent) => {}, [])
 

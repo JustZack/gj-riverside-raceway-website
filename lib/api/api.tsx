@@ -16,8 +16,8 @@ export default class API {
         return await HTTP.GET(route)
     }
 
-    static async getUpcomingSchedule() {
-        const route = API.route('schedule/upcoming')
+    static async getUpcomingSchedule(includeCancelled: boolean = false, limit: number = 4) {
+        const route = API.route(`schedule/upcoming?includeCancelled=${includeCancelled}&limit=${limit}`)
         API.logger.info(`Fetching upcoming schedule from API... ${route}`);
         return await HTTP.GET(route)
     }

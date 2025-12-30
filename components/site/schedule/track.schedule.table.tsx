@@ -10,7 +10,7 @@ export default function TrackScheduleTable() {
 
   const [events, setEvents] = useState<ScheduleEvent[]>([])
 
-  useEffect(TrackScheduleUtils.fetchAndFormatEvents.bind(null, setEvents), [])
+  useEffect(TrackScheduleUtils.getAllScheduleEvents.bind(null, setEvents), [])
 
   const columns: ColumnDef<ScheduleEvent>[] = [
     {
@@ -50,19 +50,19 @@ export default function TrackScheduleTable() {
       sortable: true,
       align: 'center',
       render: (value, row) => (
-        <span className={`px-2 py-1 rounded text-sm ${row.statusClass}`}>
+        <span className={`px-2 py-1 ${row.statusClass}`}>
           {value}
         </span>
       )
     }, {
-      key: 'updatedAt',
-      header: 'Updated',
+      key: 'start',
+      header: 'Start Time',
       sortable: true,
-      width: '100px',
+      width: '200px',
       sortType: 'date',
       render: (value) => (
         <span className={`text-sm`}>
-          {new Date(value).toLocaleDateString()}
+          {new Date(value).toLocaleString()}
         </span>
       )
     }

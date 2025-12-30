@@ -4,11 +4,17 @@ import { Row, Column } from '@/components/ui/ui'
 import { footer } from '@/content/content'
 
 export default function SiteFooter() {
-    function renderFooterColumn(items: { icon: string; text: string }[]) {
+    function renderFooterColumn(items: { icon: string; text: string; link?: string }[]) {
         return items.map((item, index) => (
             <span key={index}>
                 <i className={`${item.icon} mr-2`}></i>
-                {item.text}
+                {item.link ? (
+                    <a href={item.link} className="text-blue-600 hover:underline" target="_blank" rel="noreferrer">
+                        {item.text}
+                    </a>
+                ) : (
+                    <>{item.text}</>
+                )}
             </span>
         ))
     }

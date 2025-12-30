@@ -6,5 +6,6 @@ import { rules } from '@/content/rules'
 import { facebook } from '@/content/facebook'
 import { youtube } from '@/content/youtube'
 import { livetime } from '@/content/livetime'
+import { about } from '@/content/about';
 
-export { header, footer, socials, navigation, rules, facebook, youtube, livetime }
+export { header, footer, socials, navigation, rules, facebook, youtube, livetime, about }
