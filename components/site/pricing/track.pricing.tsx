@@ -14,7 +14,7 @@ export default function TrackPricing({className, style, width = "500px"}: {class
         )
     }
     function renderEventPricingRow(pricingEntry: EventPricing) {
-        let pricingText = `1st entry $${pricingEntry.entry}, $${pricingEntry.additional}/additional entry.`
+        let pricingText = `1st entry $${pricingEntry.entry}, $${pricingEntry.additional}/add'l entry`
         return renderPricingRow("fa-regular fa-dollar-sign", pricingEntry.id, pricingEntry.name, pricingText)
     }
 

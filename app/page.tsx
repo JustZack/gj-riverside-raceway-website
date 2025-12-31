@@ -61,12 +61,12 @@ export default function Home() {
                 <div className='lblock lg:hidden'>
                     {/* Upcoming Events Container */}
                     <FullWidthRow className="schedule bg-white">
-                        <TrackUpcomingSchedule className='px-4'/>
+                        <TrackUpcomingSchedule className='px-2' style={{margin: "0px auto"}}/>
                     </FullWidthRow>
                     
                     {/* Pricing Container */}
                     <FullWidthRow className="nav-pricing bg-gray-200">
-                        <TrackPricing  className='px-4'/>
+                        <TrackPricing  className='px-2' style={{margin: "0px auto"}}/>
                     </FullWidthRow>
                 </div>
             </>
