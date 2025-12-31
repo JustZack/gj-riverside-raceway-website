@@ -4,5 +4,6 @@ import Card from '@/components/ui/card'
 import Banner from '@/components/ui/banner'
 import Button from '@/components/ui/button'
 import InfoWithSubtext from '@/components/ui/info.with.subtext'
+import Chip from '@/components/ui/chip'
 
-export { Row, Column, Card, Banner, Button, InfoWithSubtext }
+export { Row, Column, Card, Banner, Button, InfoWithSubtext, Chip }

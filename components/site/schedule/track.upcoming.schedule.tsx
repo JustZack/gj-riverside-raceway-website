@@ -4,7 +4,7 @@ import { format } from 'date-fns'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 import TrackScheduleUtils, { ScheduleEvent } from '@/lib/utils/track.schedule.utils'
 import { about } from '@/content/content';
-import { InfoWithSubtext, Column, Row, Card } from '@/components/ui/ui'
+import { InfoWithSubtext, Column, Row, Chip } from '@/components/ui/ui'
 
 export default function TrackUpcomingSchedule({className, style, width = "350px"}: {className?: string, style?: React.CSSProperties, width?: string}) {
     const [events, setEvents] = useState<ScheduleEvent[]>([])
@@ -21,7 +21,7 @@ export default function TrackUpcomingSchedule({className, style, width = "350px"
                 <span className="flex items-center justify-center w-6 h-6 mt-0.5"><i className={icon}/></span>
 
                 <InfoWithSubtext className="flex flex-col min-w-0" style={{width: 'auto'}} subText={`${dayOfTheWeek} ${startDate} Opens ${startTime}`}>
-                    <span className={`${statusClass} flex items-center justify-center w-min mr-2`}>{status}</span>
+                    <Chip className={statusClass} width="85px">{status}</Chip>
                     <span className="font-semibold truncate">{title}</span>
                 </InfoWithSubtext>
             </Row>

@@ -3,12 +3,14 @@ export const events: Record<string, Events> = {
         id: "practice",
         name: "Practice",
         icon: "fa-solid fa-wrench",
+        chipClass: "bg-red-100 text-red-800",
         entry: 5,
     },
     weeknights: {
         id: "weeknights",
         name: "Weeknights",
         icon: "fa-solid fa-moon",
+        chipClass: "bg-blue-900/70 text-white",
         entry: 20,
         additional: 10,
         qualifiers: 2,
@@ -22,6 +24,7 @@ export const events: Record<string, Events> = {
         id: "weekends",
         name: "Weekends",
         icon: "fa-solid fa-sun",
+        chipClass: "bg-yellow-200/70 text-yellow-900",
         entry: 25,
         additional: 10,
         qualifiers: 3,
@@ -37,6 +40,7 @@ export interface Events {
     name: string;
     entry: number;
     icon: string;
+    chipClass: string;
     additional?: number;
     qualifiers?: number;
     mains?: number;

@@ -1,15 +1,15 @@
 'use client'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 import { events, Events } from '@/content/content';
-import { InfoWithSubtext, Column, Row } from '@/components/ui/ui'
+import { InfoWithSubtext, Column, Row, Chip } from '@/components/ui/ui'
 
 export default function RaceAgenda({className, style, width = "350px"}: {className?: string, style?: React.CSSProperties, width?: string}) {
-    function renderAgendaRow(icon: string, type: string, name: string, mainText: string, subtext: string = "") {
+    function renderAgendaRow(icon: string, chipClass: string, type: string, name: string, mainText: string, subtext: string = "") {
         return (
             <Row className="flex items-center justify-between gap-2 w-full" gap={1}>
                 <span className="flex items-center justify-center w-6 h-6"><i className={icon}/></span>
                 <InfoWithSubtext className="flex flex-col min-w-0" style={{width: 'auto'}} subText={subtext}>
-                    <span className={`flex items-center justify-center w-min mr-2`}>{name}:</span>
+                    <Chip className={chipClass} width="85px">{name}</Chip>
                     <span className="font-semibold truncate">{mainText}</span>
                 </InfoWithSubtext>
             </Row>
@@ -18,7 +18,7 @@ export default function RaceAgenda({className, style, width = "350px"}: {classNa
     function renderEventAgendaRow(eventEntry: Events) {
         let mainText = `Racing Starts@${eventEntry.racingStart}`
         let subText = `Open@${eventEntry.doorsOpen}, Registration Closes@${eventEntry.registrationClose}`
-        return renderAgendaRow(eventEntry.icon, eventEntry.id, eventEntry.name, mainText, subText)
+        return renderAgendaRow(eventEntry.icon, eventEntry.chipClass, eventEntry.id, eventEntry.name, mainText, subText)
     }
 
     return (

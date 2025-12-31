@@ -1,15 +1,15 @@
 'use client'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 import { products, events, Events } from '@/content/content';
-import { InfoWithSubtext, Column, Row } from '@/components/ui/ui'
+import { InfoWithSubtext, Column, Row, Chip } from '@/components/ui/ui'
 
 export default function RacePricing({className, style, width = "350px"}: {className?: string, style?: React.CSSProperties, width?: string}) {
-    function renderPricingRow(icon: string, type: string, name: string, mainText: string, subtext: string = "") {
+    function renderPricingRow(icon: string, chipClass: string, name: string, mainText: string, subtext: string = "") {
         return (
             <Row className="flex items-center justify-between gap-2 w-full" gap={1}>
                 <span className="flex items-center justify-center w-6 h-6"><i className={icon}/></span>
                 <InfoWithSubtext className="flex flex-col min-w-0" style={{width: 'auto'}} subText={subtext}>
-                    <span className={`flex items-center justify-center w-min mr-2`}>{name}:</span>
+                    <Chip className={chipClass} width="95px">{name}</Chip>
                     <span className="font-semibold truncate">{mainText}</span>
                 </InfoWithSubtext>
             </Row>
@@ -18,9 +18,10 @@ export default function RacePricing({className, style, width = "350px"}: {classN
     function renderEventPricingRow(eventEntry: Events) {
         let mainText = `$${eventEntry.entry} for first class`
         let subText = `$${eventEntry.additional} each additional class`
-        return renderPricingRow(eventEntry.icon, eventEntry.id, eventEntry.name, mainText, subText)
+        return renderPricingRow(eventEntry.icon, eventEntry.chipClass, eventEntry.name, mainText, subText)
     }
 
+    let transponder = products.transponder;
     return (
         <Column className={className} style={{ maxWidth: width, width, ...style}}>
             <div key="events-header">
@@ -32,7 +33,7 @@ export default function RacePricing({className, style, width = "350px"}: {classN
             </div>
             {renderEventPricingRow(events.weeknights)}
             {renderEventPricingRow(events.weekends)}
-            {renderPricingRow("fa-solid fa-hourglass", "transponder", "Transponders", `available for $${products.transponder.price} each.`)}
+            {renderPricingRow("fa-solid fa-hourglass", "bg-red-500/70 text-white", transponder.name, `available for $${transponder.price} each.`)}
         </Column>
     )
 }
