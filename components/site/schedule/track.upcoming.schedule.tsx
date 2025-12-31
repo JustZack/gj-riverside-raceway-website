@@ -11,31 +11,74 @@ import Column from '@/components/ui/column'
 
 export default function TrackUpcomingSchedule({className, style, width = "500px"}: {className?: string, style?: React.CSSProperties, width?: string}) {
     const [events, setEvents] = useState<ScheduleEvent[]>([])
-    useEffect(TrackScheduleUtils.getUpcomingScheduleEvents.bind(null, setEvents, true, 4), [])
+    const [isLoadingEvents, setIsLoadingEvents] = useState<boolean>(true);
+    useEffect(TrackScheduleUtils.getUpcomingScheduleEvents.bind(null, (events: ScheduleEvent[]) => {
+        setEvents(events)
+        setIsLoadingEvents(false);
+    }, true, 4), [])
 
-    function eventRow(icon: string, dayOfTheWeek: string, startDate: string, startTime: string, status: 'cancelled' | 'finished' | 'upcoming' | 'running') {
+    function eventRow(title: string, icon: string, dayOfTheWeek: string, startDate: string, startTime: string, status: 'cancelled' | 'finished' | 'upcoming' | 'running') {
         let statusClass = TrackScheduleUtils.getEventStatusClassByName(status);
         return (
-            <Row className="flex items-center justify-between gap-2 w-full" gap={1}>
-                <span className="flex items-center justify-center w-6 h-6"><i className={`${icon}`}/></span>
-                <span className={`${statusClass} flex items-center justify-center w-min`}>{status}</span>
-                <span className="flex items-center justify-start w-min min-w-[40px]">{dayOfTheWeek}</span>
-                <span className="flex items-center justify-start w-min whitespace-nowrap">{startDate} {startTime}</span>
+            <Row className="flex items-start gap-2 w-full" gap={1}>
+                <span className="flex items-center justify-center w-6 h-6 mt-0.5"><i className={icon + ' fa-xl'}/></span>
+                <div className="flex flex-col min-w-0">
+                    <div className="flex items-center flex-wrap min-w-0">
+                        <span className={`${statusClass} flex items-center justify-center w-min mr-2`}>{status}</span>
+                        <span className="font-semibold truncate">{title}</span>
+                    </div>
+                    <div className="flex items-center text-sm text-gray-500 mt-0.5">
+                        <span>{dayOfTheWeek} {startDate} {startTime}</span>
+                    </div>
+                </div>
             </Row>
         )
     }
 
-    const dayMap: Record<string, string> = { Mon: 'Mon', Tue: 'Tues', Wed: 'Wed', Thu: 'Thurs', Fri: 'Fri', Sat: 'Sat', Sun: 'Sun', };
-
-    function formatEventRow(type: 'indoor' | 'outdoor', start: Date, end: Date, name: string, status: 'cancelled' | 'finished' | 'upcoming' | 'running') {
-        let dayOfTheWeek = dayMap[format(start, 'EEE')]
-        let startDate = format(start, 'MMM dd, yyyy')
+    function formatEventRow(title: string, type: 'indoor' | 'outdoor', start: Date, end: Date, status: 'cancelled' | 'finished' | 'upcoming' | 'running') {
+        let dayOfTheWeek = format(start, 'EEEE')
+        let startDate = format(start, 'MMMM dd, yyyy')
         let startTime = format(start, 'h:mma').toLocaleLowerCase()
-        return eventRow("fa-regular fa-calendar", dayOfTheWeek, startDate, startTime, status)
+        return eventRow(title, "fa-regular fa-calendar", dayOfTheWeek, startDate, startTime, status)
     }
 
     function formatEvent(event: ScheduleEvent) {
-        return formatEventRow('indoor', event.start, event.end, event.title, event.status)
+        return formatEventRow(event.title, 'indoor', event.start, event.end, event.status)
+    }
+
+    function renderPracticeRow() {
+        return (
+            <div key="events-practice">
+                <Row className="flex items-center justify-between gap-2 w-full" gap={1}>
+                    <span className="flex items-center justify-center w-6 h-6"><i className="fa-solid fa-phone"/></span>
+                    Call <a href={about.phoneUrl} className="text-blue-600 hover:underline">{about.phone}</a> for practice.
+                </Row>
+            </div>
+        )
+    }
+
+    function renderEventRows() {
+        return (
+            <>
+                {isLoadingEvents && (
+                    <Row className="flex items-center justify-between gap-2 w-full" gap={1}>
+                        <span className="flex items-center justify-center w-6 h-6"><i className="fa-solid fa-arrows-rotate fa-spin"/></span>
+                        <span>Loading events...</span>
+                    </Row>
+                )}
+                {!isLoadingEvents && events.length === 0 && (
+                    <Row className="flex items-center justify-between gap-2 w-full" gap={1}>
+                        <span className="flex items-center justify-center w-6 h-6"><i className="fa-regular fa-calendar"/></span>
+                        <span>No upcoming events.</span>
+                    </Row>
+                )}
+                {events.map((event) => (
+                    <div key={event.id}>
+                        {formatEvent(event)}
+                    </div>
+                ))}
+            </>
+        )
     }
 
     return (
@@ -45,23 +88,8 @@ export default function TrackUpcomingSchedule({className, style, width = "500px"
                     <h1 className="text-2xl font-bold text-center underline"><i>Upcoming Events</i></h1>
                 </Row>
             </div>
-            <div key="events-practice">
-                <Row className="flex items-center justify-between gap-2 w-full" gap={1}>
-                    <span className="flex items-center justify-center w-6 h-6"><i className="fa-solid fa-phone"/></span>
-                    Call <a href={about.phoneUrl} className="text-blue-600 hover:underline">{about.phone}</a> for practice.
-                </Row>
-            </div>
-            {events.length === 0 && (
-                <Row className="flex items-center justify-between gap-2 w-full" gap={1}>
-                    <span className="flex items-center justify-center w-6 h-6"><i className="fa-regular fa-calendar"/></span>
-                    <span>No upcoming events.</span>
-                </Row>
-            )}
-            {events.map((event) => (
-                <div key={event.id}>
-                    {formatEvent(event)}
-                </div>
-            ))}
+            {renderPracticeRow()}
+            {renderEventRows()}
         </Column>
     )
 }
