@@ -2,8 +2,8 @@ export const events: Record<string, Event> = {
     practice: {
         id: "practice",
         name: "Practice",
-        icon: "fa-solid fa-wrench",
-        chipClass: "bg-black text-white",
+        icon: "fa-solid fa-road",
+        chipClass: "bg-black/70 text-white",
         entry: 5,
     },
     weeknights: {
