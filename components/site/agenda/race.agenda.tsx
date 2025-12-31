@@ -4,7 +4,7 @@ import Row from '@/components/ui/row'
 import { events, Events } from '@/content/content';
 import Column from '@/components/ui/column'
 
-export default function RaceAgenda({className, style, width = "315px"}: {className?: string, style?: React.CSSProperties, width?: string}) {
+export default function RaceAgenda({className, style, width = "350px"}: {className?: string, style?: React.CSSProperties, width?: string}) {
     function renderAgendaRow(icon: string, type: string, name: string, mainText: string, subtext: string = "") {
         return (
             <Row className="flex items-center justify-between gap-2 w-full" gap={1}>

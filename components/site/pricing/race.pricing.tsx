@@ -4,7 +4,7 @@ import Row from '@/components/ui/row'
 import { products, events, Events } from '@/content/content';
 import Column from '@/components/ui/column'
 
-export default function RacePricing({className, style, width = "315spx"}: {className?: string, style?: React.CSSProperties, width?: string}) {
+export default function RacePricing({className, style, width = "350px"}: {className?: string, style?: React.CSSProperties, width?: string}) {
     function renderPricingRow(icon: string, type: string, name: string, mainText: string, subtext: string = "") {
         return (
             <Row className="flex items-center justify-between gap-2 w-full" gap={1}>

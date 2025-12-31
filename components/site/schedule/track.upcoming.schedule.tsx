@@ -9,7 +9,7 @@ import Card from '@/components/ui/card'
 import { about } from '@/content/content';
 import Column from '@/components/ui/column'
 
-export default function TrackUpcomingSchedule({className, style, width = "315px"}: {className?: string, style?: React.CSSProperties, width?: string}) {
+export default function TrackUpcomingSchedule({className, style, width = "350px"}: {className?: string, style?: React.CSSProperties, width?: string}) {
     const [events, setEvents] = useState<ScheduleEvent[]>([])
     const [isLoadingEvents, setIsLoadingEvents] = useState<boolean>(true);
     useEffect(TrackScheduleUtils.getUpcomingScheduleEvents.bind(null, (events: ScheduleEvent[]) => {
