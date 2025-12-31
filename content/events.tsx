@@ -8,7 +8,7 @@ export const events: Record<string, Event> = {
     },
     tuesdays: {
         id: "tuesdays",
-        name: "Tuesday",
+        name: "Tuesdays",
         icon: "fa-solid fa-moon",
         chipClass: "bg-blue-900/70 text-white",
         entry: 20,
@@ -22,7 +22,7 @@ export const events: Record<string, Event> = {
     },
     saturdays: {
         id: "saturdays",
-        name: "Saturday",
+        name: "Saturdays",
         icon: "fa-solid fa-sun",
         chipClass: "bg-yellow-200/70 text-black",
         entry: 25,
