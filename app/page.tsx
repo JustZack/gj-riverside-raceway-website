@@ -35,17 +35,17 @@ export default function Home() {
                 <div className='lblock lg:hidden'>
                     {/* Upcoming Events Container */}
                     <FullWidthRow className="schedule bg-white">
-                        <TrackUpcomingSchedule className='px-1' style={{margin: "0px auto"}}/>
+                        <TrackUpcomingSchedule style={{margin: "0px auto"}}/>
                     </FullWidthRow>
 
                     {/* Race Agenda Container */}
                     <FullWidthRow className="nav-agenda bg-gray-200">
-                        <RaceAgenda className='px-1' style={{margin: "0px auto"}}/>
+                        <RaceAgenda style={{margin: "0px auto"}}/>
                     </FullWidthRow>
 
                     {/* Pricing Container */}
                     <FullWidthRow className="nav-pricing bg-white">
-                        <RacePricing  className='px-1' style={{margin: "0px auto"}}/>
+                        <RacePricing style={{margin: "0px auto"}}/>
                     </FullWidthRow>
                 </div>
             </>
