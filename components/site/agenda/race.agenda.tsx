@@ -1,7 +1,6 @@
 'use client'
-import 'react-big-calendar/lib/css/react-big-calendar.css'
-import { events, Event } from '@/content/content';
-import { InfoWithSubtext, Column, Row, Chip } from '@/components/ui/ui'
+import { events } from '@/content/content';
+import { Column } from '@/components/ui/ui'
 import BriefContentHeader from '@/components/site/brief/brief.content.header';
 import RaceEventAgenda from '@/components/site/agenda/race.event.agenda';
 

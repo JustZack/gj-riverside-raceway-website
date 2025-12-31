@@ -1,6 +1,6 @@
 'use client'
 import { products, events } from '@/content/content';
-import { Column, Row } from '@/components/ui/ui'
+import { Column } from '@/components/ui/ui'
 import RaceEventPricing from '@/components/site/pricing/race.event.pricing';
 import RaceProductPricing from '@/components/site/pricing/race.product.pricing';
 import RacePracticePricing from '@/components/site/pricing/race.practice.pricing';
