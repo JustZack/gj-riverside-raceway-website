@@ -2,13 +2,15 @@ export const events: Record<string, Event> = {
     practice: {
         id: "practice",
         name: "Practice",
+        pluralizedName: "Practicing",
         icon: "fa-solid fa-road",
         chipClass: "bg-black/70 text-white",
         entry: 5,
     },
-    tuesdays: {
-        id: "tuesdays",
-        name: "Tuesdays",
+    tuesday: {
+        id: "tuesday",
+        name: "Tuesday",
+        pluralizedName: "Tuesdays",
         icon: "fa-solid fa-moon",
         chipClass: "bg-blue-900/70 text-white",
         entry: 20,
@@ -20,9 +22,10 @@ export const events: Record<string, Event> = {
         racingStart: "6:30pm",
         
     },
-    saturdays: {
-        id: "saturdays",
-        name: "Saturdays",
+    saturday: {
+        id: "saturday",
+        name: "Saturday",
+        pluralizedName: "Saturdays",
         icon: "fa-solid fa-sun",
         chipClass: "bg-yellow-200/70 text-black",
         entry: 25,
@@ -38,6 +41,7 @@ export const events: Record<string, Event> = {
 export interface Event {
     id: string;
     name: string;
+    pluralizedName: string; 
     entry: number;
     icon: string;
     chipClass: string;

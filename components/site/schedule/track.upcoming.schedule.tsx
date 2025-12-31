@@ -5,6 +5,7 @@ import 'react-big-calendar/lib/css/react-big-calendar.css'
 import TrackScheduleUtils, { ScheduleEvent } from '@/lib/utils/track.schedule.utils'
 import { about } from '@/content/content';
 import { InfoWithSubtext, Column, Row, Chip } from '@/components/ui/ui'
+import BriefContentHeader from '@/components/site/brief/brief.content.header';
 
 export default function TrackUpcomingSchedule({className, style, width = "350px"}: {className?: string, style?: React.CSSProperties, width?: string}) {
     const [events, setEvents] = useState<ScheduleEvent[]>([])
@@ -76,11 +77,7 @@ export default function TrackUpcomingSchedule({className, style, width = "350px"
 
     return (
         <Column className={className} style={{maxWidth: width, width, ...style}}>
-            <Row className="flex items-center justify-between gap-2 w-full" gap={1}>
-                <h1 className="text-2xl font-bold text-center underline">
-                    <i className="fa-solid fa-flag-checkered mr-4"></i>Races
-                </h1>
-            </Row>
+            <BriefContentHeader icon="fa-solid fa-flag-checkered">Races</BriefContentHeader>
             {renderEventRows()}
             {renderPracticeRow()}
         </Column>

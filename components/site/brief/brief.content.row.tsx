@@ -1,7 +1,7 @@
 'use client'
 import { InfoWithSubtext, Row, Chip } from '@/components/ui/ui'
 
-type RacePricingRowProps = {
+type BriefContentRowProps = {
     icon: string,
     chipClass: string,
     name: string,
@@ -9,8 +9,8 @@ type RacePricingRowProps = {
     subtext?: string
 }
 
-export default function RacePricingRow({icon, chipClass, name, mainText, subtext = ""}: RacePricingRowProps) {
-    function renderPricingRow(icon: string, chipClass: string, name: string, mainText: string, subtext: string = "") {
+export default function BriefContentRow({icon, chipClass, name, mainText, subtext = ""}: BriefContentRowProps) {
+    function renderBriefContentRow(icon: string, chipClass: string, name: string, mainText: string, subtext: string = "") {
         return (
             <Row className="flex items-center justify-between gap-2 w-full" gap={1}>
                 <span className="flex items-center justify-center w-6 h-6"><i className={icon}/></span>
@@ -22,5 +22,5 @@ export default function RacePricingRow({icon, chipClass, name, mainText, subtext
         )
     }
 
-    return (renderPricingRow(icon, chipClass, name, mainText, subtext))
+    return (renderBriefContentRow(icon, chipClass, name, mainText, subtext))
 }

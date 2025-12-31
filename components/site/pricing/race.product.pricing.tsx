@@ -1,12 +1,13 @@
 'use client'
 import { Product } from '@/content/content';
-import RacePricingRow from '@/components/site/pricing/race.pricing.row';
+import BriefContentRow from '@/components/site/brief/brief.content.row';
 
 export default function RaceProductPricing({product}: {product: Product}) {
         return (
-        <RacePricingRow 
+        <BriefContentRow 
             icon={product.icon} chipClass={product.chipClass} 
             name={product.name} 
-            mainText={`available for $${product.price}`} subtext={product.brief} />
+            mainText={`available for $${product.price}`} 
+            subtext={product.brief} />
     )
 }

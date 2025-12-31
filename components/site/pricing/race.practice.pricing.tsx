@@ -1,11 +1,12 @@
 'use client'
 import { Event } from '@/content/content';
-import RacePricingRow from '@/components/site/pricing/race.pricing.row';
+import BriefContentRow from '@/components/site/brief/brief.content.row';
 
 export default function RacePracticePricing({practice}: {practice: Event}) {
     return (
-        <RacePricingRow 
+        <BriefContentRow 
             icon={practice.icon} chipClass={practice.chipClass} 
-            name={practice.name} mainText={`$${practice.entry} for entry`} />
+            name={practice.name} 
+            mainText={`$${practice.entry} for entry`} />
         )
 }
