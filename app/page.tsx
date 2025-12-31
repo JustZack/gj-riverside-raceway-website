@@ -25,9 +25,9 @@ export default function Home() {
                 {/* Combined schedule & pricing for large screens only */}
                 <div className='hidden lg:block'>
                     <FullWidthRow className="schedule bg-white">
-                        <TrackUpcomingSchedule className='px-1' style={{margin: "0px 0px 0px auto"}}/>
+                        <TrackUpcomingSchedule className='px-1' style={{margin: "0px 0px auto auto"}}/>
                         <RaceAgenda className='px-1' style={{margin: "0px 0px auto 0px"}}/>
-                        <RacePricing  className='px-1' style={{margin: "0px auto 0px 0px"}}/>
+                        <RacePricing  className='px-1' style={{margin: "0px auto auto 0px"}}/>
                     </FullWidthRow>
                 </div>
 
