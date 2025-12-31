@@ -1,11 +1,11 @@
 'use client'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 import Row from '@/components/ui/row'
-import { products, events, Events } from '@/content/content';
+import { events, Events } from '@/content/content';
 import Column from '@/components/ui/column'
 
-export default function TrackPricing({className, style, width = "350px"}: {className?: string, style?: React.CSSProperties, width?: string}) {
-    function renderPricingRow(icon: string, type: string, name: string, mainText: string, subtext: string = "") {
+export default function RaceAgenda({className, style, width = "350px"}: {className?: string, style?: React.CSSProperties, width?: string}) {
+    function renderAgendaRow(icon: string, type: string, name: string, mainText: string, subtext: string = "") {
         return (
             <Row className="flex items-center justify-between gap-2 w-full" gap={1}>
                 <span className="flex items-center justify-center w-6 h-6"><i className={icon}/></span>
@@ -24,10 +24,10 @@ export default function TrackPricing({className, style, width = "350px"}: {class
             </Row>
         )
     }
-    function renderEventPricingRow(eventEntry: Events) {
-        let mainText = `$${eventEntry.entry} for first class`
-        let subText = `$${eventEntry.additional} each additional class`
-        return renderPricingRow(eventEntry.icon, eventEntry.id, eventEntry.name, mainText, subText)
+    function renderEventAgendaRow(eventEntry: Events) {
+        let mainText = `Racing Starts@${eventEntry.racingStart}`
+        let subText = `Open@${eventEntry.doorsOpen}, Registration closes@${eventEntry.registrationClose}`
+        return renderAgendaRow(eventEntry.icon, eventEntry.id, eventEntry.name, mainText, subText)
     }
 
     return (
@@ -35,13 +35,12 @@ export default function TrackPricing({className, style, width = "350px"}: {class
             <div key="events-header">
                 <Row className="flex items-center justify-between gap-2 w-full" gap={1}>
                     <h1 className="text-2xl font-bold text-center underline">
-                        <i className="fa-solid fa-dollar-sign mr-4"></i>Pricing
+                        <i className="fa-solid fa-clock mr-4"></i>Agenda
                     </h1>
                 </Row>
             </div>
-            {renderEventPricingRow(events.weeknights)}
-            {renderEventPricingRow(events.weekends)}
-            {renderPricingRow("fa-solid fa-hourglass", "transponder", "Transponders", `available for $${products.transponder.price} each.`)}
+            {renderEventAgendaRow(events.weeknights)}
+            {renderEventAgendaRow(events.weekends)}
         </Column>
     )
 }

@@ -9,7 +9,7 @@ import Card from '@/components/ui/card'
 import { about } from '@/content/content';
 import Column from '@/components/ui/column'
 
-export default function TrackUpcomingSchedule({className, style, width = "500px"}: {className?: string, style?: React.CSSProperties, width?: string}) {
+export default function TrackUpcomingSchedule({className, style, width = "350px"}: {className?: string, style?: React.CSSProperties, width?: string}) {
     const [events, setEvents] = useState<ScheduleEvent[]>([])
     const [isLoadingEvents, setIsLoadingEvents] = useState<boolean>(true);
     useEffect(TrackScheduleUtils.getUpcomingScheduleEvents.bind(null, (events: ScheduleEvent[]) => {
@@ -21,14 +21,14 @@ export default function TrackUpcomingSchedule({className, style, width = "500px"
         let statusClass = TrackScheduleUtils.getEventStatusClassByName(status);
         return (
             <Row className="flex items-start gap-2 w-full" gap={1}>
-                <span className="flex items-center justify-center w-6 h-6 mt-0.5"><i className={icon + ' fa-xl'}/></span>
+                <span className="flex items-center justify-center w-6 h-6 mt-0.5"><i className={icon}/></span>
                 <div className="flex flex-col min-w-0">
                     <div className="flex items-center flex-wrap min-w-0">
                         <span className={`${statusClass} flex items-center justify-center w-min mr-2`}>{status}</span>
                         <span className="font-semibold truncate">{title}</span>
                     </div>
                     <div className="flex items-center text-sm text-gray-500 mt-0.5">
-                        <span>{dayOfTheWeek} {startDate} {startTime}</span>
+                        <span>{dayOfTheWeek} {startDate} Opens {startTime}</span>
                     </div>
                 </div>
             </Row>
@@ -36,8 +36,8 @@ export default function TrackUpcomingSchedule({className, style, width = "500px"
     }
 
     function formatEventRow(title: string, type: 'indoor' | 'outdoor', start: Date, end: Date, status: 'cancelled' | 'finished' | 'upcoming' | 'running') {
-        let dayOfTheWeek = format(start, 'EEEE')
-        let startDate = format(start, 'MMMM dd, yyyy')
+        let dayOfTheWeek = format(start, 'EEE')
+        let startDate = format(start, 'MMM dd, yyyy')
         let startTime = format(start, 'h:mma').toLocaleLowerCase()
         return eventRow(title, "fa-regular fa-calendar", dayOfTheWeek, startDate, startTime, status)
     }
@@ -82,14 +82,16 @@ export default function TrackUpcomingSchedule({className, style, width = "500px"
     }
 
     return (
-        <Column className={className} style={{maxWidth: width, ...style}}>
+        <Column className={className} style={{maxWidth: width, width, ...style}}>
             <div key="events-header">
                 <Row className="flex items-center justify-between gap-2 w-full" gap={1}>
-                    <h1 className="text-2xl font-bold text-center underline"><i>Upcoming Events</i></h1>
+                    <h1 className="text-2xl font-bold text-center underline">
+                        <i className="fa-solid fa-flag-checkered mr-4"></i>Races
+                    </h1>
                 </Row>
             </div>
-            {renderPracticeRow()}
             {renderEventRows()}
+            {renderPracticeRow()}
         </Column>
     )
 }

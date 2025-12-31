@@ -7,7 +7,7 @@ import { facebook } from '@/content/facebook'
 import { youtube } from '@/content/youtube'
 import { livetime } from '@/content/livetime'
 import { about } from '@/content/about';
-import { eventPricing, EventPricing } from '@/content/event.pricing';
+import { events, Events } from '@/content/events';
 import { products } from '@/content/products';
 
 export { 
@@ -17,8 +17,8 @@ export {
     rules, 
     facebook, youtube, livetime, 
     about, 
-    eventPricing,
+    events,
     products
 }
 
-export type { EventPricing }
+export type { Events }

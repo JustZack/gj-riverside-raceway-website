@@ -11,6 +11,7 @@ import { navigation } from '@/content/content'
 import RacingRules from '@/components/site/racing.rules'
 import TrackUpcomingSchedule from '@/components/site/schedule/track.upcoming.schedule'
 import TrackPricing from '@/components/site/pricing/track.pricing'
+import RaceAgenda from '@/components/site/agenda/race.agenda'
 
 export default function Home() {
 
@@ -52,8 +53,9 @@ export default function Home() {
                 {/* Combined schedule & pricing for large screens only */}
                 <div className='hidden lg:block'>
                     <FullWidthRow className="schedule bg-white">
-                        <TrackUpcomingSchedule className='px-4' style={{margin: "0px 0px 0px auto"}}/>
-                        <TrackPricing  className='px-4' style={{margin: "0px auto 0px 0px"}}/>
+                        <TrackUpcomingSchedule className='px-1' style={{margin: "0px 0px 0px auto"}}/>
+                        <RaceAgenda className='px-1' style={{margin: "0px 0px auto 0px"}}/>
+                        <TrackPricing  className='px-1' style={{margin: "0px auto 0px 0px"}}/>
                     </FullWidthRow>
                 </div>
 
@@ -63,9 +65,14 @@ export default function Home() {
                     <FullWidthRow className="schedule bg-white">
                         <TrackUpcomingSchedule className='px-2' style={{margin: "0px auto"}}/>
                     </FullWidthRow>
-                    
+
+                    {/* Race Agenda Container */}
+                    <FullWidthRow className="nav-agenda bg-gray-200">
+                        <RaceAgenda className='px-2' style={{margin: "0px auto"}}/>
+                    </FullWidthRow>
+
                     {/* Pricing Container */}
-                    <FullWidthRow className="nav-pricing bg-gray-200">
+                    <FullWidthRow className="nav-pricing bg-white">
                         <TrackPricing  className='px-2' style={{margin: "0px auto"}}/>
                     </FullWidthRow>
                 </div>
