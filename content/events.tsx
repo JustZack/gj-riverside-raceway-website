@@ -1,9 +1,9 @@
-export const events: Record<string, Events> = {
+export const events: Record<string, Event> = {
     practice: {
         id: "practice",
         name: "Practice",
         icon: "fa-solid fa-wrench",
-        chipClass: "bg-red-100 text-red-800",
+        chipClass: "bg-black text-white",
         entry: 5,
     },
     weeknights: {
@@ -35,7 +35,7 @@ export const events: Record<string, Events> = {
     }
 }
 
-export interface Events {
+export interface Event {
     id: string;
     name: string;
     entry: number;

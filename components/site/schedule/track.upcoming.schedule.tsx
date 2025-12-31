@@ -76,13 +76,11 @@ export default function TrackUpcomingSchedule({className, style, width = "350px"
 
     return (
         <Column className={className} style={{maxWidth: width, width, ...style}}>
-            <div key="events-header">
-                <Row className="flex items-center justify-between gap-2 w-full" gap={1}>
-                    <h1 className="text-2xl font-bold text-center underline">
-                        <i className="fa-solid fa-flag-checkered mr-4"></i>Races
-                    </h1>
-                </Row>
-            </div>
+            <Row className="flex items-center justify-between gap-2 w-full" gap={1}>
+                <h1 className="text-2xl font-bold text-center underline">
+                    <i className="fa-solid fa-flag-checkered mr-4"></i>Races
+                </h1>
+            </Row>
             {renderEventRows()}
             {renderPracticeRow()}
         </Column>

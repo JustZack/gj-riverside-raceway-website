@@ -1,39 +1,22 @@
 'use client'
-import 'react-big-calendar/lib/css/react-big-calendar.css'
-import { products, events, Events } from '@/content/content';
-import { InfoWithSubtext, Column, Row, Chip } from '@/components/ui/ui'
+import { products, events } from '@/content/content';
+import { Column, Row } from '@/components/ui/ui'
+import RaceEventPricing from '@/components/site/pricing/race.event.pricing';
+import RaceProductPricing from './race.product.pricing';
+import RacePracticePricing from './race.practice.pricing';
 
 export default function RacePricing({className, style, width = "350px"}: {className?: string, style?: React.CSSProperties, width?: string}) {
-    function renderPricingRow(icon: string, chipClass: string, name: string, mainText: string, subtext: string = "") {
-        return (
-            <Row className="flex items-center justify-between gap-2 w-full" gap={1}>
-                <span className="flex items-center justify-center w-6 h-6"><i className={icon}/></span>
-                <InfoWithSubtext className="flex flex-col min-w-0" style={{width: 'auto'}} subText={subtext}>
-                    <Chip className={chipClass} width="95px">{name}</Chip>
-                    <span className="font-semibold truncate">{mainText}</span>
-                </InfoWithSubtext>
-            </Row>
-        )
-    }
-    function renderEventPricingRow(eventEntry: Events) {
-        let mainText = `$${eventEntry.entry} for first class`
-        let subText = `$${eventEntry.additional} each additional class`
-        return renderPricingRow(eventEntry.icon, eventEntry.chipClass, eventEntry.name, mainText, subText)
-    }
-
-    let transponder = products.transponder;
     return (
         <Column className={className} style={{ maxWidth: width, width, ...style}}>
-            <div key="events-header">
-                <Row className="flex items-center justify-between gap-2 w-full" gap={1}>
-                    <h1 className="text-2xl font-bold text-center underline">
-                        <i className="fa-solid fa-dollar-sign mr-4"></i>Pricing
-                    </h1>
-                </Row>
-            </div>
-            {renderEventPricingRow(events.weeknights)}
-            {renderEventPricingRow(events.weekends)}
-            {renderPricingRow("fa-solid fa-hourglass", "bg-red-500/70 text-white", transponder.name, `available for $${transponder.price} each.`)}
+            <Row className="flex items-center justify-between gap-2 w-full" gap={1}>
+                <h1 className="text-2xl font-bold text-center underline">
+                    <i className="fa-solid fa-dollar-sign mr-4"></i>Pricing
+                </h1>
+            </Row>
+            <RaceEventPricing event={events.weeknights} />
+            <RaceEventPricing event={events.weekends} />
+            <RacePracticePricing practice={events.practice} />
+            <RaceProductPricing product={products.transponder} />
         </Column>
     )
 }

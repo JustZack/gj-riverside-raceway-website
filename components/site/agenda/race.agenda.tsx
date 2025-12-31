@@ -1,6 +1,6 @@
 'use client'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
-import { events, Events } from '@/content/content';
+import { events, Event } from '@/content/content';
 import { InfoWithSubtext, Column, Row, Chip } from '@/components/ui/ui'
 
 export default function RaceAgenda({className, style, width = "350px"}: {className?: string, style?: React.CSSProperties, width?: string}) {
@@ -15,7 +15,7 @@ export default function RaceAgenda({className, style, width = "350px"}: {classNa
             </Row>
         )
     }
-    function renderEventAgendaRow(eventEntry: Events) {
+    function renderEventAgendaRow(eventEntry: Event) {
         let mainText = `Racing Starts@${eventEntry.racingStart}`
         let subText = `Open@${eventEntry.doorsOpen}, Registration Closes@${eventEntry.registrationClose}`
         return renderAgendaRow(eventEntry.icon, eventEntry.chipClass, eventEntry.id, eventEntry.name, mainText, subText)
@@ -23,13 +23,11 @@ export default function RaceAgenda({className, style, width = "350px"}: {classNa
 
     return (
         <Column className={className} style={{ maxWidth: width, width, ...style}}>
-            <div key="events-header">
-                <Row className="flex items-center justify-between gap-2 w-full" gap={1}>
-                    <h1 className="text-2xl font-bold text-center underline">
-                        <i className="fa-solid fa-clock mr-4"></i>Agenda
-                    </h1>
-                </Row>
-            </div>
+            <Row className="flex items-center justify-between gap-2 w-full" gap={1}>
+                <h1 className="text-2xl font-bold text-center underline">
+                    <i className="fa-solid fa-clock mr-4"></i>Agenda
+                </h1>
+            </Row>
             {renderEventAgendaRow(events.weeknights)}
             {renderEventAgendaRow(events.weekends)}
         </Column>

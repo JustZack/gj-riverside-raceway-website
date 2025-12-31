@@ -7,8 +7,8 @@ import { facebook } from '@/content/facebook'
 import { youtube } from '@/content/youtube'
 import { livetime } from '@/content/livetime'
 import { about } from '@/content/about';
-import { events, Events } from '@/content/events';
-import { products } from '@/content/products';
+import { events, Event } from '@/content/events';
+import { products, Product } from '@/content/products';
 
 export { 
     header, footer, 
@@ -21,4 +21,4 @@ export {
     products
 }
 
-export type { Events }
+export type { Event, Product }
