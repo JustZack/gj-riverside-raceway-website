@@ -11,30 +11,6 @@ import RaceAgenda from '@/components/site/agenda/race.agenda'
 
 export default function Home() {
 
-    function homePageV0() {
-        return (
-            <>
-                <SiteHomeBanner />
-                <Row collapsible fullWidth shadowTop shadowBottom justify="center" align="center" className="py-8" style={{ backgroundColor: "#ffffff" }}>
-                    <Column justify="center" align="center">
-                        <img src="images/fliers/schedule.updated.11.16.2025.jpg" alt="Schedule Flyer" style={{height: "600px"}}/>
-                    </Column>
-                    <Column justify="center" align="center" className="text-center w-full max-w-full lg:max-w-3xl">
-                        <div className="text-center w-full max-w-full">
-                            <TrackScheduleCalendar />
-                        </div>
-                    </Column>
-                </Row>
-                <main className="flex-grow flex flex-col items-center justify-center p-4 md:p-5">
-                    <div className="text-center w-full max-w-full lg:max-w-7xl">
-                        <TrackScheduleTable />
-                        <TrackSocialsContainer />
-                    </div>
-                </main>
-            </>
-        )
-    }
-
     function FullWidthRow({children, className}: {children: React.ReactNode, className?: string}) {
         return (
             <Row collapsible fullWidth justify="center" align="center" className={`${className} py-4`}>
@@ -76,8 +52,7 @@ export default function Home() {
         )
     }
 
-    function homePageV1() {
-        return (
+    return (
             <>
             {/* Top Banner with Upcoming Events */}
                 <section id="top" className="w-full nav-home">
@@ -93,7 +68,4 @@ export default function Home() {
                 </FullWidthRow>
             </>
         )
-    }
-
-    return homePageV1()
 }
