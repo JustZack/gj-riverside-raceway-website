@@ -22,7 +22,7 @@ export default function SiteFooter() {
     return (
         <Row collapsible fullWidth shadowTop justify="center" align="center" className="py-8" style={{ backgroundColor: "#ffffff" }}>
             {footer.map((footerItems, index) => (
-                <Column key={index} align="center" style={{width: '375px' }}>
+                <Column className="px-2" key={index} align="center" style={{width: '375px' }}>
                     {renderFooterColumn(footerItems.items)}
                 </Column>
             ))}
