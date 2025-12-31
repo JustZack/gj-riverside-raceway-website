@@ -10,6 +10,7 @@ import { Button, Column, Row } from '@/components/ui/ui'
 import { navigation } from '@/content/content'
 import RacingRules from '@/components/site/racing.rules'
 import TrackUpcomingSchedule from '@/components/site/schedule/track.upcoming.schedule'
+import TrackPricing from '@/components/site/pricing/track.pricing'
 
 export default function Home() {
 
@@ -45,6 +46,33 @@ export default function Home() {
         )    
     }
 
+    function PricingAndUpcomingSchedule() {
+        return (
+            <>
+                {/* Combined schedule & pricing for large screens only */}
+                <div className='hidden lg:block'>
+                    <FullWidthRow className="schedule bg-white">
+                        <TrackUpcomingSchedule className='px-4' style={{margin: "0px 0px 0px auto"}}/>
+                        <TrackPricing  className='px-4' style={{margin: "0px auto 0px 0px"}}/>
+                    </FullWidthRow>
+                </div>
+
+                {/* Split schedule & pricing for smaller screens */}
+                <div className='lblock lg:hidden'>
+                    {/* Upcoming Events Container */}
+                    <FullWidthRow className="schedule bg-white">
+                        <TrackUpcomingSchedule className='px-4'/>
+                    </FullWidthRow>
+                    
+                    {/* Pricing Container */}
+                    <FullWidthRow className="nav-pricing bg-gray-200">
+                        <TrackPricing  className='px-4'/>
+                    </FullWidthRow>
+                </div>
+            </>
+        )
+    }
+
     function homePageV1() {
         return (
             <>
@@ -53,10 +81,9 @@ export default function Home() {
                     <SiteHomeBanner />
                 </section>
 
-                <FullWidthRow className="schedule bg-white">
-                    <TrackUpcomingSchedule />
-                </FullWidthRow>
-                
+                {/* Combined container which adjusts based on screen size */}
+                <PricingAndUpcomingSchedule/>
+
                 {/* Socials Container */}
                 <FullWidthRow className="nav-socials">
                     <TrackSocialsContainer />
