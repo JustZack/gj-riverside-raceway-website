@@ -5,6 +5,7 @@ import TrackScheduleUtils, { ScheduleEvent } from '@/lib/utils/track.schedule.ut
 import { about } from '@/content/content';
 import { InfoWithSubtext, Column, Row, Chip } from '@/components/ui/ui'
 import BriefContentHeader from '@/components/site/brief/brief.content.header';
+import BriefContentRow from '@/components/site/brief/brief.content.row';
 import RaceUpcomingEvent from '@/components/site/schedule/race.upcoming.event';
 
 export default function TrackUpcomingSchedule({className, style, width = "350px"}: {className?: string, style?: React.CSSProperties, width?: string}) {
@@ -17,14 +18,14 @@ export default function TrackUpcomingSchedule({className, style, width = "350px"
         setIsLoadingEvents(false);
     }
 
-    function PracticeRow() {
+    function StaticContentRow({icon, children}: {icon: string, children: React.ReactNode}) {
         return (
-            <div key="events-practice">
-                <Row className="flex items-center justify-between gap-2 w-full" gap={1}>
-                    <span className="flex items-center justify-center w-6 h-6"><i className="fa-solid fa-phone"/></span>
-                    Call {about.getPhoneAnchorTag()} for practice.
-                </Row>
-            </div>
+            <Row className="flex items-center justify-between gap-2 w-full" gap={1}>
+                <span className="flex items-center justify-center w-6 h-6">
+                    <i className={icon}/>
+                </span>
+                <span>{children}</span>
+            </Row>
         )
     }
 
@@ -32,16 +33,10 @@ export default function TrackUpcomingSchedule({className, style, width = "350px"
         return (
             <>
                 {isLoadingEvents && (
-                    <Row className="flex items-center justify-between gap-2 w-full" gap={1}>
-                        <span className="flex items-center justify-center w-6 h-6"><i className="fa-solid fa-arrows-rotate fa-spin"/></span>
-                        <span>Loading events...</span>
-                    </Row>
+                    <StaticContentRow icon="fa-solid fa-arrows-rotate fa-spin">Loading events...</StaticContentRow>
                 )}
                 {!isLoadingEvents && events.length === 0 && (
-                    <Row className="flex items-center justify-between gap-2 w-full" gap={1}>
-                        <span className="flex items-center justify-center w-6 h-6"><i className="fa-regular fa-calendar"/></span>
-                        <span>No upcoming events.</span>
-                    </Row>
+                    <StaticContentRow icon="fa-regular fa-calendar">No upcoming events.</StaticContentRow>
                 )}
                 {events.map((event) => (
                     <RaceUpcomingEvent key={event.id} event={event} />
@@ -54,7 +49,7 @@ export default function TrackUpcomingSchedule({className, style, width = "350px"
         <Column className={className} style={{maxWidth: width, width, ...style}}>
             <BriefContentHeader icon="fa-solid fa-flag-checkered">Races</BriefContentHeader>
             <EventRows/>
-            <PracticeRow/>
+            <StaticContentRow icon="fa-solid fa-phone">Call {about.getPhoneAnchorTag()} for practice.</StaticContentRow>
         </Column>
     )
 }
