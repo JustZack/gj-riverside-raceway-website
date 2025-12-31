@@ -51,7 +51,7 @@ export default function TrackUpcomingSchedule({className, style, width = "500px"
             <div key="events-practice">
                 <Row className="flex items-center justify-between gap-2 w-full" gap={1}>
                     <span className="flex items-center justify-center w-6 h-6"><i className="fa-solid fa-phone"/></span>
-                    Call <a href={about.phoneUrl} className="text-blue-600 hover:underline">{about.phone}</a> for practice.
+                    Call {about.getPhoneAnchorTag()} for practice.
                 </Row>
             </div>
         )

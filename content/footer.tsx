@@ -3,18 +3,13 @@ import { about } from '@/content/about';
 export const footer = [
     {
         items: [
-            { icon: 'fas fa-map-marker-alt', text: about.address, link: `https://www.google.com/maps/place/${about.address}` }, 
-            { icon: 'fas fa-phone', text: about.phone, link: about.phoneUrl }
+            { icon: 'fas fa-map-marker-alt', content: about.getAddressAnchorTag() }, 
+            { icon: 'fas fa-phone', content: about.getPhoneAnchorTag() }
         ]
     }, {
         items: [
-            {
-                icon: 'fas fa-copyright',
-                text: `${new Date().getFullYear()} ${about.name}`
-            }, {
-                icon: 'fas fa-desktop',
-                text: `Website by ${about.websiteBy}`
-            }
+            { icon: 'fas fa-copyright', content: `${new Date().getFullYear()} ${about.name}` }, 
+            { icon: 'fas fa-desktop', content: `Website by ${about.websiteBy}` }
         ]
     }
 ]
