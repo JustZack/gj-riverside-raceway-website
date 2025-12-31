@@ -1,15 +1,14 @@
 'use client'
 
-import { Row, Column } from '@/components/ui/ui'
+import { ContentWithIcon, Row, Column } from '@/components/ui/ui'
 import { footer } from '@/content/content'
 
 export default function SiteFooter() {
     function renderFooterColumn(items: { icon: string; content: string | React.JSX.Element;}[]) {
         return items.map((item, index) => (
-            <span key={index}>
-                <i className={`${item.icon} mr-2`}></i>
+            <ContentWithIcon key={index} icon={item.icon}>
                 {item.content}
-            </span>
+            </ContentWithIcon>
         ))
     }
 
