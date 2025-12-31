@@ -1,16 +1,12 @@
 'use client'
 
-import TrackScheduleTable from '@/components/site/schedule/track.schedule.table'
-import TrackScheduleCalendar from '@/components/site/schedule/track.schedule.calendar'
-import TrackScheduleCalendarNew from '@/components/site/schedule/track.schedule.calendar.new'
 import TrackSocialsContainer from '@/components/site/socials/track.socials.container'
 import SiteHomeBanner from '@/components/site/site.home.banner'
 
 import { Button, Column, Row } from '@/components/ui/ui'
-import { navigation } from '@/content/content'
-import RacingRules from '@/components/site/racing.rules'
+
 import TrackUpcomingSchedule from '@/components/site/schedule/track.upcoming.schedule'
-import TrackPricing from '@/components/site/pricing/track.pricing'
+import RacePricing from '@/components/site/pricing/race.pricing'
 import RaceAgenda from '@/components/site/agenda/race.agenda'
 
 export default function Home() {
@@ -55,7 +51,7 @@ export default function Home() {
                     <FullWidthRow className="schedule bg-white">
                         <TrackUpcomingSchedule className='px-1' style={{margin: "0px 0px 0px auto"}}/>
                         <RaceAgenda className='px-1' style={{margin: "0px 0px auto 0px"}}/>
-                        <TrackPricing  className='px-1' style={{margin: "0px auto 0px 0px"}}/>
+                        <RacePricing  className='px-1' style={{margin: "0px auto 0px 0px"}}/>
                     </FullWidthRow>
                 </div>
 
@@ -73,7 +69,7 @@ export default function Home() {
 
                     {/* Pricing Container */}
                     <FullWidthRow className="nav-pricing bg-white">
-                        <TrackPricing  className='px-2' style={{margin: "0px auto"}}/>
+                        <RacePricing  className='px-2' style={{margin: "0px auto"}}/>
                     </FullWidthRow>
                 </div>
             </>
