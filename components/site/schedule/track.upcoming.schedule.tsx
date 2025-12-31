@@ -39,7 +39,7 @@ export default function TrackUpcomingSchedule({className, style, width = "500px"
     }
 
     return (
-        <Column className={className} style={{ minWidth: width, maxWidth: width, ...style}}>
+        <Column className={className} style={{maxWidth: width, ...style}}>
             <div key="events-header">
                 <Row className="flex items-center justify-between gap-2 w-full" gap={1}>
                     <h1 className="text-2xl font-bold text-center underline"><i>Upcoming Events</i></h1>

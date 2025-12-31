@@ -19,7 +19,7 @@ export default function TrackPricing({className, style, width = "500px"}: {class
     }
 
     return (
-        <Column className={className} style={{ minWidth: width, maxWidth: width, ...style}}>
+        <Column className={className} style={{ maxWidth: width, ...style}}>
             <div key="events-header">
                 <Row className="flex items-center justify-between gap-2 w-full" gap={1}>
                     <h1 className="text-2xl font-bold text-center underline"><i>Event Pricing</i></h1>
