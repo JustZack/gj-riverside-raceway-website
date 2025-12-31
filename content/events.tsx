@@ -6,9 +6,9 @@ export const events: Record<string, Event> = {
         chipClass: "bg-black/70 text-white",
         entry: 5,
     },
-    weeknights: {
-        id: "weeknights",
-        name: "Weeknights",
+    tuesdays: {
+        id: "tuesdays",
+        name: "Tuesdays",
         icon: "fa-solid fa-moon",
         chipClass: "bg-blue-900/70 text-white",
         entry: 20,
@@ -20,9 +20,9 @@ export const events: Record<string, Event> = {
         racingStart: "6:30pm",
         
     },
-    weekends: {
-        id: "weekends",
-        name: "Weekends",
+    saturdays: {
+        id: "saturdays",
+        name: "Saturdays",
         icon: "fa-solid fa-sun",
         chipClass: "bg-yellow-200/70 text-yellow-900",
         entry: 25,

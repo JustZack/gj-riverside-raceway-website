@@ -28,8 +28,8 @@ export default function RaceAgenda({className, style, width = "350px"}: {classNa
                     <i className="fa-solid fa-clock mr-4"></i>Agenda
                 </h1>
             </Row>
-            {renderEventAgendaRow(events.weeknights)}
-            {renderEventAgendaRow(events.weekends)}
+            {renderEventAgendaRow(events.tuesdays)}
+            {renderEventAgendaRow(events.saturdays)}
         </Column>
     )
 }

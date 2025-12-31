@@ -13,8 +13,8 @@ export default function RacePricing({className, style, width = "350px"}: {classN
                     <i className="fa-solid fa-dollar-sign mr-4"></i>Pricing
                 </h1>
             </Row>
-            <RaceEventPricing event={events.weeknights} />
-            <RaceEventPricing event={events.weekends} />
+            <RaceEventPricing event={events.tuesdays} />
+            <RaceEventPricing event={events.saturdays} />
             <RacePracticePricing practice={events.practice} />
             <RaceProductPricing product={products.transponder} />
         </Column>
