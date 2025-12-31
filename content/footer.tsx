@@ -10,7 +10,7 @@ export const footer = [
         items: [
             {
                 icon: 'fas fa-copyright',
-                text: `${new Date().getFullYear()} ${about.name}. All rights reserved.`
+                text: `${new Date().getFullYear()} ${about.name}`
             }, {
                 icon: 'fas fa-desktop',
                 text: `Website by ${about.websiteBy}`
