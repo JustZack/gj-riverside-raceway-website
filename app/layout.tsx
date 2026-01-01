@@ -14,7 +14,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="h-full">
       <head>
         <link rel="stylesheet" 
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" 
@@ -22,9 +22,11 @@ export default function RootLayout({
           crossOrigin="anonymous" referrerPolicy="no-referrer" />
         <link rel="icon" type="image/png" href="/images/racing-flag-icon.png" />
       </head>
-      <body className="flex flex-col min-h-screen">
+      <body className="flex flex-col min-h-screen h-full">
         <SiteHeader/>
-        {children}
+        <main className="flex-1 w-full">
+          {children}
+        </main>
         <SiteFooter/>
       </body>
     </html>
