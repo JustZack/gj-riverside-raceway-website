@@ -36,6 +36,7 @@ export default class ScheduledJobs {
         ScheduledJobs.logger.info(`First job run will start in ${timeUntilNextInterval / 1000} seconds.`);
 
         //Set a timeout to start at the next interval boundary
+        this.runNextJob();
         setTimeout(async () => {
             await this.runNextJob();
             setInterval(async () => {

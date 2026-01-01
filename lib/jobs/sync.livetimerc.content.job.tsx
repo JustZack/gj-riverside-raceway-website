@@ -1,7 +1,6 @@
 import Events from "@/lib/db/events";
 import LiveTimeEvents from "@/lib/db/livetime";
 import * as cheerio from 'cheerio';
-import { DateTime } from "luxon";
 import { Prisma }  from "@prisma/client";
 import Logger from "@/lib/utils/logger";
 import { livetime } from "@/content/content";
@@ -95,12 +94,7 @@ class ScrapedLiveTimeEvent {
         this.name = first.text().trim();
 
         // the date is formatted like: <span class="hidden">2025-12-02 00:00:00</span>Dec 2, 2025
-        const date_str = cols.eq(1).find('span').text().trim();
-
-        // Convert MST to UTC and format as ISO 8601: "2024-07-15T18:00:00.000Z"
-        const date_mst = DateTime.fromFormat(date_str, 'yyyy-MM-dd HH:mm:ss', { zone: 'America/Denver' });
-        const date_utc = date_mst.setZone('utc');
-        this.date = date_utc.toISO({ suppressMilliseconds: false, includeOffset: false }) || '';
+        this.date = cols.eq(1).find('span').text().trim();
 
         // These values are just numeric in the table
         this.entries = parseInt(cols.eq(2).text().trim(), 10);
