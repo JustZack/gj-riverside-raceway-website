@@ -1,12 +1,12 @@
 import Events from "@/lib/db/events";
 import LiveTimeEvents from "@/lib/db/livetime";
-import * as cheerio from 'cheerio';
 import { Prisma }  from "@prisma/client";
 import Logger from "@/lib/utils/logger";
 import { livetime } from "@/content/content";
 
 export default async function SyncLiveTimeContentJob() {
     const logger: Logger = new Logger('SyncLiveTimeContentJob');
+    const cheerio = await import('cheerio');
 
     function scrapeUrl(url: string): Promise<string> {
         return new Promise((resolve, reject) => {
