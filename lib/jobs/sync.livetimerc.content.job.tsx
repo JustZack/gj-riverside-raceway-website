@@ -3,7 +3,7 @@ import LiveTimeEvents from "@/lib/db/livetime";
 import { Prisma }  from "@prisma/client";
 import Logger from "@/lib/utils/logger";
 import { livetime } from "@/content/content";
-import { JSDOM } from 'jsdom';
+import { parse, HTMLElement } from 'node-html-parser';
 
 export default async function SyncLiveTimeContentJob() {
     const logger: Logger = new Logger('SyncLiveTimeContentJob');
@@ -23,8 +23,8 @@ export default async function SyncLiveTimeContentJob() {
         return scrapeUrl(livetime.getLink(path));
     }
 
-    function parseHTML(html: string): Document {
-        return new JSDOM(html).window.document;
+    function parseHTML(html: string): HTMLElement {
+        return parse(html);
     }
 
     async function upsertTrackEvent(event: ScrapedLiveTimeEvent): Promise<void> {
@@ -39,8 +39,8 @@ export default async function SyncLiveTimeContentJob() {
     function extractEventsFromPage(html: string): ScrapedLiveTimeEvent[] {
         logger.info(`Scraping LiveTimeRC events page...`);
         let events: ScrapedLiveTimeEvent[] = [];
-        const doc = parseHTML(html);
-        const events_table = doc.querySelector('table#events');
+        const root = parseHTML(html);
+        const events_table = root.querySelector('table#events');
         if (!events_table) {
             logger.info('No events table found.');
             return events;
@@ -88,8 +88,8 @@ class ScrapedLiveTimeEvent {
     livetime_path: string;
     laps: number;
 
-    constructor(row: Element) {
-        const cols = Array.from(row.querySelectorAll('td'));
+    constructor(row: HTMLElement) {
+        const cols = row.querySelectorAll('td');
         const first = cols[0];
 
         // The ID is in a url like this: /results/?p=view_event&id=488422
@@ -99,16 +99,16 @@ class ScrapedLiveTimeEvent {
             href = a.getAttribute('href') || '';
         }
         this.event_id = parseInt(href.split('&id=').pop() || '0', 10);
-        this.name = first?.textContent?.trim() || '';
+        this.name = first?.text.trim() || '';
 
         // the date is formatted like: <span class="hidden">2025-12-02 00:00:00</span>Dec 2, 2025
         const dateCol = cols[1];
         const dateSpan = dateCol?.querySelector('span');
-        this.date = dateSpan?.textContent?.trim() || '';
+        this.date = dateSpan?.text.trim() || '';
 
         // These values are just numeric in the table
-        this.entries = parseInt(cols[2]?.textContent?.trim() || '0', 10);
-        this.drivers = parseInt(cols[3]?.textContent?.trim() || '0', 10);
+        this.entries = parseInt(cols[2]?.text.trim() || '0', 10);
+        this.drivers = parseInt(cols[3]?.text.trim() || '0', 10);
 
         this.livetime_path = `${livetime.resultsPath}${this.event_id}`;
         this.laps = 0;
