@@ -30,7 +30,3 @@ export default function RootLayout({
     </html>
   );
 }
-
-
-//Start scheduled jobs system
-ScheduledJobs.startProgressiveJobRuns();
