@@ -9,6 +9,7 @@ import { livetime } from '@/content/livetime'
 import { about } from '@/content/about';
 import { events, Event } from '@/content/events';
 import { products, Product } from '@/content/products';
+import { eventClasses, EventClass } from './event.classes'
 
 export { 
     header, footer, 
@@ -18,7 +19,8 @@ export {
     facebook, youtube, livetime, 
     about, 
     events,
-    products
+    products,
+    eventClasses
 }
 
-export type { Event, Product }
+export type { Event, Product, EventClass }
