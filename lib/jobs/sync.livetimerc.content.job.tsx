@@ -6,7 +6,13 @@ import { livetime } from "@/content/content";
 
 export default async function SyncLiveTimeContentJob() {
     const logger: Logger = new Logger('SyncLiveTimeContentJob');
-    const cheerio = await import('cheerio');
+    let cheerio: any = null;
+    try {
+        cheerio = await import('cheerio');
+    } catch (error) {
+        logger.error(`Failed to import cheerio: ${error}`);
+        return;
+    }
 
     function scrapeUrl(url: string): Promise<string> {
         return new Promise((resolve, reject) => {
