@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import SiteHeader from '@/components/site/site.header'
 import SiteFooter from '@/components/site/site.footer'
 import "./globals.css";
+import ScheduledJobs from "@/lib/jobs/scheduled.jobs";
 
 export const metadata: Metadata = {
   title: "GJ Riverside Raceway",
@@ -29,3 +30,7 @@ export default function RootLayout({
     </html>
   );
 }
+
+
+//Start scheduled jobs system
+ScheduledJobs.startProgressiveJobRuns();
