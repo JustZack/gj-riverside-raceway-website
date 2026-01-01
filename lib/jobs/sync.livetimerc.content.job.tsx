@@ -3,16 +3,10 @@ import LiveTimeEvents from "@/lib/db/livetime";
 import { Prisma }  from "@prisma/client";
 import Logger from "@/lib/utils/logger";
 import { livetime } from "@/content/content";
+import { JSDOM } from 'jsdom';
 
 export default async function SyncLiveTimeContentJob() {
     const logger: Logger = new Logger('SyncLiveTimeContentJob');
-    let cheerio: any = null;
-    try {
-        cheerio = await import('cheerio');
-    } catch (error) {
-        logger.error(`Failed to import cheerio: ${error}`);
-        return;
-    }
 
     function scrapeUrl(url: string): Promise<string> {
         return new Promise((resolve, reject) => {
@@ -29,8 +23,8 @@ export default async function SyncLiveTimeContentJob() {
         return scrapeUrl(livetime.getLink(path));
     }
 
-    function parseHTML(html: string): cheerio.Root {
-        return cheerio.load(html);
+    function parseHTML(html: string): Document {
+        return new JSDOM(html).window.document;
     }
 
     async function upsertTrackEvent(event: ScrapedLiveTimeEvent): Promise<void> {
@@ -45,11 +39,15 @@ export default async function SyncLiveTimeContentJob() {
     function extractEventsFromPage(html: string): ScrapedLiveTimeEvent[] {
         logger.info(`Scraping LiveTimeRC events page...`);
         let events: ScrapedLiveTimeEvent[] = [];
-        const $ = parseHTML(html);
-        const events_table = $('table#events');
-        const event_rows = events_table.find('tbody tr');
-        event_rows.each((index: number, element: cheerio.Element) => {
-            const event = new ScrapedLiveTimeEvent($(element));
+        const doc = parseHTML(html);
+        const events_table = doc.querySelector('table#events');
+        if (!events_table) {
+            logger.info('No events table found.');
+            return events;
+        }
+        const event_rows = events_table.querySelectorAll('tbody tr');
+        event_rows.forEach((row) => {
+            const event = new ScrapedLiveTimeEvent(row);
             logger.info(`Scraped ${event.name} (LiveTime ID: ${event.event_id})`);
             events.push(event);
         });
@@ -90,21 +88,27 @@ class ScrapedLiveTimeEvent {
     livetime_path: string;
     laps: number;
 
-    constructor(row: cheerio.Cheerio) {
-        const cols = row.find('td');
-        const first = cols.eq(0);
+    constructor(row: Element) {
+        const cols = Array.from(row.querySelectorAll('td'));
+        const first = cols[0];
 
         // The ID is in a url like this: /results/?p=view_event&id=488422
-        const href = first.find('a').attr('href') || '';
+        let href = '';
+        const a = first?.querySelector('a');
+        if (a) {
+            href = a.getAttribute('href') || '';
+        }
         this.event_id = parseInt(href.split('&id=').pop() || '0', 10);
-        this.name = first.text().trim();
+        this.name = first?.textContent?.trim() || '';
 
         // the date is formatted like: <span class="hidden">2025-12-02 00:00:00</span>Dec 2, 2025
-        this.date = cols.eq(1).find('span').text().trim();
+        const dateCol = cols[1];
+        const dateSpan = dateCol?.querySelector('span');
+        this.date = dateSpan?.textContent?.trim() || '';
 
         // These values are just numeric in the table
-        this.entries = parseInt(cols.eq(2).text().trim(), 10);
-        this.drivers = parseInt(cols.eq(3).text().trim(), 10);
+        this.entries = parseInt(cols[2]?.textContent?.trim() || '0', 10);
+        this.drivers = parseInt(cols[3]?.textContent?.trim() || '0', 10);
 
         this.livetime_path = `${livetime.resultsPath}${this.event_id}`;
         this.laps = 0;
