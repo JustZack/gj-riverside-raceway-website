@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import SiteHeader from '@/components/site/site.header'
 import SiteFooter from '@/components/site/site.footer'
 import "./globals.css";
-import ScheduledJobs from "@/lib/jobs/scheduled.jobs";
 
 export const metadata: Metadata = {
   title: "GJ Riverside Raceway",
@@ -21,6 +20,7 @@ export default function RootLayout({
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" 
           integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" 
           crossOrigin="anonymous" referrerPolicy="no-referrer" />
+        <link rel="icon" type="image/png" href="/images/racing-flag-icon.png" />
       </head>
       <body className="flex flex-col min-h-screen">
         <SiteHeader/>
