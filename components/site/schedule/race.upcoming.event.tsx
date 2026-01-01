@@ -16,8 +16,9 @@ export default function RaceUpcomingEvent({event}: {event: ScheduleEvent}) {
     let name = eventInfo?.name || dayOfTheWeek
     let chipClass = eventInfo?.chipClass || ""
     return (
-        <BriefContentRow 
-            icon={"fa-regular fa-calendar"} chipClass={chipClass} name={name} 
-            mainText={event.title} subtext={`${shortDayOfTheWeek} ${startDate} Opens ${startTime}`} />
+        <BriefContentRow icon={"fa-regular fa-calendar"} chipClass={chipClass} name={name} 
+            subtext={`${shortDayOfTheWeek} ${startDate} Opens ${startTime}`}>
+            {event.title}
+        </BriefContentRow>
     )
 }

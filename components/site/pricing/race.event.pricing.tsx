@@ -4,9 +4,9 @@ import BriefContentRow from '@/components/site/brief/brief.content.row';
 
 export default function RaceEventPricing({event}: {event: Event}) {
     return (
-        <BriefContentRow 
-            icon={event.icon} chipClass={event.chipClass} name={event.pluralizedName} 
-            mainText={`$${event.entry} for first class`} 
-            subtext={`$${event.additional} each additional class`} />
+        <BriefContentRow icon={event.icon} chipClass={event.chipClass} name={event.pluralizedName} 
+            subtext={`$${event.additional} each additional class`}>
+            ${event.entry} for first class
+        </BriefContentRow>
     )
 }
