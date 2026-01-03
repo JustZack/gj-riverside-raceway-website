@@ -20,19 +20,40 @@ export default function SiteInfoBanner() {
     }
 
     let livetimeSocial = socials.find(social => social.name === "LiveTime RC")!;
-    function showTodaysEvent() { return todaysEvent !== null; }
+
+    function hasEventToday() { return todaysEvent !== null; }
+
+    function showTodaysEvent() { return hasEventToday() && todaysEvent?.status !== 'running'; }
     function TodaysEventInfo() {
         if (todaysEvent) {
-            let eventUrl = livetime.getResultLink(todaysEvent.id)
-            function openLinkInNewTab(eventUrl: string) {
-                window.open(eventUrl, '_blank', 'noopener,noreferrer');
-            }
             return InfoContent(
                 <>{todaysEvent.title} Today!</>,
-                <>Doors Open@{new Date(todaysEvent.start).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</>,
+                <>Opens {new Date(todaysEvent.start).toLocaleTimeString([], {hour: 'numeric', minute:'2-digit'})}</>,
                 <Button
                     icon={livetimeSocial.buttonIcon} 
-                    onClick={() => openLinkInNewTab(eventUrl)}
+                    onClick={() => window.open(todaysEvent.link!, '_blank', 'noopener,noreferrer')}
+                    textColor={"#ffffff"}
+                    backgroundColor={livetimeSocial.primaryColor}
+                    borderColor={livetimeSocial.primaryColor}
+                    hoverTextColor={livetimeSocial.primaryColor}
+                    hoverBackgroundColor="rgba(255, 255, 255, 0.8)"
+                    hoverBorderColor={livetimeSocial.primaryColor}
+                    height={35}>
+                    Results on {livetimeSocial.name}
+                </Button>
+            )
+        }
+        return null;
+    }
+    
+    function showRunningEvent() { return hasEventToday() && todaysEvent?.status === 'running'; }
+    function RunningEventInfo() {
+        if (todaysEvent) {
+            return InfoContent(
+                <>{todaysEvent.title} Running now!</>,
+                <Button
+                    icon={livetimeSocial.buttonIcon} 
+                    onClick={() => window.open(todaysEvent.link!, '_blank', 'noopener,noreferrer')}
                     textColor={"#ffffff"}
                     backgroundColor={livetimeSocial.primaryColor}
                     borderColor={livetimeSocial.primaryColor}
@@ -47,7 +68,8 @@ export default function SiteInfoBanner() {
         return null;
     }
 
-    function showDefaultInfo() { return !showTodaysEvent(); }
+
+    function showDefaultInfo() { return !showRunningEvent() && !showTodaysEvent(); }
     function DefaultInfo() {
         return InfoContent(
             <>Check our upcoming races below!</>,
@@ -59,7 +81,8 @@ export default function SiteInfoBanner() {
     return (
         <>
             <Column>
-                <Row collapsible>
+                <Row collapsible gap={3}>
+                    {showRunningEvent() && (<RunningEventInfo/>)}
                     {showTodaysEvent() && (<TodaysEventInfo/>)}
                     {showDefaultInfo() && (<DefaultInfo/>)}
                 </Row>

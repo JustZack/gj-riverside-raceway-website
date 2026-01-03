@@ -14,9 +14,10 @@ export default function RaceUpcomingEvent({event}: {event: ScheduleEvent}) {
     let startTime = format(event.start, 'h:mma').toLocaleLowerCase()
 
     let isToday = TrackScheduleUtils.eventIsToday(event);
+    let isRunning = TrackScheduleUtils.eventIsRunning(event);
     let name, chipClass;
     if (isToday) {
-        name = "Today"
+        name = isRunning ? "Running" : "Today";
         chipClass = event.statusClass;
     } else {
         name = eventInfo?.name || dayOfTheWeek

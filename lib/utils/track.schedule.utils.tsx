@@ -38,7 +38,7 @@ export default class TrackScheduleUtils {
         let base = `rounded min-w-[75px] flex items-center justify-center`
         if (status === 'cancelled')         return `${base} bg-red-100 text-red-800` 
         else if (status === 'finished')     return `${base} bg-green-100 text-green-800`
-        else if (status === 'running')      return `${base} bg-gray-300 text-gray-900`
+        else if (status === 'running')      return `${base} bg-checkerboard text-white font-bold text-outline-black `
         else if (status === 'today')        return `${base} bg-checkerboard text-white font-bold text-outline-black `
         else                                return `${base} bg-blue-100 text-blue-800`
     }
@@ -46,7 +46,7 @@ export default class TrackScheduleUtils {
     static getEventStatusColorByName(status: 'cancelled' | 'finished' | 'upcoming' | 'running' | 'today'): string {
         if (status === 'cancelled')         return '#ef4444' // red
         else if (status === 'finished')     return '#22c55e' // green
-        else if (status === 'running')      return '#6b7280' // gray
+        else if (status === 'running')      return '#ffffff' // white
         else if (status === 'today')        return '#ffffff' // white
         else                                return '#3b82f6' // blue
     }
@@ -96,7 +96,7 @@ export default class TrackScheduleUtils {
     static getTodaysScheduledEvent(setterCallback: (events: ScheduleEvent) => void, includeCancelled: boolean = false): void {
         API.getUpcomingSchedule(includeCancelled, 1).then((data) => {
             TrackScheduleUtils.formatAndSetEvents(data, (events: ScheduleEvent[]) => {
-                let todaysEvent = events.filter(event => event.status === 'today');
+                let todaysEvent = events.filter(event => ['today', 'running'].includes(event.status));
                 setterCallback(todaysEvent[0]);
             });
         });
