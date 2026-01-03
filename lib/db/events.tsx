@@ -44,9 +44,11 @@ export default class Events {
 
     //Business Logic for events
     static async getUpcoming(includeCancelled: boolean = false, limit?: number, sort: SortOrder = 'asc', orderBy: TrackEventOrderBy = 'start'): Promise<TrackEventWithLiveTime[]> {
+        let todayAtMidnight = new Date()
+        todayAtMidnight.setHours(0, 0, 0, 0)
         return prisma.trackEvent.findMany({
             where: {
-                end: { gte: new Date() },
+                end: { gte: todayAtMidnight },
                 visible: true,
                 cancelled: includeCancelled ? undefined : false
             },

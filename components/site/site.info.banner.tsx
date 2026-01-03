@@ -7,7 +7,10 @@ import { socials, livetime, about } from '@/content/content'
 
 export default function SiteInfoBanner() {
     const [todaysEvent, setTodaysEvent] = useState<ScheduleEvent | null>(null);
-    useEffect(TrackScheduleUtils.getTodaysScheduledEvent.bind(null, setTodaysEvent, true), []);
+    useEffect(TrackScheduleUtils.getTodaysScheduledEvent.bind(null, (event: ScheduleEvent) => {
+        setTodaysEvent(event);
+        console.log(event)
+    }, true), []);
 
     function InfoContent(contentA: React.JSX.Element, contentB?: React.JSX.Element, contentC?: React.JSX.Element) {
         return (
@@ -50,7 +53,7 @@ export default function SiteInfoBanner() {
     function RunningEventInfo() {
         if (todaysEvent) {
             return InfoContent(
-                <>{todaysEvent.title} Running now!</>,
+                <>{todaysEvent.title} Open now!</>,
                 <Button
                     icon={livetimeSocial.buttonIcon} 
                     onClick={() => window.open(todaysEvent.link!, '_blank', 'noopener,noreferrer')}

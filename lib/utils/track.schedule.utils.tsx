@@ -8,14 +8,22 @@ export default class TrackScheduleUtils {
     }
     //Checks if the event has finished (based on end date)
     static eventIsFinished(event: any): boolean {
-        return new Date(event.end) < new Date()
+        const endDate = new Date(event.end)
+        const today = new Date()
+        // Zero out time for both dates
+        endDate.setHours(0, 0, 0, 0)
+        today.setHours(0, 0, 0, 0)
+        return endDate < today
     }
     //Checks if the event is currently running (based on start and end date)
     static eventIsRunning(event: any): boolean {
-        const today = new Date()
-        const startDate = new Date(event.start)
-        const endDate = new Date(event.end)
-        return startDate <= today && endDate >= today
+        const now = new Date();
+        // Start of tomorrow (midnight)
+        let tomorrowAtMidnight = new Date();
+        tomorrowAtMidnight.setDate(tomorrowAtMidnight.getDate() + 1);
+        tomorrowAtMidnight.setHours(0, 0, 0, 0);
+        const startDate = new Date(event.start);
+        return now >= startDate && now < tomorrowAtMidnight;
     }
     //Checks if the event is happening today
     static eventIsToday(event: any): boolean {
@@ -96,6 +104,7 @@ export default class TrackScheduleUtils {
     static getTodaysScheduledEvent(setterCallback: (events: ScheduleEvent) => void, includeCancelled: boolean = false): void {
         API.getUpcomingSchedule(includeCancelled, 1).then((data) => {
             TrackScheduleUtils.formatAndSetEvents(data, (events: ScheduleEvent[]) => {
+                console.log(events)
                 let todaysEvent = events.filter(event => ['today', 'running'].includes(event.status));
                 setterCallback(todaysEvent[0]);
             });

@@ -17,7 +17,7 @@ export default function RaceUpcomingEvent({event}: {event: ScheduleEvent}) {
     let isRunning = TrackScheduleUtils.eventIsRunning(event);
     let name, chipClass;
     if (isToday) {
-        name = isRunning ? "Running" : "Today";
+        name = isRunning ? "Open" : "Today";
         chipClass = event.statusClass;
     } else {
         name = eventInfo?.name || dayOfTheWeek
