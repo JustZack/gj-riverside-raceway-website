@@ -40,3 +40,30 @@ body {
   min-width: 0 !important;
   max-width: 100% !important;
 }
+
+/* Checkerboard background utility */
+.bg-checkerboard {
+  background-color: #fff;
+  background-image:
+    linear-gradient(45deg, #000 25%, transparent 25%, transparent 75%, #000 75%, #000),
+    linear-gradient(45deg, #000 25%, #fff 25%, #fff 75%, #000 75%, #000);
+  background-size: 20px 20px;
+  background-position: 0 0, 10px 10px;
+}
+
+/* Text outline utility */
+.text-outline-white {
+  text-shadow:
+    -1px -1px 0 #fff,
+     1px -1px 0 #fff,
+    -1px  1px 0 #fff,
+     1px  1px 0 #fff;
+}
+
+.text-outline-black {
+  text-shadow:
+    -1px -1px 0 #000,
+     1px -1px 0 #000,
+    -1px  1px 0 #000,
+     1px  1px 0 #000;
+}

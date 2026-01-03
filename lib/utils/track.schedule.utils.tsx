@@ -2,38 +2,52 @@ import API from "@/lib/api/api"
 import { Event } from "react-big-calendar"
 import { livetime } from "@/content/content"
 export default class TrackScheduleUtils {
+    //Checks if the event was cancelled
     static eventIsCancelled(event: any): boolean {
         return event.cancelled === true
     }
+    //Checks if the event has finished (based on end date)
     static eventIsFinished(event: any): boolean {
         return new Date(event.end) < new Date()
     }
+    //Checks if the event is currently running (based on start and end date)
     static eventIsRunning(event: any): boolean {
-        return new Date(event.start) <= new Date() && new Date(event.end) >= new Date()
+        const today = new Date()
+        const startDate = new Date(event.start)
+        const endDate = new Date(event.end)
+        return startDate <= today && endDate >= today
     }
+    //Checks if the event is happening today
+    static eventIsToday(event: any): boolean {
+        return (new Date()).toDateString() === (new Date(event.start)).toDateString()
+    }
+    //Checks if the event is upcoming (based on start date)
     static eventIsUpcoming(event: any): boolean {
         return new Date(event.start) > new Date()
     }
 
-    static getEventStatus(event: ScheduleEvent): 'cancelled' | 'finished' | 'upcoming' | 'running' {
+    static getEventStatus(event: ScheduleEvent): 'cancelled' | 'finished' | 'upcoming' | 'running' | 'today' {
         if (this.eventIsCancelled(event))       return 'cancelled'
         else if (this.eventIsFinished(event))   return 'finished'
         else if (this.eventIsRunning(event))    return 'running'
+        else if (this.eventIsToday(event))      return 'today'
         else                                    return 'upcoming'
     }
 
-    static getEventStatusClassByName(status: 'cancelled' | 'finished' | 'upcoming' | 'running'): string {
-        let base = `rounded text-sm min-w-[75px] flex items-center justify-center`
+    static getEventStatusClassByName(status: 'cancelled' | 'finished' | 'upcoming' | 'running' | 'today'): string {
+        let base = `rounded min-w-[75px] flex items-center justify-center`
         if (status === 'cancelled')         return `${base} bg-red-100 text-red-800` 
         else if (status === 'finished')     return `${base} bg-green-100 text-green-800`
         else if (status === 'running')      return `${base} bg-gray-300 text-gray-900`
+        else if (status === 'today')        return `${base} bg-checkerboard text-white font-bold text-outline-black `
         else                                return `${base} bg-blue-100 text-blue-800`
     }
 
-    static getEventStatusColorByName(status: 'cancelled' | 'finished' | 'upcoming' | 'running'): string {
+    static getEventStatusColorByName(status: 'cancelled' | 'finished' | 'upcoming' | 'running' | 'today'): string {
         if (status === 'cancelled')         return '#ef4444' // red
         else if (status === 'finished')     return '#22c55e' // green
         else if (status === 'running')      return '#6b7280' // gray
+        else if (status === 'today')        return '#ffffff' // white
         else                                return '#3b82f6' // blue
     }
 
@@ -78,6 +92,15 @@ export default class TrackScheduleUtils {
             TrackScheduleUtils.formatAndSetEvents(data, setterCallback);
         })
     }
+
+    static getTodaysScheduledEvent(setterCallback: (events: ScheduleEvent) => void, includeCancelled: boolean = false): void {
+        API.getUpcomingSchedule(includeCancelled, 1).then((data) => {
+            TrackScheduleUtils.formatAndSetEvents(data, (events: ScheduleEvent[]) => {
+                let todaysEvent = events.filter(event => event.status === 'today');
+                setterCallback(todaysEvent[0]);
+            });
+        });
+    }
 }
 
 export interface ScheduleEvent extends Event {
@@ -87,7 +110,7 @@ export interface ScheduleEvent extends Event {
     end: Date
     cancelled: boolean
     description?: string
-    status: 'cancelled' | 'finished' | 'upcoming' | 'running'
+    status: 'cancelled' | 'finished' | 'upcoming' | 'running' | 'today'
     statusColor: string
     statusClass: string
     liveTimeId: number
