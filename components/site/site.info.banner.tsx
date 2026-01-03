@@ -54,6 +54,7 @@ export default function SiteInfoBanner() {
         if (todaysEvent) {
             return InfoContent(
                 <>{todaysEvent.title} Open now!</>,
+                undefined,
                 <Button
                     icon={livetimeSocial.buttonIcon} 
                     onClick={() => window.open(todaysEvent.link!, '_blank', 'noopener,noreferrer')}
