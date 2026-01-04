@@ -55,25 +55,17 @@ export default function RaceClass({eventClass}: {eventClass: EventClass}) {
         }
     }
 
-    function getRulesButtonIcon(): string {
-        return isOpen ? 'fa-solid fa-close' : 'fa-regular fa-file-lines';
-    }
-
-    function getRulesButtonText(): string {
-        return isOpen ? 'Hide Rules' : 'View Rules';
-    }
-
     return (
         <>
             <ContentWithIcon icon={eventClass.icon}>
                 <div className="flex w-full justify-between items-center">
                     <span className='text-left'>{eventClass.name}</span>
                     <Button className={"text-right text-sm"} onClick={handleToggleRules} 
-                        icon={getRulesButtonIcon()} height={25}
+                        icon={isOpen ? 'fa-solid fa-close' : 'fa-regular fa-file-lines'} height={25}
                         backgroundColor='red' hoverBackgroundColor='white'
                         textColor='white' hoverTextColor='red'
                         borderColor='red' hoverBorderColor='red'>
-                        {getRulesButtonText()}
+                        {isOpen ? 'Close Rules' : 'Open Rules'}
                     </Button>
                 </div>
             </ContentWithIcon>
