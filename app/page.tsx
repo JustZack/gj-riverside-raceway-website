@@ -44,9 +44,11 @@ export default function Home() {
         return showClassesParam === 'true';
     }
 
-    function PricingAndUpcomingSchedule() {
+    function SiteHomeBody() {
         return (
             <>
+                {/* Home page banner is identical for any screen size*/}
+                <SiteHomeBanner />
                 <div className='hidden lg:block'>
                     {/* Dynamic Info Row */}
                     <FullWidthRow className={`track-type ${getNextRowClass()}`}>
@@ -93,24 +95,13 @@ export default function Home() {
                         <RacePricing style={{margin: "0px auto"}}/>
                     </FullWidthRow>
                 </div>
-            </>
-        )
-    }
-
-    return (
-            <>
-            {/* Top Banner with Upcoming Events */}
-                <section id="top" className="w-full nav-home">
-                    <SiteHomeBanner />
-                </section>
-
-                {/* Combined container which adjusts based on screen size */}
-                <PricingAndUpcomingSchedule/>
-
-                {/* Socials Container */}
+                {/* Socials Container is identical for any screen size*/}
                 <FullWidthRow className="nav-socials">
                     <TrackSocialsContainer />
                 </FullWidthRow>
             </>
         )
+    }
+
+    return (<SiteHomeBody/>)
 }
