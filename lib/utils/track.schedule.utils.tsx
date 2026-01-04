@@ -85,7 +85,7 @@ export default class TrackScheduleUtils {
         else if (status === 'finished')     return 'fa-solid fa-check-circle'
         else if (status === 'running')      return 'fa-solid fa-forward'
         else if (status === 'today')        return 'fa-solid fa-calendar-check'
-        else                                return 'fa-regular fa-calendar'
+        else                                return 'fa-solid fa-calendar-day'
     }
 
     static getEventStatusClass(event: ScheduleEvent): string {
