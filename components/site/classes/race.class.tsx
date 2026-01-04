@@ -44,8 +44,13 @@ export default function RaceClass({eventClass}: {eventClass: EventClass}) {
             case 'electronics': return 'fa-solid fa-bolt';
             case 'gearing': return 'fa-solid fa-cogs';
             case 'suspension': return 'fa-solid fa-arrows-up-down-left-right';
-            case 'weight': return 'fa-solid fa-weight-scale';
-            case 'disclaimer': return 'fa-solid fa-exclamation-triangle';
+            case 'differential': return 'fa-solid fa-gears';
+            case 'heat-sink': return 'fa-solid fa-temperature-high';
+            case 'tires': return 'fa-regular fa-circle';
+            case 'bodies': return 'fa-solid fa-car-side';
+            case 'battery': return 'fa-solid fa-battery-full';
+            case 'servo-horn': return 'fa-solid fa-gear';
+            case 'bearing': return 'fa-solid fa-circle-notch';
             default: return 'fa-solid fa-info-circle';
         }
     }
@@ -76,7 +81,7 @@ export default function RaceClass({eventClass}: {eventClass: EventClass}) {
             <div className={`overflow-hidden transition-all duration-300 ease-in-out ${isOpen && eventClass.rules ? 'max-h-[1000px] opacity-100' : 'max-h-0 opacity-0'}`}>
                 {showContent && eventClass.rules && (
                     <div className="bg-white border border-gray-200 rounded shadow p-4 max-w-[96vw] min-w-[16rem] text-sm mx-auto">
-                        <div className="font-bold mb-2 text-left">Rules</div>
+                        {false && <div className="font-bold mb-2 text-left">Rules</div>}
                         {eventClass.rules.map((rule, idx) => (
                             <ContentWithIcon key={idx} icon={getIconFromType(rule.type)}>
                                 <span className="font-semibold capitalize">{rule.type}:</span> {rule.description}

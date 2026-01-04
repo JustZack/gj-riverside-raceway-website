@@ -38,9 +38,6 @@ export const eventClasses: Record<string, EventClass> = {
             }, {
                 type: "bearing",
                 description: "Stock bearings preferred. Will not disqualify for ceramic bearings to due difficulting of teching."
-            }, {
-                type: "disclaimer",
-                description: "Rules are subject to change at any time to cover grey areas of part availabilities."
             }
         ]
     },
@@ -51,14 +48,17 @@ export const eventClasses: Record<string, EventClass> = {
         chipClass: "bg-blue-600 text-white",
         rules: [
             {
-                type: "chassis",
-                description: "Must be a buggy chassis. No trucks or truggies allowed. Offset chassis allowed."
-            }, {
                 type: "electronics",
-                description: "13.5 or equivalent motor only. "
+                description: "13.5 or equivalent motor only. ESC, Servo and Receiver of choice."
             }, {
-                type: "disclaimer",
-                description: "Rules are subject to change at any time to cover grey areas of part availabilities."
+                type: "tires",
+                description: "Carpet tires or slicks may be used."
+            }, {
+                type: "bodies",
+                description: "Appropriate street stock bodies should be used."
+            }, {
+                type: "battery",
+                description: "No offset batteries are allowed.",
             }
         ]
     },
@@ -69,9 +69,21 @@ export const eventClasses: Record<string, EventClass> = {
         chipClass: "bg-green-600 text-white",
         rules: [
             {
-                type: "disclaimer",
-                description: "Rules are subject to change at any time to cover grey areas of part availabilities."
-            }
+                type: "chassis",
+                description: "Must be a buggy chassis. Offset chassis allowed. No trucks, truggies, or other types allowed."
+            }, {
+                type: "electronics",
+                description: "13.5 or equivalent motor only. ESC, Servo and Receiver of choice."
+            }, {
+                type: "tires",
+                description: "Carpet tires or slicks may be used."
+            }, {
+                type: "bodies",
+                description: "Appropriate late model bodies should be used."
+            }, {
+                type: "battery",
+                description: "No offset batteries are allowed.",
+            },
         ]
     },
     lateModelHackfab: {
@@ -81,8 +93,8 @@ export const eventClasses: Record<string, EventClass> = {
         chipClass: "bg-yellow-600 text-white",
         rules: [
             {
-                type: "disclaimer",
-                description: "Rules are subject to change at any time to cover grey areas of part availabilities."
+                type: "chassis",
+                description: "Must be a Hackfab Late Model chassis. No trucks, truggies, or other types allowed."
             }
         ]
     },
@@ -92,10 +104,6 @@ export const eventClasses: Record<string, EventClass> = {
         icon: "fa-solid fa-rocket",
         chipClass: "bg-orange-600 text-white",
         rules: [
-            {
-                type: "disclaimer",
-                description: "Rules are subject to change at any time to cover grey areas of part availabilities."
-            }
         ]
     },
     sprint410: {
@@ -104,10 +112,6 @@ export const eventClasses: Record<string, EventClass> = {
         icon: "fa-solid fa-rocket",
         chipClass: "bg-purple-600 text-white",
         rules: [
-            {
-                type: "disclaimer",
-                description: "Rules are subject to change at any time to cover grey areas of part availabilities."
-            }
         ],
         hidden: true,
     },
@@ -117,10 +121,6 @@ export const eventClasses: Record<string, EventClass> = {
         icon: "fa-solid fa-rocket",
         chipClass: "bg-pink-600 text-white",
         rules: [
-            {
-                type: "disclaimer",
-                description: "Rules are subject to change at any time to cover grey areas of part availabilities."
-            }
         ],
         hidden: true,
     }

@@ -11,14 +11,14 @@ export default function RaceClasses({className, style, width = "350px"}: {classN
             {Object.values(eventClasses).map((eventClass: EventClass) => {
                 if (!eventClass.hidden) return (<RaceClass key={eventClass.id} eventClass={eventClass} />)
             })}
-            <ContentWithIcon icon="fa-solid fa-warning">
-                <InfoWithSubtext subText="Changes accomodate grey areas & parts availability">
-                    <span className='font-semibold truncate'>Rules are subject to change</span>
-                </InfoWithSubtext>
-            </ContentWithIcon>
             <ContentWithIcon icon="fa-solid fa-info-circle">
                 <InfoWithSubtext subText="Classes may be combined or split based on entries">
                     <span className='font-semibold truncate'>Three or more similar cars form a class</span>
+                </InfoWithSubtext>
+            </ContentWithIcon>
+            <ContentWithIcon icon="fa-solid fa-warning">
+                <InfoWithSubtext subText="We'll update this section as things change">
+                    <span className='font-semibold truncate'>Classes & Rules are subject to change</span>
                 </InfoWithSubtext>
             </ContentWithIcon>
         </Column>
