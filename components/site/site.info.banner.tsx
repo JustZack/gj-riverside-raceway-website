@@ -14,15 +14,22 @@ export default function SiteInfoBanner() {
         console.log(event)
     }, true, 1), []);
 
-    function InfoContent(contentAIcon: string, contentA: React.JSX.Element | string, contentB?: React.JSX.Element | string, contentC?: React.JSX.Element | string, contentD?: React.JSX.Element | string) {
+    type InfoContentProps = {
+        aIcon: string;
+        a: React.JSX.Element | string;
+        b?: React.JSX.Element | string;
+        c?: React.JSX.Element | string;
+        d?: React.JSX.Element | string;
+    }
+    function InfoContent({aIcon, a, b, c, d}: InfoContentProps) {
         return (
             <>
                 <span className="font-bold text-xl">
-                    <ContentWithIcon icon={contentAIcon}>{contentA}</ContentWithIcon>
+                    <ContentWithIcon icon={aIcon}>{a}</ContentWithIcon>
                 </span>
-                {contentB && (<span className="font-bold text-xl">{contentB}</span>)}
-                {contentC && (<span className="text-md">{contentC}</span>)}
-                {contentD && (<span className="text-sm">{contentD}</span>)}
+                {b && (<span className="font-bold text-xl">{b}</span>)}
+                {c && (<span className="text-md">{c}</span>)}
+                {d && (<span className="text-sm">{d}</span>)}
             </>
         )
     }
@@ -56,26 +63,25 @@ export default function SiteInfoBanner() {
     function NotTodayEventInfo() {
         if (hasNextEvent()) {
             let nextRaceDate = TimeUtils.getShortDateString(nextEvent!.start, false, true)
-            return InfoContent(`fa-solid fa-calendar-day`, `Next race ${nextRaceDate}`, undefined, undefined, <SitePhone/>)
+            return InfoContent({aIcon: `fa-solid fa-calendar-day`, a: `Next race ${nextRaceDate}`, c: <SitePhone/>})
         }
     }
 
     function TodaysEventInfo() {
         if (hasNextEvent()) {
             let opensAt = TimeUtils.getShortTimeString(nextEvent!.start);
-            return InfoContent(`fa-solid fa-flag-checkered`, `${nextEvent!.title} Today!`, `Opens ${opensAt}`, <EventLiveTimeButton event={nextEvent!} />
-            )
+            return InfoContent({aIcon: `fa-solid fa-flag-checkered`, a: `${nextEvent!.title} Today!`, b: `Opens ${opensAt}`, d: <EventLiveTimeButton event={nextEvent!} />})
         }
     }
     
     function RunningEventInfo() {
         if (hasNextEvent()) {
-            return InfoContent(`fa-solid fa-flag-checkered`, `${nextEvent!.title} Open now!`, undefined, <EventLiveTimeButton event={nextEvent!} />)
+            return InfoContent({aIcon: `fa-solid fa-flag-checkered`, a: `${nextEvent!.title} Open now!`, d: <EventLiveTimeButton event={nextEvent!} />})
         }
     }
     
     function DefaultInfo() {
-        return InfoContent(`fa-solid fa-info-circle`, `Check our upcoming races below!`, undefined, <SitePhone/>)
+        return InfoContent({aIcon: `fa-solid fa-info-circle`, a: `Check our upcoming races below!`, d: <SitePhone/>})
     }
 
     function SiteInfo() {
