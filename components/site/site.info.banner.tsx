@@ -8,10 +8,11 @@ import TimeUtils from '@/lib/utils/time'
 import { SitePhoneDisplayForPractice } from './site.phone.display'
 
 export default function SiteInfoBanner() {
+    const [loading, setLoading] = useState<boolean>(true);
     const [nextEvent, setNextEvent] = useState<ScheduleEvent | null>(null);
     useEffect(TrackScheduleUtils.getUpcomingScheduleEvents.bind(null, (event: ScheduleEvent[]) => {
         setNextEvent(event[0] || null);
-        console.log(event)
+        setLoading(false);
     }, true, 1), []);
 
     type InfoContentProps = {
@@ -54,11 +55,16 @@ export default function SiteInfoBanner() {
 
     function SitePhone() { return (<SitePhoneDisplayForPractice className="px-4"/>) }
 
+    function isLoading(): boolean { return loading; }
     function hasNextEvent(): boolean { return nextEvent !== null; }
     function hasEventToday(): boolean { return hasNextEvent() && TrackScheduleUtils.eventIsToday(nextEvent);  }
     function hasUpcomingEventNotToday(): boolean { return hasNextEvent() && TrackScheduleUtils.eventIsUpcoming(nextEvent); }
     function hasUpcomingEventToday(): boolean { return hasEventToday() && nextEvent?.status !== 'running'; }
     function hasOpenEventToday(): boolean { return hasEventToday() && nextEvent?.status === 'running'; }
+
+    function loadingEventInfo() {
+        return InfoContent({aIcon: `fa-solid fa-rotate fa-spin`, a: `Checking for upcoming races . . .`, c: <SitePhone/>})
+    }
 
     function NotTodayEventInfo() {
         if (hasNextEvent()) {
@@ -81,14 +87,15 @@ export default function SiteInfoBanner() {
     }
     
     function DefaultInfo() {
-        return InfoContent({aIcon: `fa-solid fa-info-circle`, a: `Check our upcoming races below!`, d: <SitePhone/>})
+        return InfoContent({aIcon: `fa-solid fa-info-circle`, a: `No races scheduled, check back soon!`, c: <SitePhone/>})
     }
 
     function SiteInfo() {
-        if (hasOpenEventToday()) return RunningEventInfo();
-        if (hasUpcomingEventToday()) return TodaysEventInfo();
-        if (hasUpcomingEventNotToday()) return NotTodayEventInfo();
-        return DefaultInfo();
+        if (isLoading())                        return loadingEventInfo();
+        else if (hasOpenEventToday())           return RunningEventInfo();
+        else if (hasUpcomingEventToday())       return TodaysEventInfo();
+        else if (hasUpcomingEventNotToday())    return NotTodayEventInfo();
+        else                                    return DefaultInfo();
     }
 
     console.log(`Rendering SiteInfoBanner, nextEvent: ${nextEvent?.title || 'none'}`);
