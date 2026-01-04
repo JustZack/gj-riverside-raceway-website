@@ -33,7 +33,7 @@ export default function TrackUpcomingSchedule({className, style, width = "350px"
 
     return (
         <Column className={className} style={{maxWidth: width, width, ...style}}>
-            <BriefContentHeader icon="fa-solid fa-flag-checkered">Races</BriefContentHeader>
+            <BriefContentHeader icon="fa-solid fa-flag-checkered">Upcoming Races</BriefContentHeader>
             <EventRows/>
         </Column>
     )
