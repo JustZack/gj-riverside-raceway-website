@@ -27,7 +27,7 @@ export default function SiteInfoBanner() {
     function hasRegisteringEventToday(): boolean    { return hasEventToday() && nextEvent?.status === 'registering'; }
 
     function loadingEventInfo() {
-        return <SiteInfoContent aIcon={`fa-solid fa-rotate fa-spin`} a={`Checking for upcoming races . . .`} c={<SitePhone/>} />
+        return <SiteInfoContent aIcon={`fa-solid fa-rotate fa-spin`} a={`Loading upcoming race...`} c={<SitePhone/>} />
     }
 
     function RegisteringEventInfo() {

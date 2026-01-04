@@ -19,10 +19,10 @@ export default function TrackUpcomingSchedule({className, style, width = "350px"
         return (
             <>
                 {isLoadingEvents && (
-                    <ContentWithIcon icon="fa-solid fa-arrows-rotate fa-spin">Loading events...</ContentWithIcon>
+                    <ContentWithIcon icon="fa-solid fa-arrows-rotate fa-spin">Loading upcoming races...</ContentWithIcon>
                 )}
                 {!isLoadingEvents && events.length === 0 && (
-                    <ContentWithIcon icon="fa-regular fa-calendar">No upcoming events.</ContentWithIcon>
+                    <ContentWithIcon icon="fa-regular fa-calendar">No upcoming races.</ContentWithIcon>
                 )}
                 {events.map((event) => (
                     <RaceUpcomingEvent key={event.id} event={event} />
