@@ -36,9 +36,9 @@ export default function Home() {
     }
 
     let whiteRow = true;
-    //Easily alternate row colors
-    function getNextRowClass(whiteOverride: boolean = false): string {
-        let isWhite = whiteOverride || whiteRow;
+    //Alternate row colors for the home page rows
+    function getNextRowClass(whiteOverride: boolean | undefined = undefined): string {
+        let isWhite = whiteOverride ?? whiteRow;
         const rowClass = isWhite ? 'bg-white' : 'bg-gray-200';
         whiteRow = !isWhite;
         return rowClass;
@@ -50,54 +50,54 @@ export default function Home() {
             <>
                 {/* Home page banner is identical for any screen size*/}
                 <SiteHomeBanner />
+                {/* Dynamic Info Row is identical for any screen size */}
+                <FullWidthRow className={`track-info ${getNextRowClass(true)}`}>
+                    <SiteInfoBanner/>
+                </FullWidthRow>
+
+                {/* Large Screen */}
                 <div className='hidden lg:block'>
-                    {/* Dynamic Info Row */}
-                    <FullWidthRow className={`track-type ${getNextRowClass()}`}>
-                        <SiteInfoBanner/>
-                    </FullWidthRow>
                     {/* Combined schedule & pricing for large screens only */}
-                    <FullWidthRow className={`schedule ${getNextRowClass()}`}>
+                    <FullWidthRow className={`race-schedule race-agenda race-pricing ${getNextRowClass(false)}`}>
                         <TrackUpcomingSchedule className='px-1' style={{margin: "0px 0px auto auto"}}/>
                         <RaceAgenda className='px-1' style={{margin: "0px 0px auto 0px"}}/>
                         <RacePricing  className='px-1' style={{margin: "0px auto auto 0px"}}/>
                     </FullWidthRow>
                     {/* Classes Container */}
                     {doShowClasses() && (
-                    <FullWidthRow className={`nav-pricing ${getNextRowClass()}`}>
+                    <FullWidthRow className={`race-classes ${getNextRowClass()}`}>
                         <RaceClasses style={{margin: "0px auto auto auto"}}/>
                     </FullWidthRow>
                     )}
                 </div>
-                {/* Split schedule & pricing for smaller screens */}
+
+                {/* Non-Large Screens */}
                 <div className='block lg:hidden'>
-                    {/* Dynamic Info Row */}
-                    <FullWidthRow className={`info ${getNextRowClass()}`}>
-                        <SiteInfoBanner/>
-                    </FullWidthRow>
                     {/* Upcoming Events Container */}
-                    <FullWidthRow className={`schedule ${getNextRowClass()}`}>
+                    <FullWidthRow className={`track-schedule ${getNextRowClass(false)}`}>
                         <TrackUpcomingSchedule style={{margin: "0px auto"}}/>
                     </FullWidthRow>
 
                     {/* Race Agenda Container */}
-                    <FullWidthRow className={`nav-agenda ${getNextRowClass()}`}>
+                    <FullWidthRow className={`race-agenda ${getNextRowClass()}`}>
                         <RaceAgenda style={{margin: "0px auto"}}/>
                     </FullWidthRow>
 
                     {/* Classes Container */}
                     {doShowClasses() && (
-                    <FullWidthRow className={`nav-pricing ${getNextRowClass()}`}>
+                    <FullWidthRow className={`race-classes ${getNextRowClass()}`}>
                         <RaceClasses style={{margin: "0px auto"}}/>
                     </FullWidthRow>
                     )}
 
                     {/* Pricing Container */}
-                    <FullWidthRow className={`nav-classes ${getNextRowClass()}`}>
+                    <FullWidthRow className={`race-pricing ${getNextRowClass()}`}>
                         <RacePricing style={{margin: "0px auto"}}/>
                     </FullWidthRow>
                 </div>
+
                 {/* Socials Container is identical for any screen size*/}
-                <FullWidthRow className="nav-socials">
+                <FullWidthRow className="track-socials">
                     <TrackSocialsContainer />
                 </FullWidthRow>
             </>
