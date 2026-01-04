@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useRef } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { EventClass } from '@/content/content';
 import { Button, ContentWithIcon } from '@/components/ui/ui';
 
@@ -9,6 +9,17 @@ export default function RaceClass({eventClass}: {eventClass: EventClass}) {
     // Use a custom event to coordinate which rule set is open globally
     const rulesButtonRef = useRef<HTMLSpanElement>(null);
     const isOpen = openRulesId === eventClass.id;
+    const [showContent, setShowContent] = useState(isOpen);
+
+    // Animate close: keep content mounted until transition ends
+    useEffect(() => {
+        if (isOpen) {
+            setShowContent(true);
+        } else if (showContent) {
+            const timeout = setTimeout(() => setShowContent(false), 300); // match duration-300
+            return () => clearTimeout(timeout);
+        }
+    }, [isOpen]);
 
     function handleToggleRules() {
         if (openRulesId === eventClass.id) {
@@ -63,7 +74,7 @@ export default function RaceClass({eventClass}: {eventClass: EventClass}) {
             </ContentWithIcon>
 
             <div className={`overflow-hidden transition-all duration-300 ease-in-out ${isOpen && eventClass.rules ? 'max-h-[1000px] opacity-100' : 'max-h-0 opacity-0'}`}>
-                {isOpen && eventClass.rules && (
+                {showContent && eventClass.rules && (
                     <div className="bg-white border border-gray-200 rounded shadow p-4 max-w-[96vw] min-w-[16rem] text-sm mx-auto">
                         <div className="font-bold mb-2 text-left">Rules</div>
                         {eventClass.rules.map((rule, idx) => (
