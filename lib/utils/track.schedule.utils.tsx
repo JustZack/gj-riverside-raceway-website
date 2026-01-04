@@ -100,16 +100,6 @@ export default class TrackScheduleUtils {
             TrackScheduleUtils.formatAndSetEvents(data, setterCallback);
         })
     }
-
-    static getTodaysScheduledEvent(setterCallback: (events: ScheduleEvent) => void, includeCancelled: boolean = false): void {
-        API.getUpcomingSchedule(includeCancelled, 1).then((data) => {
-            TrackScheduleUtils.formatAndSetEvents(data, (events: ScheduleEvent[]) => {
-                console.log(events)
-                let todaysEvent = events.filter(event => ['today', 'running'].includes(event.status));
-                setterCallback(todaysEvent[0]);
-            });
-        });
-    }
 }
 
 export interface ScheduleEvent extends Event {

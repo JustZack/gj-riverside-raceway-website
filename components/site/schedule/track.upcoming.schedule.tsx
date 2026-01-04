@@ -1,11 +1,8 @@
 'use client'
 import { useState, useEffect, useCallback } from 'react'
-import { format } from 'date-fns'
 import TrackScheduleUtils, { ScheduleEvent } from '@/lib/utils/track.schedule.utils'
-import { about } from '@/content/content';
 import { ContentWithIcon, Column, Row } from '@/components/ui/ui'
 import BriefContentHeader from '@/components/site/brief/brief.content.header';
-import BriefContentRow from '@/components/site/brief/brief.content.row';
 import RaceUpcomingEvent from '@/components/site/schedule/race.upcoming.event';
 
 export default function TrackUpcomingSchedule({className, style, width = "350px"}: {className?: string, style?: React.CSSProperties, width?: string}) {
@@ -38,7 +35,6 @@ export default function TrackUpcomingSchedule({className, style, width = "350px"
         <Column className={className} style={{maxWidth: width, width, ...style}}>
             <BriefContentHeader icon="fa-solid fa-flag-checkered">Races</BriefContentHeader>
             <EventRows/>
-            <ContentWithIcon icon="fa-solid fa-phone">Call {about.getPhoneAnchorTag()} for practice.</ContentWithIcon>
         </Column>
     )
 }

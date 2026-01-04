@@ -8,6 +8,7 @@
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
+  --text-outline-size: 1px;
 }
 
 /*
@@ -54,16 +55,16 @@ body {
 /* Text outline utility */
 .text-outline-white {
   text-shadow:
-    -1px -1px 0 #fff,
-     1px -1px 0 #fff,
-    -1px  1px 0 #fff,
-     1px  1px 0 #fff;
+    calc(var(--text-outline-size) * -1) calc(var(--text-outline-size) * -1) 0 #fff,
+    calc(var(--text-outline-size) * 1) calc(var(--text-outline-size) * -1) 0 #fff,
+    calc(var(--text-outline-size) * -1) calc(var(--text-outline-size) * 1) 0 #fff,
+    calc(var(--text-outline-size) * 1) calc(var(--text-outline-size) * 1) 0 #fff;
 }
 
 .text-outline-black {
   text-shadow:
-    -1px -1px 0 #000,
-     1px -1px 0 #000,
-    -1px  1px 0 #000,
-     1px  1px 0 #000;
+    calc(var(--text-outline-size) * -1) calc(var(--text-outline-size) * -1) 0 #000,
+    calc(var(--text-outline-size) * 1) calc(var(--text-outline-size) * -1) 0 #000,
+    calc(var(--text-outline-size) * -1) calc(var(--text-outline-size) * 1) 0 #000,
+    calc(var(--text-outline-size) * 1) calc(var(--text-outline-size) * 1) 0 #000;
 }
