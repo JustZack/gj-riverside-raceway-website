@@ -1,16 +1,79 @@
 'use client'
+
+import React, { useRef } from 'react';
 import { EventClass } from '@/content/content';
-import { ContentWithIcon } from '@/components/ui/ui';
+import { Button, ContentWithIcon } from '@/components/ui/ui';
 
+let openRulesId: string | null = null;
 export default function RaceClass({eventClass}: {eventClass: EventClass}) {
+    // Use a custom event to coordinate which rule set is open globally
+    const rulesButtonRef = useRef<HTMLSpanElement>(null);
+    const isOpen = openRulesId === eventClass.id;
 
-    function openRulesDialog(eventClass: EventClass) {
-        window.dispatchEvent(new CustomEvent('open-rules-dialog', {detail: {eventClass: eventClass}}));
+    function handleToggleRules() {
+        if (openRulesId === eventClass.id) {
+            openRulesId = null;
+        } else {
+            openRulesId = eventClass.id;
+        }
+        window.dispatchEvent(new CustomEvent('rules-toggle'));
+    }
+
+    // Listen for global rules-toggle events to force re-render
+    const [, forceUpdate] = React.useReducer((x) => x + 1, 0);
+    React.useEffect(() => {
+        function onToggle() { forceUpdate(); }
+        window.addEventListener('rules-toggle', onToggle);
+        return () => window.removeEventListener('rules-toggle', onToggle);
+    }, []);
+
+    function getIconFromType(type: string): string {
+        switch (type) {
+            case 'chassis': return 'fa-solid fa-cube';
+            case 'electronics': return 'fa-solid fa-bolt';
+            case 'gearing': return 'fa-solid fa-cogs';
+            case 'suspension': return 'fa-solid fa-arrows-up-down-left-right';
+            case 'weight': return 'fa-solid fa-weight-scale';
+            case 'disclaimer': return 'fa-solid fa-exclamation-triangle';
+            default: return 'fa-solid fa-info-circle';
+        }
+    }
+
+    function getRulesButtonIcon(): string {
+        return isOpen ? 'fa-solid fa-close' : 'fa-regular fa-file-lines';
+    }
+
+    function getRulesButtonText(): string {
+        return isOpen ? 'Hide Rules' : 'View Rules';
     }
 
     return (
-        <ContentWithIcon icon="fa-regular fa-file-lines">
-            {eventClass.name} - <span className="cursor-pointer text-blue-500 hover:underline" onClick={() => openRulesDialog(eventClass)}>View Rules</span>
-        </ContentWithIcon>
+        <>
+            <ContentWithIcon icon={eventClass.icon}>
+                <div className="flex w-full justify-between items-center">
+                    <span className='text-left'>{eventClass.name}</span>
+                    <Button className={"text-right text-sm"} onClick={handleToggleRules} 
+                        icon={getRulesButtonIcon()} height={25}
+                        backgroundColor='red' hoverBackgroundColor='white'
+                        textColor='white' hoverTextColor='red'
+                        borderColor='red' hoverBorderColor='red'>
+                        {getRulesButtonText()}
+                    </Button>
+                </div>
+            </ContentWithIcon>
+
+            <div className={`overflow-hidden transition-all duration-300 ease-in-out ${isOpen && eventClass.rules ? 'max-h-[1000px] opacity-100' : 'max-h-0 opacity-0'}`}>
+                {isOpen && eventClass.rules && (
+                    <div className="bg-white border border-gray-200 rounded shadow p-4 max-w-[96vw] min-w-[16rem] text-sm mx-auto">
+                        <div className="font-bold mb-2 text-left">Rules</div>
+                        {eventClass.rules.map((rule, idx) => (
+                            <ContentWithIcon key={idx} icon={getIconFromType(rule.type)}>
+                                <span className="font-semibold capitalize">{rule.type}:</span> {rule.description}
+                            </ContentWithIcon>
+                        ))}
+                    </div>
+                )}
+            </div>
+        </>
     )
 }
