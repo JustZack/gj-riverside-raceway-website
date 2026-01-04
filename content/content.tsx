@@ -10,6 +10,7 @@ import { about } from '@/content/about';
 import { events, Event } from '@/content/events';
 import { products, Product } from '@/content/products';
 import { eventClasses, EventClass } from './event.classes'
+import { bannerImages, BannerImage } from './banner.images'
 
 export { 
     header, footer, 
@@ -20,7 +21,8 @@ export {
     about, 
     events,
     products,
-    eventClasses
+    eventClasses,
+    bannerImages
 }
 
-export type { Event, Product, EventClass }
+export type { Event, Product, EventClass, BannerImage }

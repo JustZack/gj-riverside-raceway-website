@@ -15,7 +15,7 @@ export const socials = [
         buttonIcon: "fa-brands fa-facebook fa-xl",
         buttonText: facebook.groupName,
         description: "Join the conversation and stay updated with the latest news!",
-        backgroundImage: "/images/gv-rc-oval.jpg",
+        backgroundImage: "/images/group-pics/01.03.2026.group.pic.jpeg",
     }, {
         name: "Youtube",
         url: youtube.getChannelLink(),
