@@ -69,20 +69,20 @@ export default function SiteInfoBanner() {
     function NotTodayEventInfo() {
         if (hasNextEvent()) {
             let nextRaceDate = TimeUtils.getShortDateString(nextEvent!.start, false, true)
-            return InfoContent({aIcon: `fa-solid fa-calendar-day`, a: `Next race ${nextRaceDate}`, c: <SitePhone/>})
+            return InfoContent({aIcon: nextEvent!.statusIcon, a: `Next race ${nextRaceDate}`, c: <SitePhone/>})
         }
     }
 
     function TodaysEventInfo() {
         if (hasNextEvent()) {
             let opensAt = TimeUtils.getShortTimeString(nextEvent!.start);
-            return InfoContent({aIcon: `fa-solid fa-flag-checkered`, a: `${nextEvent!.title} Today!`, b: `Opens ${opensAt}`, d: <EventLiveTimeButton event={nextEvent!} />})
+            return InfoContent({aIcon: nextEvent!.statusIcon, a: `${nextEvent!.title} Today!`, b: `Opens ${opensAt}`, d: <EventLiveTimeButton event={nextEvent!} />})
         }
     }
     
     function RunningEventInfo() {
         if (hasNextEvent()) {
-            return InfoContent({aIcon: `fa-solid fa-flag-checkered`, a: `${nextEvent!.title} Open now!`, d: <EventLiveTimeButton event={nextEvent!} />})
+            return InfoContent({aIcon: nextEvent!.statusIcon, a: `${nextEvent!.title} Running now!`, d: <EventLiveTimeButton event={nextEvent!} />})
         }
     }
     

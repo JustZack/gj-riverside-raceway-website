@@ -1,7 +1,15 @@
 import API from "@/lib/api/api"
 import { Event } from "react-big-calendar"
-import { livetime } from "@/content/content"
+import { events, livetime } from "@/content/content"
+import TimeUtils from "./time"
 export default class TrackScheduleUtils {
+
+    //Gets the event agenda information based on the event date
+    static getEventAgendaByEvent(event: ScheduleEvent): any {
+        let dayOfTheWeek = TimeUtils.getDayOfTheWeek(event.start, false);
+        return events[dayOfTheWeek.toLowerCase() as keyof typeof events];
+    }
+    
     //Checks if the event was cancelled
     static eventIsCancelled(event: any): boolean {
         return event.cancelled === true
@@ -42,6 +50,19 @@ export default class TrackScheduleUtils {
         else                                    return 'upcoming'
     }
 
+    static getEventStatusText(event: ScheduleEvent): string {
+        let status: string;
+        let eventInfo = TrackScheduleUtils.getEventAgendaByEvent(event);
+        //If the event is NOT running today. use the event name from the agenda or day of the week
+        //  I.E. "Tuesday", "Saturday"
+        if (!TrackScheduleUtils.eventIsToday(event)) status = eventInfo.name
+        else {
+            status = this.getEventStatus(event);
+            status = status.charAt(0).toUpperCase() + status.slice(1); // Capitalize first letter
+        }
+        return status
+    }
+
     static getEventStatusClassByName(status: 'cancelled' | 'finished' | 'upcoming' | 'running' | 'today'): string {
         let base = `rounded min-w-[75px] flex items-center justify-center`
         if (status === 'cancelled')         return `${base} bg-red-100 text-red-800` 
@@ -59,12 +80,28 @@ export default class TrackScheduleUtils {
         else                                return '#3b82f6' // blue
     }
 
+    static getEventStatusIconByName(status: 'cancelled' | 'finished' | 'upcoming' | 'running' | 'today'): string {
+        if (status === 'cancelled')         return 'fa-solid fa-xmark-circle'
+        else if (status === 'finished')     return 'fa-solid fa-check-circle'
+        else if (status === 'running')      return 'fa-solid fa-forward'
+        else if (status === 'today')        return 'fa-solid fa-calendar-check'
+        else                                return 'fa-regular fa-calendar'
+    }
+
     static getEventStatusClass(event: ScheduleEvent): string {
-        return this.getEventStatusClassByName(this.getEventStatus(event));
+        let eventInfo = TrackScheduleUtils.getEventAgendaByEvent(event);
+        //If the event is NOT running today. use the event class from the agenda
+        //  I.E. use the tuesday or saturday class
+        if (!TrackScheduleUtils.eventIsToday(event)) return eventInfo?.chipClass || ""
+        else return this.getEventStatusClassByName(this.getEventStatus(event));
     }
 
     static getEventStatusColor(event: ScheduleEvent): string {
         return this.getEventStatusColorByName(this.getEventStatus(event));
+    }
+
+    static getEventStatusIcon(event: ScheduleEvent): string {
+        return this.getEventStatusIconByName(this.getEventStatus(event));
     }
 
     static formatEvents(rawEvents: any[]): ScheduleEvent[] {
@@ -76,8 +113,10 @@ export default class TrackScheduleUtils {
             cancelled: event.cancelled,
             description: event.description,
             status: TrackScheduleUtils.getEventStatus(event),
+            statusText: TrackScheduleUtils.getEventStatusText(event),
             statusColor: TrackScheduleUtils.getEventStatusColor(event),
             statusClass: TrackScheduleUtils.getEventStatusClass(event),
+            statusIcon: TrackScheduleUtils.getEventStatusIcon(event),
             ...event.liveTimeEvent,
             link: event.livetimeID ? livetime.getResultLink(event.livetimeID) : undefined,
         }))
@@ -110,8 +149,10 @@ export interface ScheduleEvent extends Event {
     cancelled: boolean
     description?: string
     status: 'cancelled' | 'finished' | 'upcoming' | 'running' | 'today'
+    statusText: string,
     statusColor: string
     statusClass: string
+    statusIcon: string,
     liveTimeId: number
     entries?: number
     drivers?: number
