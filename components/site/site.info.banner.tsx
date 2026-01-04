@@ -6,7 +6,6 @@ import { useState, useEffect } from 'react'
 import { socials, livetime } from '@/content/content'
 import TimeUtils from '@/lib/utils/time'
 import { SitePhoneDisplayForPractice } from './site.phone.display'
-import { TimerDisplay } from '../ui/timer'
 
 export default function SiteInfoBanner() {
     const [nextEvent, setNextEvent] = useState<ScheduleEvent | null>(null);
