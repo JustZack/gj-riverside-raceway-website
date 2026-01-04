@@ -68,3 +68,15 @@ body {
     calc(var(--text-outline-size) * -1) calc(var(--text-outline-size) * 1) 0 #000,
     calc(var(--text-outline-size) * 1) calc(var(--text-outline-size) * 1) 0 #000;
 }
+
+/* Scroll snap container - must be present on a container with scrollable content */
+.scroll-snap-container {
+  scroll-snap-type: y mandatory;
+  height: 100vh;
+  overflow-y: scroll;
+}
+
+/* Scroll snap child - must be present on each child of a scroll snap container */
+.scroll-snap-child {
+  scroll-snap-align: start;
+}

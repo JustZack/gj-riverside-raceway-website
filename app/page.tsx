@@ -13,9 +13,9 @@ import SiteInfoBanner from '@/components/site/info-banner/site.info.banner'
 
 export default function Home() {
 
-    function FullWidthRow({children, className}: {children: React.ReactNode, className?: string}) {
+    function FullWidthRow({children, className, paddingClassName = "py-4"}: {children: React.ReactNode, className?: string, paddingClassName?: string}) {
         return (
-            <Row collapsible fullWidth justify="center" align="center" className={`${className} py-4`}>
+            <Row collapsible fullWidth justify="center" align="center" className={`${className} ${paddingClassName} scroll-snap-child`}>
                 {children}
             </Row>
         )    
@@ -47,9 +47,12 @@ export default function Home() {
     // Main body of the home page
     function SiteHomeBody() {
         return (
-            <>
+            <section className="scroll-snap-container">
                 {/* Home page banner is identical for any screen size*/}
-                <SiteHomeBanner />
+                <FullWidthRow className={`site-home-banner`} paddingClassName=''>
+                    <SiteHomeBanner />
+                </FullWidthRow>
+
                 {/* Dynamic Info Row is identical for any screen size */}
                 <FullWidthRow className={`track-info ${getNextRowClass(true)}`}>
                     <SiteInfoBanner/>
@@ -100,7 +103,7 @@ export default function Home() {
                 <FullWidthRow className="track-socials">
                     <TrackSocialsContainer />
                 </FullWidthRow>
-            </>
+            </section>
         )
     }
 
