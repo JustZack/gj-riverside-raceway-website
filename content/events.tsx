@@ -17,9 +17,9 @@ export const events: Record<string, Event> = {
         additional: 10,
         qualifiers: 2,
         mains: 1,
-        doorsOpen: "4:00pm",
-        registrationClose: "6:00pm",
-        racingStart: "6:30pm",
+        doorsOpen: "16:00",
+        registrationClose: "18:00",
+        racingStart: "18:30",
         
     },
     saturday: {
@@ -32,9 +32,9 @@ export const events: Record<string, Event> = {
         additional: 10,
         qualifiers: 3,
         mains: 1,
-        doorsOpen: "9:30am",
-        registrationClose: "10:30am",
-        racingStart: "11:00am"
+        doorsOpen: "09:30",
+        registrationClose: "10:30",
+        racingStart: "11:00"
     }
 }
 

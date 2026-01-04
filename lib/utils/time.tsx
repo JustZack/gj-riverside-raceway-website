@@ -5,6 +5,29 @@ export type DateFormat = 'MM/dd/yyyy' | 'dd/MM/yyyy' | 'yyyy-MM-dd' | 'MMM dd, y
 
 //Houses common time and date utility functions
 export default class TimeUtils {
+    static getDateWithTime(date: Date, hours: number, minutes: number, seconds: number = 0, milliseconds: number = 0): Date {
+        let newDate = new Date(date);
+        newDate.setHours(hours, minutes, seconds, milliseconds);
+        return newDate;
+    }
+
+    static getDateWithStringTime(date: Date, timeStr: string | undefined): Date {
+        if (!timeStr) return date;
+        let [hours, minutes] = timeStr.split(':').map(Number);
+        return this.getDateWithTime(date, hours, minutes);
+    }
+
+
+    static getMidnight(date: Date, addDays: number = 0): Date {
+        let newDate = this.getDateWithTime(date, 0, 0, 0, 0);
+        if (addDays !== 0) newDate.setDate(newDate.getDate() + addDays);
+        return newDate;
+    }
+
+    static getMidnightToday(): Date {
+        return this.getMidnight(new Date());
+    }
+
     static getDayOfTheWeek(date: Date, abbreviation: boolean): string {
         return format(date, abbreviation ? 'EEE' : 'EEEE');
     }
@@ -15,6 +38,12 @@ export default class TimeUtils {
 
     static formatTime(date: Date, formatStr: TimeFormat = 'hh:mm:ss'): string {
         return format(date, formatStr);
+    }
+
+    static formatTimeFromString(timeStr: string, formatStr: TimeFormat = 'h:mma'): string {
+        let midnight = this.getMidnightToday();
+        let dateWithTime = this.getDateWithStringTime(midnight, timeStr);
+        return this.getShortTimeString(dateWithTime);
     }
 
     static formatDateTime(date: Date, dateFormat: DateFormat = 'MM/do/yyyy', timeFormat: TimeFormat = 'hh:mm:ss'): string {

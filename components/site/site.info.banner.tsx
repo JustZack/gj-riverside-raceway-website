@@ -61,6 +61,7 @@ export default function SiteInfoBanner() {
     function hasUpcomingEventNotToday(): boolean { return hasNextEvent() && TrackScheduleUtils.eventIsUpcoming(nextEvent); }
     function hasUpcomingEventToday(): boolean { return hasEventToday() && nextEvent?.status !== 'running'; }
     function hasOpenEventToday(): boolean { return hasEventToday() && nextEvent?.status === 'running'; }
+    function hasRegisteringEventToday(): boolean { return hasEventToday() && nextEvent?.status === 'registering'; }
 
     function loadingEventInfo() {
         return InfoContent({aIcon: `fa-solid fa-rotate fa-spin`, a: `Checking for upcoming races . . .`, c: <SitePhone/>})
@@ -79,6 +80,13 @@ export default function SiteInfoBanner() {
             return InfoContent({aIcon: nextEvent!.statusIcon, a: `${nextEvent!.title} Today!`, b: `Opens ${opensAt}`, d: <EventLiveTimeButton event={nextEvent!} />})
         }
     }
+
+    function RegisteringEventInfo() {
+        if (hasNextEvent()) {
+            let opensAt = TimeUtils.getShortTimeString(nextEvent!.start);
+            return InfoContent({aIcon: nextEvent!.statusIcon, a: `${nextEvent!.title} Registering now!`, b: `Opens ${opensAt}`, d: <EventLiveTimeButton event={nextEvent!} />})
+        }
+    }
     
     function RunningEventInfo() {
         if (hasNextEvent()) {
@@ -92,13 +100,13 @@ export default function SiteInfoBanner() {
 
     function SiteInfo() {
         if (isLoading())                        return loadingEventInfo();
+        else if (hasRegisteringEventToday())    return RegisteringEventInfo();
         else if (hasOpenEventToday())           return RunningEventInfo();
         else if (hasUpcomingEventToday())       return TodaysEventInfo();
         else if (hasUpcomingEventNotToday())    return NotTodayEventInfo();
         else                                    return DefaultInfo();
     }
 
-    console.log(`Rendering SiteInfoBanner, nextEvent: ${nextEvent?.title || 'none'}`);
     return (
         <>
             <Column>

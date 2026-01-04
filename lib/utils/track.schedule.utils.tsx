@@ -1,56 +1,72 @@
 import API from "@/lib/api/api"
-import { Event } from "react-big-calendar"
-import { events, livetime } from "@/content/content"
-import TimeUtils from "./time"
+import { Event as RBCEvent } from "react-big-calendar"
+import { events, Event, livetime } from "@/content/content"
+import TimeUtils from "@/lib/utils/time"
+export type ScheduleEventStatus = 'cancelled' | 'finished' | 'upcoming' | 'registering' | 'running' | 'today';
 export default class TrackScheduleUtils {
 
     //Gets the event agenda information based on the event date
-    static getEventAgendaByEvent(event: ScheduleEvent): any {
+    static getEventAgendaByEvent(event: ScheduleEvent): Event {
         let dayOfTheWeek = TimeUtils.getDayOfTheWeek(event.start, false);
         return events[dayOfTheWeek.toLowerCase() as keyof typeof events];
     }
-    
+
     //Checks if the event was cancelled
-    static eventIsCancelled(event: any): boolean {
+    static eventIsCancelled(event: ScheduleEvent): boolean {
         return event.cancelled === true
     }
     //Checks if the event has finished (based on end date)
-    static eventIsFinished(event: any): boolean {
-        const endDate = new Date(event.end)
-        const today = new Date()
-        // Zero out time for both dates
-        endDate.setHours(0, 0, 0, 0)
-        today.setHours(0, 0, 0, 0)
+    static eventIsFinished(event: ScheduleEvent): boolean {
+        const endDate = TimeUtils.getMidnight(new Date(event.end));
+        const today = TimeUtils.getMidnightToday();
         return endDate < today
     }
-    //Checks if the event is currently running (based on start and end date)
+
+    //Based on the agenda, check if the event is in the "registering" phase
+    static eventIsRegistering(event: ScheduleEvent): boolean {
+        let eventInfo = TrackScheduleUtils.getEventAgendaByEvent(event);
+        let isRegistering = false;
+        if (eventInfo) {
+            const now = new Date();
+            const startDate = new Date(event.start);
+            const opensAt = TimeUtils.getDateWithStringTime(startDate, eventInfo.doorsOpen);
+            const registeringEnds = TimeUtils.getDateWithStringTime(startDate, eventInfo.racingStart);
+            isRegistering = now >= opensAt && now < registeringEnds;
+        }
+        return isRegistering
+    }
+        //Based on the agenda, check if the event is in the "running" phase
     static eventIsRunning(event: any): boolean {
-        const now = new Date();
-        // Start of tomorrow (midnight)
-        let tomorrowAtMidnight = new Date();
-        tomorrowAtMidnight.setDate(tomorrowAtMidnight.getDate() + 1);
-        tomorrowAtMidnight.setHours(0, 0, 0, 0);
-        const startDate = new Date(event.start);
-        return now >= startDate && now < tomorrowAtMidnight;
+        let eventInfo = TrackScheduleUtils.getEventAgendaByEvent(event);
+        let isRunning = false;
+        if (eventInfo) {
+            const now = new Date();
+            const startDate = new Date(event.start);
+            const raceStart = TimeUtils.getDateWithStringTime(startDate, eventInfo.racingStart);
+            const racingEnds = TimeUtils.getMidnight(startDate, 1);
+            isRunning = now >= raceStart && now < racingEnds;
+        }
+        return isRunning
     }
     //Checks if the event is happening today
     static eventIsToday(event: any): boolean {
-        return (new Date()).toDateString() === (new Date(event.start)).toDateString()
+        return TimeUtils.getMidnightToday().toDateString() === TimeUtils.getMidnight(new Date(event.start)).toDateString()
     }
     //Checks if the event is upcoming (based on start date)
     static eventIsUpcoming(event: any): boolean {
         return new Date(event.start) > new Date()
     }
 
-    static getEventStatus(event: ScheduleEvent): 'cancelled' | 'finished' | 'upcoming' | 'running' | 'today' {
+    static getEventStatus(event: any): ScheduleEventStatus {
         if (this.eventIsCancelled(event))       return 'cancelled'
         else if (this.eventIsFinished(event))   return 'finished'
+        else if (this.eventIsRegistering(event))return 'registering'
         else if (this.eventIsRunning(event))    return 'running'
         else if (this.eventIsToday(event))      return 'today'
         else                                    return 'upcoming'
     }
 
-    static getEventStatusText(event: ScheduleEvent): string {
+    static getEventStatusText(event: any): string {
         let status: string;
         let eventInfo = TrackScheduleUtils.getEventAgendaByEvent(event);
         //If the event is NOT running today. use the event name from the agenda or day of the week
@@ -63,26 +79,29 @@ export default class TrackScheduleUtils {
         return status
     }
 
-    static getEventStatusClassByName(status: 'cancelled' | 'finished' | 'upcoming' | 'running' | 'today'): string {
+    static getEventStatusClassByName(status: ScheduleEventStatus): string {
         let base = `rounded min-w-[75px] flex items-center justify-center`
         if (status === 'cancelled')         return `${base} bg-red-100 text-red-800` 
         else if (status === 'finished')     return `${base} bg-green-100 text-green-800`
+        else if (status === 'registering')  return `${base} bg-checkerboard text-white font-bold text-outline-black `
         else if (status === 'running')      return `${base} bg-checkerboard text-white font-bold text-outline-black `
         else if (status === 'today')        return `${base} bg-checkerboard text-white font-bold text-outline-black `
         else                                return `${base} bg-blue-100 text-blue-800`
     }
 
-    static getEventStatusColorByName(status: 'cancelled' | 'finished' | 'upcoming' | 'running' | 'today'): string {
+    static getEventStatusColorByName(status: ScheduleEventStatus): string {
         if (status === 'cancelled')         return '#ef4444' // red
         else if (status === 'finished')     return '#22c55e' // green
+        else if (status === 'registering')  return '#ffffff' // white
         else if (status === 'running')      return '#ffffff' // white
         else if (status === 'today')        return '#ffffff' // white
         else                                return '#3b82f6' // blue
     }
 
-    static getEventStatusIconByName(status: 'cancelled' | 'finished' | 'upcoming' | 'running' | 'today'): string {
+    static getEventStatusIconByName(status: ScheduleEventStatus): string {
         if (status === 'cancelled')         return 'fa-solid fa-xmark-circle'
         else if (status === 'finished')     return 'fa-solid fa-check-circle'
+        else if (status === 'registering')  return 'fa-solid fa-pen'
         else if (status === 'running')      return 'fa-solid fa-forward'
         else if (status === 'today')        return 'fa-solid fa-calendar-check'
         else                                return 'fa-solid fa-calendar-day'
@@ -141,14 +160,14 @@ export default class TrackScheduleUtils {
     }
 }
 
-export interface ScheduleEvent extends Event {
+export interface ScheduleEvent extends RBCEvent {
     id: number
     title: string
     start: Date
     end: Date
     cancelled: boolean
     description?: string
-    status: 'cancelled' | 'finished' | 'upcoming' | 'running' | 'today'
+    status: ScheduleEventStatus
     statusText: string,
     statusColor: string
     statusClass: string
