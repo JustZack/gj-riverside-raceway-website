@@ -36,42 +36,34 @@ export default function SiteInfoBanner() {
 
     function SitePhone() { return (<SitePhoneDisplayForPractice className="px-4"/>) }
 
-    function isLoading(): boolean { return loading; }
-    function hasNextEvent(): boolean { return nextEvent !== null; }
-    function hasEventToday(): boolean { return hasNextEvent() && TrackScheduleUtils.eventIsToday(nextEvent);  }
-    function hasUpcomingEventNotToday(): boolean { return hasNextEvent() && TrackScheduleUtils.eventIsUpcoming(nextEvent); }
-    function hasUpcomingEventToday(): boolean { return hasEventToday() && nextEvent?.status !== 'running'; }
-    function hasOpenEventToday(): boolean { return hasEventToday() && nextEvent?.status === 'running'; }
-    function hasRegisteringEventToday(): boolean { return hasEventToday() && nextEvent?.status === 'registering'; }
+    function isLoading(): boolean                   { return loading; }
+    function hasNextEvent(): boolean                { return nextEvent !== null; }
+    function hasEventToday(): boolean               { return hasNextEvent() && TrackScheduleUtils.eventIsToday(nextEvent);  }
+    function hasUpcomingEventNotToday(): boolean    { return hasNextEvent() && TrackScheduleUtils.eventIsUpcoming(nextEvent); }
+    function hasUpcomingEventToday(): boolean       { return hasEventToday() && nextEvent?.status !== 'running'; }
+    function hasOpenEventToday(): boolean           { return hasEventToday() && nextEvent?.status === 'running'; }
+    function hasRegisteringEventToday(): boolean    { return hasEventToday() && nextEvent?.status === 'registering'; }
 
     function loadingEventInfo() {
         return <SiteInfoContent aIcon={`fa-solid fa-rotate fa-spin`} a={`Checking for upcoming races . . .`} c={<SitePhone/>} />
     }
 
     function RegisteringEventInfo() {
-        if (hasNextEvent()) {
-            return <SiteInfoContent aIcon={nextEvent!.statusIcon} a={`Registering: ${nextEvent!.title}!`} d={<EventLiveTimeButton event={nextEvent!} />} />
-        }
+        return <SiteInfoContent aIcon={nextEvent!.statusIcon} a={`Registering: ${nextEvent!.title}!`} d={<EventLiveTimeButton event={nextEvent!} />} />
     }
         
     function RunningEventInfo() {
-        if (hasNextEvent()) {
-            return <SiteInfoContent aIcon={nextEvent!.statusIcon} a={`Running: ${nextEvent!.title}!`} d={<EventLiveTimeButton event={nextEvent!} />} />
-        }
+        return <SiteInfoContent aIcon={nextEvent!.statusIcon} a={`Running: ${nextEvent!.title}!`} d={<EventLiveTimeButton event={nextEvent!} />} />
     }
 
     function TodaysEventInfo() {
-        if (hasNextEvent()) {
-            let opensAt = TimeUtils.getShortTimeString(nextEvent!.start);
-            return <SiteInfoContent aIcon={nextEvent!.statusIcon} a={`${nextEvent!.title} today!`} b={`Registration Opens@${opensAt}`} d={<EventLiveTimeButton event={nextEvent!} />} />
-        }
+        let opensAt = TimeUtils.getShortTimeString(nextEvent!.start);
+        return <SiteInfoContent aIcon={nextEvent!.statusIcon} a={`${nextEvent!.title} today!`} b={`Registration Opens@${opensAt}`} d={<EventLiveTimeButton event={nextEvent!} />} />
     }
 
     function NotTodayEventInfo() {
-        if (hasNextEvent()) {
-            let nextRaceDate = TimeUtils.getShortDateString(nextEvent!.start, false, true)
-            return <SiteInfoContent aIcon={nextEvent!.statusIcon} a={`Next race ${nextRaceDate}`} c={<SitePhone/>} />
-        }
+        let nextRaceDate = TimeUtils.getShortDateString(nextEvent!.start, false, true)
+        return <SiteInfoContent aIcon={nextEvent!.statusIcon} a={`Next race ${nextRaceDate}`} c={<SitePhone/>} />
     }
 
     function DefaultInfo() {
