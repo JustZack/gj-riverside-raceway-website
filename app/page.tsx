@@ -9,7 +9,7 @@ import TrackUpcomingSchedule from '@/components/site/schedule/track.upcoming.sch
 import RacePricing from '@/components/site/pricing/race.pricing'
 import RaceAgenda from '@/components/site/agenda/race.agenda'
 import RaceClasses from '@/components/site/classes/race.classes'
-import SiteInfoBanner from '@/components/site/site.info.banner'
+import SiteInfoBanner from '@/components/site/info-banner/site.info.banner'
 
 export default function Home() {
 

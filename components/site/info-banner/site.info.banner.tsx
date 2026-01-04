@@ -1,11 +1,12 @@
 'use client'
 
-import { Column, Button, Row, ContentWithIcon } from '@/components/ui/ui'
+import { Column, Button, Row } from '@/components/ui/ui'
 import TrackScheduleUtils, { ScheduleEvent } from '@/lib/utils/track.schedule.utils'
 import { useState, useEffect } from 'react'
 import { socials, livetime } from '@/content/content'
 import TimeUtils from '@/lib/utils/time'
-import { SitePhoneDisplayForPractice } from './site.phone.display'
+import { SitePhoneDisplayForPractice } from '../site.phone.display'
+import SiteInfoContent from './site.info.content'
 
 export default function SiteInfoBanner() {
     const [loading, setLoading] = useState<boolean>(true);
@@ -14,26 +15,6 @@ export default function SiteInfoBanner() {
         setNextEvent(event[0] || null);
         setLoading(false);
     }, true, 1), []);
-
-    type InfoContentProps = {
-        aIcon: string;
-        a: React.JSX.Element | string;
-        b?: React.JSX.Element | string;
-        c?: React.JSX.Element | string;
-        d?: React.JSX.Element | string;
-    }
-    function InfoContent({aIcon, a, b, c, d}: InfoContentProps) {
-        return (
-            <>
-                <span className="font-bold text-xl">
-                    <ContentWithIcon icon={aIcon}>{a}</ContentWithIcon>
-                </span>
-                {b && (<span className="font-bold text-xl">{b}</span>)}
-                {c && (<span className="text-md">{c}</span>)}
-                {d && (<span className="text-sm">{d}</span>)}
-            </>
-        )
-    }
 
     let livetimeSocial = socials.find(social => social.name === "LiveTime RC")!;
     function EventLiveTimeButton({event}: {event: ScheduleEvent}) {
@@ -64,37 +45,37 @@ export default function SiteInfoBanner() {
     function hasRegisteringEventToday(): boolean { return hasEventToday() && nextEvent?.status === 'registering'; }
 
     function loadingEventInfo() {
-        return InfoContent({aIcon: `fa-solid fa-rotate fa-spin`, a: `Checking for upcoming races . . .`, c: <SitePhone/>})
+        return <SiteInfoContent aIcon={`fa-solid fa-rotate fa-spin`} a={`Checking for upcoming races . . .`} c={<SitePhone/>} />
     }
 
-    function NotTodayEventInfo() {
+    function RegisteringEventInfo() {
         if (hasNextEvent()) {
-            let nextRaceDate = TimeUtils.getShortDateString(nextEvent!.start, false, true)
-            return InfoContent({aIcon: nextEvent!.statusIcon, a: `Next race ${nextRaceDate}`, c: <SitePhone/>})
+            return <SiteInfoContent aIcon={nextEvent!.statusIcon} a={`Registering: ${nextEvent!.title}!`} d={<EventLiveTimeButton event={nextEvent!} />} />
+        }
+    }
+        
+    function RunningEventInfo() {
+        if (hasNextEvent()) {
+            return <SiteInfoContent aIcon={nextEvent!.statusIcon} a={`Running: ${nextEvent!.title}!`} d={<EventLiveTimeButton event={nextEvent!} />} />
         }
     }
 
     function TodaysEventInfo() {
         if (hasNextEvent()) {
             let opensAt = TimeUtils.getShortTimeString(nextEvent!.start);
-            return InfoContent({aIcon: nextEvent!.statusIcon, a: `${nextEvent!.title} today!`, b: `Registration Opens@${opensAt}`, d: <EventLiveTimeButton event={nextEvent!} />})
+            return <SiteInfoContent aIcon={nextEvent!.statusIcon} a={`${nextEvent!.title} today!`} b={`Registration Opens@${opensAt}`} d={<EventLiveTimeButton event={nextEvent!} />} />
         }
     }
 
-    function RegisteringEventInfo() {
+    function NotTodayEventInfo() {
         if (hasNextEvent()) {
-            return InfoContent({aIcon: nextEvent!.statusIcon, a: `Registering: ${nextEvent!.title}!`, d: <EventLiveTimeButton event={nextEvent!} />})
+            let nextRaceDate = TimeUtils.getShortDateString(nextEvent!.start, false, true)
+            return <SiteInfoContent aIcon={nextEvent!.statusIcon} a={`Next race ${nextRaceDate}`} c={<SitePhone/>} />
         }
     }
-    
-    function RunningEventInfo() {
-        if (hasNextEvent()) {
-            return InfoContent({aIcon: nextEvent!.statusIcon, a: `Running: ${nextEvent!.title}!`, d: <EventLiveTimeButton event={nextEvent!} />})
-        }
-    }
-    
+
     function DefaultInfo() {
-        return InfoContent({aIcon: `fa-solid fa-info-circle`, a: `No races scheduled, check back soon!`, c: <SitePhone/>})
+        return <SiteInfoContent aIcon={`fa-solid fa-info-circle`} a={`No races scheduled, check back soon!`} c={<SitePhone/>} />
     }
 
     function SiteInfo() {
