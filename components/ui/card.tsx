@@ -1,4 +1,5 @@
 import React from 'react'
+import Image from 'next/image'
 
 type CardProps = {
   children: React.ReactNode
@@ -55,16 +56,24 @@ export default function Card({
       }}
     >
       {backgroundImage && (
-        <div
-          className="absolute inset-0 -z-10"
-          style={{
-            backgroundImage: `linear-gradient(${startBackgroundImageGradient()}, ${endBackgroundImageGradient()}), url(${backgroundImage})`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            backgroundRepeat: 'no-repeat',
-            filter: `blur(${backgroundBlur}px)`
-          }}
-        />
+        <>
+          {/* Optimized background image with next/image */}
+          <div className="absolute inset-0 -z-20 w-full h-full">
+            <Image
+              src={backgroundImage} alt="Card background" fill
+              style={{ objectFit: 'cover', filter: `blur(${backgroundBlur}px)` }}
+              priority sizes="100vw"
+            />
+          </div>
+          {/* Overlay gradient for color blending */}
+          <div
+            className="absolute inset-0 -z-10 pointer-events-none"
+            style={{
+              background: `linear-gradient(${startBackgroundImageGradient()}, ${endBackgroundImageGradient()})`,
+              borderRadius: `${borderRadius}px`
+            }}
+          />
+        </>
       )}
       {children}
     </div>
