@@ -77,20 +77,19 @@ export default function SiteInfoBanner() {
     function TodaysEventInfo() {
         if (hasNextEvent()) {
             let opensAt = TimeUtils.getShortTimeString(nextEvent!.start);
-            return InfoContent({aIcon: nextEvent!.statusIcon, a: `${nextEvent!.title} Today!`, b: `Opens ${opensAt}`, d: <EventLiveTimeButton event={nextEvent!} />})
+            return InfoContent({aIcon: nextEvent!.statusIcon, a: `${nextEvent!.title} today!`, b: `Registration Opens@${opensAt}`, d: <EventLiveTimeButton event={nextEvent!} />})
         }
     }
 
     function RegisteringEventInfo() {
         if (hasNextEvent()) {
-            let opensAt = TimeUtils.getShortTimeString(nextEvent!.start);
-            return InfoContent({aIcon: nextEvent!.statusIcon, a: `${nextEvent!.title} Registering now!`, b: `Opens ${opensAt}`, d: <EventLiveTimeButton event={nextEvent!} />})
+            return InfoContent({aIcon: nextEvent!.statusIcon, a: `Registering: ${nextEvent!.title}!`, d: <EventLiveTimeButton event={nextEvent!} />})
         }
     }
     
     function RunningEventInfo() {
         if (hasNextEvent()) {
-            return InfoContent({aIcon: nextEvent!.statusIcon, a: `${nextEvent!.title} Running now!`, d: <EventLiveTimeButton event={nextEvent!} />})
+            return InfoContent({aIcon: nextEvent!.statusIcon, a: `Running: ${nextEvent!.title}!`, d: <EventLiveTimeButton event={nextEvent!} />})
         }
     }
     

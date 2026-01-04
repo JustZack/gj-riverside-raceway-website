@@ -101,7 +101,7 @@ export default class TrackScheduleUtils {
     static getEventStatusIconByName(status: ScheduleEventStatus): string {
         if (status === 'cancelled')         return 'fa-solid fa-xmark-circle'
         else if (status === 'finished')     return 'fa-solid fa-check-circle'
-        else if (status === 'registering')  return 'fa-solid fa-pen'
+        else if (status === 'registering')  return 'fa-solid fa-list-check'
         else if (status === 'running')      return 'fa-solid fa-forward'
         else if (status === 'today')        return 'fa-solid fa-calendar-check'
         else                                return 'fa-solid fa-calendar-day'
