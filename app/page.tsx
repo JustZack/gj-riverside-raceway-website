@@ -29,6 +29,12 @@ export default function Home() {
         return null;
     }
 
+    // Feature flag for showing classes section based on query string
+    function doShowClasses(): boolean {
+        let showClassesParam = getQueryParam('classes');
+        return showClassesParam === 'true';
+    }
+
     let whiteRow = true;
     //Easily alternate row colors
     function getNextRowClass(whiteOverride: boolean = false): string {
@@ -38,12 +44,7 @@ export default function Home() {
         return rowClass;
     }
 
-    // Feature flag for showing classes section based on query string
-    function doShowClasses(): boolean {
-        let showClassesParam = getQueryParam('classes');
-        return showClassesParam === 'true';
-    }
-
+    // Main body of the home page
     function SiteHomeBody() {
         return (
             <>
