@@ -1,12 +1,12 @@
 'use client'
 
-import { Column, Button, Row } from '@/components/ui/ui'
+import { Column, Row } from '@/components/ui/ui'
 import TrackScheduleUtils, { ScheduleEvent } from '@/lib/utils/track.schedule.utils'
 import { useState, useEffect } from 'react'
-import { socials, livetime } from '@/content/content'
 import TimeUtils from '@/lib/utils/time'
 import { SitePhoneDisplayForPractice } from '../site.phone.display'
 import SiteInfoContent from './site.info.content'
+import LiveTimeEventButton from '../buttons/livetime.event.button'
 
 export default function SiteInfoBanner() {
     const [loading, setLoading] = useState<boolean>(true);
@@ -16,31 +16,13 @@ export default function SiteInfoBanner() {
         setLoading(false);
     }, true, 1), []);
 
-    let livetimeSocial = socials.find(social => social.name === "LiveTime RC")!;
-    function EventLiveTimeButton({event}: {event: ScheduleEvent}) {
-        return (
-            <Button
-                icon={livetimeSocial.buttonIcon} 
-                onClick={() => window.open(event!.link!, '_blank', 'noopener,noreferrer')}
-                textColor={"#ffffff"}
-                backgroundColor={livetimeSocial.primaryColor}
-                borderColor={livetimeSocial.primaryColor}
-                hoverTextColor={livetimeSocial.primaryColor}
-                hoverBackgroundColor="rgba(255, 255, 255, 0.8)"
-                hoverBorderColor={livetimeSocial.primaryColor}
-                height={35}>
-                Results on {livetimeSocial.name}
-            </Button>
-        )
-    }
-
     function SitePhone() { return (<SitePhoneDisplayForPractice className="px-4"/>) }
 
     function isLoading(): boolean                   { return loading; }
     function hasNextEvent(): boolean                { return nextEvent !== null; }
     function hasEventToday(): boolean               { return hasNextEvent() && TrackScheduleUtils.eventIsToday(nextEvent);  }
     function hasUpcomingEventNotToday(): boolean    { return hasNextEvent() && TrackScheduleUtils.eventIsUpcoming(nextEvent); }
-    function hasUpcomingEventToday(): boolean       { return hasEventToday() && nextEvent?.status !== 'running'; }
+    function hasUpcomingEventToday(): boolean       { return hasEventToday() && nextEvent?.status === 'today'; }
     function hasOpenEventToday(): boolean           { return hasEventToday() && nextEvent?.status === 'running'; }
     function hasRegisteringEventToday(): boolean    { return hasEventToday() && nextEvent?.status === 'registering'; }
 
@@ -49,16 +31,16 @@ export default function SiteInfoBanner() {
     }
 
     function RegisteringEventInfo() {
-        return <SiteInfoContent aIcon={nextEvent!.statusIcon} a={`Registering: ${nextEvent!.title}!`} d={<EventLiveTimeButton event={nextEvent!} />} />
+        return <SiteInfoContent aIcon={nextEvent!.statusIcon} a={`Registering: ${nextEvent!.title}!`} d={<LiveTimeEventButton event={nextEvent!} />} />
     }
         
     function RunningEventInfo() {
-        return <SiteInfoContent aIcon={nextEvent!.statusIcon} a={`Running: ${nextEvent!.title}!`} d={<EventLiveTimeButton event={nextEvent!} />} />
+        return <SiteInfoContent aIcon={nextEvent!.statusIcon} a={`Running: ${nextEvent!.title}!`} d={<LiveTimeEventButton event={nextEvent!} />} />
     }
 
     function TodaysEventInfo() {
         let opensAt = TimeUtils.getShortTimeString(nextEvent!.start);
-        return <SiteInfoContent aIcon={nextEvent!.statusIcon} a={`${nextEvent!.title} today!`} b={`Registration Opens@${opensAt}`} d={<EventLiveTimeButton event={nextEvent!} />} />
+        return <SiteInfoContent aIcon={nextEvent!.statusIcon} a={`${nextEvent!.title} today!`} b={`Registration Opens@${opensAt}`} d={<LiveTimeEventButton event={nextEvent!} />} />
     }
 
     function NotTodayEventInfo() {
