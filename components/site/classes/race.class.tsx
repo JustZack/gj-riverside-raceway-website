@@ -2,7 +2,8 @@
 
 import React, { useRef, useEffect, useState } from 'react';
 import { EventClass } from '@/content/content';
-import { Button, ContentWithIcon } from '@/components/ui/ui';
+import { Button, Card, ContentWithIcon } from '@/components/ui/ui';
+import BriefContentHeader from '../brief/brief.content.header';
 
 let openRulesId: string | null = null;
 export default function RaceClass({eventClass}: {eventClass: EventClass}) {
@@ -72,14 +73,13 @@ export default function RaceClass({eventClass}: {eventClass: EventClass}) {
 
             <div className={`overflow-hidden transition-all duration-300 ease-in-out ${isOpen && eventClass.rules ? 'max-h-[1000px] opacity-100' : 'max-h-0 opacity-0'}`}>
                 {showContent && eventClass.rules && (
-                    <div className="bg-white border border-gray-200 rounded shadow p-4 max-w-[96vw] min-w-[16rem] text-sm mx-auto">
-                        {false && <div className="font-bold mb-2 text-left">Rules</div>}
+                    <Card shadow className="text-sm mx-auto">
                         {eventClass.rules.map((rule, idx) => (
                             <ContentWithIcon key={idx} icon={getIconFromType(rule.type)}>
                                 <span className="font-semibold capitalize">{rule.type}:</span> {rule.description}
                             </ContentWithIcon>
                         ))}
-                    </div>
+                    </Card>
                 )}
             </div>
         </>
