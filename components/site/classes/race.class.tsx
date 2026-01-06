@@ -3,12 +3,10 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { EventClass } from '@/content/content';
 import { Button, Card, ContentWithIcon } from '@/components/ui/ui';
-import BriefContentHeader from '../brief/brief.content.header';
 
 let openRulesId: string | null = null;
 export default function RaceClass({eventClass}: {eventClass: EventClass}) {
     // Use a custom event to coordinate which rule set is open globally
-    const rulesButtonRef = useRef<HTMLSpanElement>(null);
     const isOpen = openRulesId === eventClass.id;
     const [showContent, setShowContent] = useState(isOpen);
 
@@ -23,11 +21,8 @@ export default function RaceClass({eventClass}: {eventClass: EventClass}) {
     }, [isOpen]);
 
     function handleToggleRules() {
-        if (openRulesId === eventClass.id) {
-            openRulesId = null;
-        } else {
-            openRulesId = eventClass.id;
-        }
+        if (openRulesId === eventClass.id) openRulesId = null;
+        else openRulesId = eventClass.id;
         window.dispatchEvent(new CustomEvent('rules-toggle'));
     }
 
@@ -66,7 +61,7 @@ export default function RaceClass({eventClass}: {eventClass: EventClass}) {
                         backgroundColor='red' hoverBackgroundColor='white'
                         textColor='white' hoverTextColor='red'
                         borderColor='red' hoverBorderColor='red'>
-                        {isOpen ? 'Close Rules' : 'Open Rules'}
+                        {isOpen ? 'Close Rules' : 'Show Rules'}
                     </Button>
                 </div>
             </ContentWithIcon>

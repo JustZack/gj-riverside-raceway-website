@@ -31,16 +31,16 @@ export default function SiteInfoBanner() {
     }
 
     function RegisteringEventInfo() {
-        return <SiteInfoContent aIcon={nextEvent!.statusIcon} a={`Registering: ${nextEvent!.title}!`} d={<LiveTimeEventButton event={nextEvent!} />} />
+        return <SiteInfoContent aIcon={nextEvent!.statusIcon} a={`Registration open for todays race!`} d={<LiveTimeEventButton event={nextEvent!} />} />
     }
         
     function RunningEventInfo() {
-        return <SiteInfoContent aIcon={nextEvent!.statusIcon} a={`Running: ${nextEvent!.title}!`} d={<LiveTimeEventButton event={nextEvent!} />} />
+        return <SiteInfoContent aIcon={nextEvent!.statusIcon} a={`${nextEvent!.title} in progress!`} d={<LiveTimeEventButton event={nextEvent!} />} />
     }
 
     function TodaysEventInfo() {
         let opensAt = TimeUtils.getShortTimeString(nextEvent!.start);
-        return <SiteInfoContent aIcon={nextEvent!.statusIcon} a={`${nextEvent!.title} today!`} b={`Registration Opens@${opensAt}`} d={<LiveTimeEventButton event={nextEvent!} />} />
+        return <SiteInfoContent aIcon={nextEvent!.statusIcon} a={`${nextEvent!.title} today!`} b={`Doors Opens at ${opensAt}`} d={<LiveTimeEventButton event={nextEvent!} />} />
     }
 
     function NotTodayEventInfo() {
