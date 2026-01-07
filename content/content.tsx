@@ -9,7 +9,7 @@ import { livetime } from '@/content/livetime'
 import { about } from '@/content/about';
 import { events, Event } from '@/content/events';
 import { products, Product } from '@/content/products';
-import { eventClasses, EventClass } from './event.classes'
+import { eventClasses, EventClass, EventClassRule } from './event.classes'
 import { bannerImages, BannerImage } from './banner.images'
 
 export { 
@@ -25,4 +25,4 @@ export {
     bannerImages
 }
 
-export type { Event, Product, EventClass, BannerImage }
+export type { Event, Product, EventClass, EventClassRule, BannerImage }

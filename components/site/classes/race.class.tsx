@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useRef, useEffect, useState } from 'react';
-import { EventClass } from '@/content/content';
+import { EventClass, EventClassRule } from '@/content/content';
 import { Button, Card, ContentWithIcon } from '@/components/ui/ui';
 
 let openRulesId: string | null = null;
@@ -51,6 +51,33 @@ export default function RaceClass({eventClass}: {eventClass: EventClass}) {
         }
     }
 
+    function ClassRuleSet(ruleSet: EventClassRule, idx: number) {
+        if (ruleSet && ((ruleSet.rules && ruleSet.rules.length > 0) || ruleSet.rule)) {
+            if (ruleSet.rule) {
+                return (
+                    <ContentWithIcon key={idx} icon={getIconFromType(ruleSet.type)}>
+                        <span className="font-semibold capitalize">{ruleSet.type}:</span> {ruleSet.rule}
+                    </ContentWithIcon>
+                )
+            } else if (ruleSet.rules) {
+                return (
+                    <ContentWithIcon key={idx} icon={getIconFromType(ruleSet.type)}>
+                        <div className="mb-4">
+                            <span className="font-semibold capitalize">{ruleSet.type}:</span>
+                            <ul className="list-disc list-inside mt-1">
+                                {ruleSet.rules!.map((r, idx) => (
+                                    <li key={idx}>{r}</li>
+                                ))}
+                            </ul>
+                        </div>
+                    </ContentWithIcon>
+                )
+            } 
+        } else {
+            return (<i className="font-semibold capitalize">No rules defined for this class.</i>)
+        }
+    }
+
     return (
         <>
             <ContentWithIcon icon={eventClass.icon}>
@@ -66,13 +93,11 @@ export default function RaceClass({eventClass}: {eventClass: EventClass}) {
                 </div>
             </ContentWithIcon>
 
-            <div className={`overflow-hidden transition-all duration-300 ease-in-out ${isOpen && eventClass.rules ? 'max-h-[1000px] opacity-100' : 'max-h-0 opacity-0'}`}>
+            <div className={`transition-all duration-300 ease-in-out ${isOpen && eventClass.rules ? 'max-h-[5000px] opacity-100' : 'max-h-0 opacity-0'}`}>
                 {showContent && eventClass.rules && (
                     <Card shadow className="text-sm mx-auto">
-                        {eventClass.rules.map((rule, idx) => (
-                            <ContentWithIcon key={idx} icon={getIconFromType(rule.type)}>
-                                <span className="font-semibold capitalize">{rule.type}:</span> {rule.description}
-                            </ContentWithIcon>
+                        {eventClass.rules.map((ruleSet, idx) => (
+                            ClassRuleSet(ruleSet, idx)
                         ))}
                     </Card>
                 )}

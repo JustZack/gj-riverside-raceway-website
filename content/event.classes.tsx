@@ -7,37 +7,70 @@ export const eventClasses: Record<string, EventClass> = {
         rules: [ 
             {
                 type: "chassis",
-                description: "Chassis must be in stock configuration. Battery must be in stock location. Switch may be moved. All components on car must be uised and un-modified including wiring, plugs, bodies, etc. No lightening of any parts."
+                rules: [
+                    "Chassis must be in stock configuration.",
+                    "Battery must be in stock location; Power switch may be moved.",
+                    "All components on car must be used and un-modified including wiring, plugs, bodies, etc.",
+                    "No lightening of any parts."
+                ]
             }, {
                 type: "electronics",
-                description: "Stock electronics only. Including radio, servo, speed control & receiver."
+                rule: "Stock electronics only. Including radio, servo, speed control & receiver."
             }, {
                 type: "gearing",
-                description: "Stock gears only (59/19)"
+                rule: "Stock gears only (59/19)"
             }, {
                 type: "suspension",
-                description: "Any shock oil may be used. Shocks move freely (I.E. not locked). Must use stock springs."
+                rules: [ 
+                    "Shocks must move freely (I.E. not locked).", 
+                    "Must use stock springs.", 
+                    "Any shock oil may be used."
+                ]
             }, {
                 type: "differential",
-                description: "Any differential fluid may be used. Must use stock differential, Part #ARA31177V2. Differential must move freely (I.E. not locked). No spools or locked differentials."
+                rules: [
+                    "Must use stock differential, Part #ARA31177V2.", 
+                    "Differential must move freely (I.E. not locked).",
+                    "No spools or locked differentials.",
+                    "Any differential fluid may be used."
+                ]
             }, {
                 type: "heat-sink",
-                description: "Motor heat sink is allowed for longevity. Must use Part #LOS-1920."
+                rules: [
+                    "Motor heat sink is allowed for longevity.",
+                    "Part #LOS-1920 is the only approved heat sink."
+                ]
             }, {
                 type: "tires",
-                description: "Soft or medium compound rubber slicks allowed. Rain tires, dirt tires, or foam tires are not allowed. May glue of tape the right front tire. Traction compound is allowed per track compound rules."
+                rules: [
+                    "Soft or medium compound rubber slicks allowed.",
+                    "Rain tires, dirt tires, or foam tires are not allowed.",
+                    "May glue of tape the right front tire.",
+                    "Traction compound is allowed per track compound rules."
+                ]
             }, {
                 type: "bodies",
-                description: "Any losi brand NASCAR car or truck body manufactured for the loLosi NASCAR chassis may be used. Bodies may not be modified or trimmed. Bodies must be realistically painted, no clear bodies."
+                rules: [
+                    "Any losi brand NASCAR car or truck body manufactured for the Losi NASCAR chassis may be used.",
+                    "Bodies must be realistically painted, no clear bodies.",
+                    "Bodies may not be modified or trimmed."
+                ]
             }, {
                 type: "battery",
-                description: "Stock 1400mah 30c battery charged to 8.44v max. Must be charged with Specktrum Smart charger or equivalent. Must have stock plug and wire length."
+                rules: [
+                    "Stock 1400mah 30c battery charged to 8.44v max.",
+                    "Must have stock plug and wire length.",
+                    "Must be charged with Specktrum Smart charger or equivalent."
+                ]
             }, {
                 type: "servo-horn",
-                description: "Fixed, solid, or glued servo horn is allowed."
+                rule: "Fixed, solid, or glued servo horn is allowed."
             }, {
                 type: "bearing",
-                description: "Stock bearings preferred. Will not disqualify for ceramic bearings to due difficulting of teching."
+                rules: [
+                    "Stock bearings preferred.",
+                    "Will not disqualify for ceramic bearings due to difficulty of teching."
+                ]
             }
         ]
     },
@@ -48,17 +81,20 @@ export const eventClasses: Record<string, EventClass> = {
         chipClass: "bg-blue-600 text-white",
         rules: [
             {
+                type: "chassis",
+                rule: "No adjustable rear arms."
+            }, {
                 type: "electronics",
-                description: "13.5 or equivalent motor only. ESC, Servo and Receiver of choice."
+                rule: "13.5 or equivalent motor only. ESC, Servo and Receiver of choice."
             }, {
                 type: "tires",
-                description: "Carpet tires or slicks may be used."
+                rule: "Carpet tires or slicks may be used."
             }, {
                 type: "bodies",
-                description: "Appropriate street stock bodies should be used."
+                rule: "Appropriate street stock bodies should be used."
             }, {
                 type: "battery",
-                description: "No offset batteries are allowed.",
+                rule: "No offset batteries are allowed.",
             }
         ]
     },
@@ -70,20 +106,21 @@ export const eventClasses: Record<string, EventClass> = {
         rules: [
             {
                 type: "chassis",
-                description: "Must be a buggy chassis. Offset chassis allowed. No trucks, truggies, or other types allowed."
+                rules: [
+                    "Must be a buggy chassis. Offset chassis allowed.",
+                    "No trucks, truggies, or other types allowed.",
+                    "Adjustable rear arms are allowed."
+                ]
             }, {
                 type: "electronics",
-                description: "13.5 or equivalent motor only. ESC, Servo and Receiver of choice."
+                rule: "13.5 or equivalent motor only. ESC, Servo and Receiver of choice."
             }, {
                 type: "tires",
-                description: "Carpet tires or slicks may be used."
+                rule: "Carpet tires or slicks may be used."
             }, {
                 type: "bodies",
-                description: "Appropriate late model bodies should be used."
-            }, {
-                type: "battery",
-                description: "No offset batteries are allowed.",
-            },
+                rule: "Appropriate late model bodies should be used."
+            }
         ]
     },
     lateModelHackfab: {
@@ -94,7 +131,46 @@ export const eventClasses: Record<string, EventClass> = {
         rules: [
             {
                 type: "chassis",
-                description: "Must be a Hackfab Late Model chassis. No trucks, truggies, or other types allowed."
+                rules: [
+                    "Losi Mini-T 2.0 or Mini-B with HackFab Oval Conversion Kit.",
+                    "Original Losi Mini Late Model also allowed.",
+                    "Any chassis upgrades allowed.",
+                    "Additional weight allowed."
+                ]
+            }, {
+                type: "electronics",
+                rules: [
+                    "Brushless Motor/ESC has a 5,000KV limit.",
+                    "Hobbywing EZRun 18A ESC - Part #HWI81010020",
+                    "Hobbywing Quicrun 2030SL G2 Motor; 5000KV only - Part #HWI30404800",
+                    "ESC/Timing boost allowed.",
+                    "Any micro/mini servo allowed.",
+                    "Any radio system allowed excluding Gyro or AVC systems."
+                ]
+            }, {
+                type: "battery",
+                rules: [
+                    "Open 2s, 2,200MAH Limit (70c max).",
+                    "Gens Ace 2s LiPo 60C (7.4v/2200mAh) allowed - Part #GEA2202S60X6",
+                    "Powerhobby 2s LiPo 50c 2000mAg recommended - Part #PHB2s200050C",
+                    "Gens Ace 2s LiPo 60c (7.4v/2200mAh) hardcase allowed - Part #GEA222s60X76GT",
+                    "Stock 650mAh or 800mAh allowed."
+                ]
+            }, {
+                type: "bodies",
+                rule: "McAllister Mini Late Model (Greenville/Batesville)"
+            }, {
+                type: "tires",
+                rules: [
+                    "BSR or Gone Bananas Foam Tires.",
+                    "BSR tires work best trued down to ~52mm"
+                ]
+            }, {
+                type: "suspension",
+                rule: "Any shocks/springs allowed, no restrictions."
+            }, {
+                type: "gearing",
+                rule: "Any gearing allowed, including aftermarket pinion/spur gears."
             }
         ]
     },
@@ -137,7 +213,6 @@ export interface EventClass {
     hidden?: boolean;
 }
 
-export interface EventClassRule {
-    type: string;
-    description: string;
-}
+export type EventClassRule =
+    | ({ type: string; rule: string; rules?: never })
+    | ({ type: string; rules: string[]; rule?: never });
