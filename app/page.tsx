@@ -67,7 +67,7 @@ export default function Home() {
                         {/* Classes Container */}
                         {doShowClasses() && (
                         <FullWidthRow className={`race-classes ${getNextRowClass()}`}>
-                            <RaceClasses style={{margin: "0px auto auto auto"}}/>
+                            <RaceClasses width="700px" style={{margin: "0px auto auto auto"}}/>
                         </FullWidthRow>
                         )}
                     </div>

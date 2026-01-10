@@ -2,7 +2,7 @@ export const eventClasses: Record<string, EventClass> = {
     losiNascar: {
         id: "losiNascar",
         name: "Losi NASCAR",
-        icon: "fa-solid fa-car-side",
+        icon: "fa-solid fa-flag-checkered",
         chipClass: "bg-red-600 text-white",
         rules: [ 
             {
@@ -77,7 +77,7 @@ export const eventClasses: Record<string, EventClass> = {
     streetStock: {
         id: "streetStock",
         name: "Street Stock",
-        icon: "fa-solid fa-car",
+        icon: "fa-solid fa-road",
         chipClass: "bg-blue-600 text-white",
         rules: [
             {
@@ -174,13 +174,29 @@ export const eventClasses: Record<string, EventClass> = {
             }
         ]
     },
-    winglessSprint: {
-        id: "winglessSprint",
-        name: "Wingless Sprint",
+    sprint360: {
+        id: "sprint360",
+        name: "360 Sprint",
         icon: "fa-solid fa-rocket",
-        chipClass: "bg-orange-600 text-white",
+        chipClass: "bg-pink-600 text-white",
         rules: [
-        ]
+            {
+                type: "chassis",
+                rule: "No adjustable rear arms."
+            }, {
+                type: "electronics",
+                rule: "13.5 or equivalent motor only. ESC, Servo and Receiver of choice."
+            }, {
+                type: "tires",
+                rule: "Carpet tires or slicks may be used."
+            }, {
+                type: "bodies",
+                rule: "Appropriate street stock bodies should be used."
+            }, {
+                type: "battery",
+                rule: "No offset batteries are allowed.",
+            }
+        ],
     },
     sprint410: {
         id: "sprint410",
@@ -188,18 +204,25 @@ export const eventClasses: Record<string, EventClass> = {
         icon: "fa-solid fa-rocket",
         chipClass: "bg-purple-600 text-white",
         rules: [
+            {
+                type: "chassis",
+                rules: [
+                    "Must be a buggy chassis. Offset chassis allowed.",
+                    "No trucks, truggies, or other types allowed.",
+                    "Adjustable rear arms are allowed."
+                ]
+            }, {
+                type: "electronics",
+                rule: "13.5 or equivalent motor only. ESC, Servo and Receiver of choice."
+            }, {
+                type: "tires",
+                rule: "Carpet tires or slicks may be used."
+            }, {
+                type: "bodies",
+                rule: "Appropriate sprint bodies should be used."
+            }
         ],
-        hidden: true,
     },
-    sprint360: {
-        id: "sprint360",
-        name: "360 Sprint",
-        icon: "fa-solid fa-rocket",
-        chipClass: "bg-pink-600 text-white",
-        rules: [
-        ],
-        hidden: true,
-    }
 
 }
 
