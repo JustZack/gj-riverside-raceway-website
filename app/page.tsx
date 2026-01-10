@@ -29,12 +29,6 @@ export default function Home() {
         return null;
     }
 
-    // Feature flag for showing classes section based on query string
-    function doShowClasses(): boolean {
-        let showClassesParam = getQueryParam('classes');
-        return showClassesParam === 'true';
-    }
-
     let whiteRow = true;
     //Alternate row colors for the home page rows
     function getNextRowClass(whiteOverride: boolean | undefined = undefined): string {
@@ -65,11 +59,9 @@ export default function Home() {
                             <RacePricing  className='px-1' style={{margin: "0px auto auto 0px"}}/>
                         </FullWidthRow>
                         {/* Classes Container */}
-                        {doShowClasses() && (
                         <FullWidthRow className={`race-classes ${getNextRowClass()}`}>
                             <RaceClasses width="700px" style={{margin: "0px auto auto auto"}}/>
                         </FullWidthRow>
-                        )}
                     </div>
 
                     {/* Non-Large Screens */}
@@ -85,11 +77,9 @@ export default function Home() {
                         </FullWidthRow>
 
                         {/* Classes Container */}
-                        {doShowClasses() && (
                         <FullWidthRow className={`race-classes ${getNextRowClass()}`}>
                             <RaceClasses style={{margin: "0px auto"}}/>
                         </FullWidthRow>
-                        )}
 
                         {/* Pricing Container */}
                         <FullWidthRow className={`race-pricing ${getNextRowClass()}`}>
