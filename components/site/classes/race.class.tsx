@@ -24,7 +24,7 @@ export default function RaceClass({eventClass}: {eventClass: EventClass}) {
     // Scroll to top of container when rules open, after layout stabilizes
     useEffect(() => {
         let timeout: NodeJS.Timeout | undefined;
-        if (showContent && containerRef.current) {
+        if (window.innerWidth <= 768 && showContent && containerRef.current) {
             timeout = setTimeout(() => {
                 const el = containerRef.current;
                 if (el) {
