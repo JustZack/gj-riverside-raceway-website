@@ -9,6 +9,7 @@ export default function RaceClass({eventClass}: {eventClass: EventClass}) {
     // Use a custom event to coordinate which rule set is open globally
     const isOpen = openRulesId === eventClass.id;
     const [showContent, setShowContent] = useState(isOpen);
+    const containerRef = useRef<HTMLDivElement>(null);
 
     // Animate close: keep content mounted until transition ends
     useEffect(() => {
@@ -19,6 +20,23 @@ export default function RaceClass({eventClass}: {eventClass: EventClass}) {
             return () => clearTimeout(timeout);
         }
     }, [isOpen]);
+
+    // Scroll to top of container when rules open, after layout stabilizes
+    useEffect(() => {
+        let timeout: NodeJS.Timeout | undefined;
+        if (showContent && containerRef.current) {
+            timeout = setTimeout(() => {
+                const el = containerRef.current;
+                if (el) {
+                    const rect = el.getBoundingClientRect();
+                    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                    const top = rect.top + scrollTop - 150; // 150px above
+                    window.scrollTo({ top, behavior: 'smooth' });
+                }
+            }, 250); // Wait for transition to finish (duration-300)
+        }
+        return () => timeout && clearTimeout(timeout);
+    }, [showContent]);
 
     function handleToggleRules() {
         if (openRulesId === eventClass.id) openRulesId = null;
@@ -79,12 +97,13 @@ export default function RaceClass({eventClass}: {eventClass: EventClass}) {
     }
 
     return (
-        <>
+        <div ref={containerRef} className="w-full">
             <ContentWithIcon icon={eventClass.icon}>
-                <div className="flex w-full justify-between items-center">
-                    <span className='text-left'>{eventClass.name}</span>
-                    <Button className={"text-right text-sm"} onClick={handleToggleRules} 
-                        icon={isOpen ? 'fa-solid fa-close' : 'fa-regular fa-file-lines'} height={25}
+                <div className="flex w-full items-top">
+                    <span className='flex-grow text-left'>{eventClass.name}</span>
+                    <Button className={"text-sm ml-auto"} onClick={handleToggleRules}
+                        icon={isOpen ? 'fa-solid fa-close' : 'fa-regular fa-file-lines'} 
+                        height={35}
                         backgroundColor='red' hoverBackgroundColor='white'
                         textColor='white' hoverTextColor='red'
                         borderColor='red' hoverBorderColor='red'>
@@ -95,19 +114,19 @@ export default function RaceClass({eventClass}: {eventClass: EventClass}) {
 
             <div className={`transition-all duration-300 ease-in-out ${isOpen && eventClass.rules && eventClass.rules.length > 0 ? 'max-h-[5000px] opacity-100' : 'max-h-0 opacity-0'}`}>
                 {showContent && eventClass.rules && eventClass.rules.length > 0 ? (
-                    <Card shadow className="w-full text-sm mx-auto">
+                    <Card shadow className="w-full text-sm mx-auto mt-2">
                         {eventClass.rules.map((ruleSet, idx) => (
                             ClassRuleSet(ruleSet, idx)
                         ))}
                     </Card>
                 ) : (
                     showContent && (
-                        <Card shadow className="w-full text-sm mx-auto">
+                        <Card shadow className="w-full text-sm mx-auto mt-2">
                             <i className="font-semibold capitalize">No rules defined for this class.</i>
                         </Card>
                     )
                 )}
             </div>
-        </>
+        </div>
     )
 }
