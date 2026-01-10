@@ -37,7 +37,7 @@ export default function Home() {
 
     function hasQueryParam(param: string) { return checkQueryParam(param, false); }
 
-    function withAwards(): boolean { return hasQueryParam('awards');}
+    function withAwards() { return hasQueryParam('awards');}
 
     let whiteRow = true;
     //Alternate row colors for the home page rows
