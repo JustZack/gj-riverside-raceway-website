@@ -10,6 +10,7 @@ import RacePricing from '@/components/site/pricing/race.pricing'
 import RaceAgenda from '@/components/site/agenda/race.agenda'
 import RaceClasses from '@/components/site/classes/race.classes'
 import SiteInfoBanner from '@/components/site/info-banner/site.info.banner'
+import RaceAwards from '@/components/site/awards/race.awards'
 
 export default function Home() {
 
@@ -21,13 +22,22 @@ export default function Home() {
         )    
     }
 
-    function getQueryParam(param: string): string | null {
+    function checkQueryParam(param: string, readValue: boolean): string | boolean | null {
         if (typeof window !== 'undefined') {
             const params = new URLSearchParams(window.location.search);
-            return params.get(param);
+            if (readValue) params.get(param);
+            return params.has(param);
+        } else {
+            if (readValue) return null;
+            return false;
         }
-        return null;
     }
+
+    function getQueryParam(param: string) { return checkQueryParam(param, true); }
+
+    function hasQueryParam(param: string) { return checkQueryParam(param, false); }
+
+    function withAwards(): boolean { return hasQueryParam('awards');}
 
     let whiteRow = true;
     //Alternate row colors for the home page rows
@@ -58,10 +68,14 @@ export default function Home() {
                             <RaceAgenda className='px-1' style={{margin: "0px 0px auto 0px"}}/>
                             <RacePricing  className='px-1' style={{margin: "0px auto auto 0px"}}/>
                         </FullWidthRow>
-                        {/* Classes Container */}
+                        {/* Combined classes & Awards Container */}
                         <FullWidthRow className={`race-classes ${getNextRowClass()}`}>
-                            <RaceClasses width="700px" style={{margin: "0px auto auto auto"}}/>
+                            <RaceClasses width="700px" style={{margin: `0px ${withAwards() ? "0px" : "auto"} 0px auto`}}/>
+                            {withAwards() && (
+                            <RaceAwards style={{margin: "0px auto 0px 0px"}}/>
+                            )}
                         </FullWidthRow>
+
                     </div>
 
                     {/* Non-Large Screens */}
@@ -85,6 +99,13 @@ export default function Home() {
                         <FullWidthRow className={`race-pricing ${getNextRowClass()}`}>
                             <RacePricing style={{margin: "0px auto"}}/>
                         </FullWidthRow>
+
+                        {/* Awards Container */}
+                        {withAwards() && (
+                        <FullWidthRow className={`race-awards ${getNextRowClass()}`}>
+                            <RaceAwards style={{margin: "0px auto"}}/>
+                        </FullWidthRow>
+                        )}
                     </div>
 
                     {/* Socials Container is identical for any screen size*/}

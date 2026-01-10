@@ -10,6 +10,7 @@ import { about } from '@/content/about';
 import { events, Event } from '@/content/events';
 import { products, Product } from '@/content/products';
 import { eventClasses, EventClass, EventClassRule } from './event.classes'
+import { eventAwards, EventAward } from './event.awards'
 import { bannerImages, BannerImage } from './banner.images'
 
 export { 
@@ -22,7 +23,8 @@ export {
     events,
     products,
     eventClasses,
+    eventAwards,
     bannerImages
 }
 
-export type { Event, Product, EventClass, EventClassRule, BannerImage }
+export type { Event, Product, EventClass, EventClassRule, EventAward, BannerImage }

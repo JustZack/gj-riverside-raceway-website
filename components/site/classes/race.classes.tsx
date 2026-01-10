@@ -7,7 +7,7 @@ import RaceClass from '@/components/site/classes/race.class';
 export default function RaceClasses({className, style, width = "350px"}: {className?: string, style?: React.CSSProperties, width?: string}) {
     return (
         <Column className={className} style={{ maxWidth: width, width, ...style}} gap={2}>
-            <BriefContentHeader icon="fa-solid fa-car">Classes</BriefContentHeader> 
+            <BriefContentHeader icon="fa-solid fa-car">Classes & Rules</BriefContentHeader> 
             {Object.values(eventClasses).map((eventClass: EventClass) => {
                 if (!eventClass.hidden) return (<RaceClass key={eventClass.id} eventClass={eventClass} />)
             })}
