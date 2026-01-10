@@ -11,8 +11,8 @@ export default function RaceEventAgenda({event}: {event: Event}) {
     return (
         <BriefContentRow 
             icon={event.icon} chipClass={event.chipClass} name={event.pluralizedName} 
-            subtext={`Open@${doorsOpenTime}, Registration Closes@${registrationCloseTime}`}>
-            Racing Starts@{racingStartTime}  
+            subtext={`Opens at ${doorsOpenTime} - Registration closes at ${registrationCloseTime}`}>
+            Racing starts at {racingStartTime}  
         </BriefContentRow>
 
     )

@@ -7,7 +7,7 @@ import TimeUtils from '@/lib/utils/time';
 export default function RaceUpcomingEvent({event}: {event: ScheduleEvent}) {
     return (
         <BriefContentRow icon={event.statusIcon} chipClass={event.statusClass} name={event.statusText} 
-            subtext={`${TimeUtils.getShortDateTimeString(event.start, " Opens ")}`}>
+            subtext={`${TimeUtils.getShortDateTimeString(event.start, " - Opens at ")}`}>
             {event.title}
         </BriefContentRow>
     )
