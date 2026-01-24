@@ -6,7 +6,7 @@ export const bannerImages: BannerImage[] = [
         objectFit: "cover",
         displayMode: "fill"
     }, {
-        src: "/images/indoor-track/february-freeze-2026.PNG",
+        src: "/images/fliers/february-freeze-2026.PNG",
         objectPosition: "center 30%",
         objectFit: "contain",
         displayMode: "contain",

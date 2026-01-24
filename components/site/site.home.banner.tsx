@@ -31,40 +31,44 @@ export default function SiteHomeBanner() {
                         height: "100%",
                         objectFit: "cover",
                         objectPosition: img.objectPosition,
-                        filter: "blur(16px) brightness(0.7)",
+                        filter: "blur(2px) brightness(0.6)",
                         zIndex: 0,
                         pointerEvents: "none",
                         userSelect: "none"
                     }}
                     aria-hidden="true"
                 />
-                {/* Main image, always fully visible */}
-                <img
-                    src={img.src}
-                    style={{
-                        position: "relative",
-                        width: "100%",
-                        height: "100%",
-                        objectFit: "contain",
-                        objectPosition: img.objectPosition,
-                        zIndex: 1
-                    }}
-                />
+                {/* Main image, always fully visible, downloadable on hold click */}
+                <a href={img.src} download style={{ position: "relative", display: "block", width: "100%", height: "100%", zIndex: 1 }}>
+                    <img
+                        src={img.src}
+                        style={{
+                            width: "100%",
+                            height: "100%",
+                            objectFit: "contain",
+                            objectPosition: img.objectPosition,
+                            display: "block"
+                        }}
+                    />
+                </a>
             </div>
         );
     }
 
     function FullWidthBackgroundBanner({ img }: { img: BannerImage }) {
         return (
-            <img
-                src={img.src}
-                style={{
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "cover",
-                    objectPosition: img.objectPosition
-                }}
-            />
+            <a href={img.src} download style={{ display: "block", width: "100%", height: "100%" }}>
+                <img
+                    src={img.src}
+                    style={{
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "cover",
+                        objectPosition: img.objectPosition,
+                        display: "block"
+                    }}
+                />
+            </a>
         );
     }
 
@@ -72,7 +76,7 @@ export default function SiteHomeBanner() {
 
     return (
         <Banner
-            style={{ height: "68vw", maxHeight: "400px", minHeight: "100px", position: "relative", overflow: "hidden" }}
+            style={{ height: "68vw", maxHeight: "600px", minHeight: "100px", position: "relative", overflow: "hidden" }}
             media={
                 img.displayMode === "contain"
                     ? <BlurredBackgroundBanner img={img} />
