@@ -35,6 +35,20 @@ export const events: Record<string, Event> = {
         doorsOpen: "09:30",
         registrationClose: "10:30",
         racingStart: "11:00"
+    },
+    sunday: {
+        id: "saturday",
+        name: "Saturday",
+        pluralizedName: "Saturdays",
+        icon: "fa-solid fa-sun",
+        chipClass: "bg-yellow-200/70 text-black",
+        entry: 25,
+        additional: 10,
+        qualifiers: 3,
+        mains: 1,
+        doorsOpen: "09:30",
+        registrationClose: "10:30",
+        racingStart: "11:00"
     }
 }
 
