@@ -35,7 +35,7 @@ export default function SiteInfoBanner() {
     }
         
     function RunningEventInfo() {
-        return <SiteInfoContent aIcon={nextEvent!.statusIcon} a={`${nextEvent!.title} in progress!`} d={<LiveTimeEventButton event={nextEvent!} />} />
+        return <SiteInfoContent aIcon={nextEvent!.statusIcon} a={`${nextEvent!.briefTitle} in progress!`} d={<LiveTimeEventButton event={nextEvent!} />} />
     }
 
     function TodaysEventInfo() {

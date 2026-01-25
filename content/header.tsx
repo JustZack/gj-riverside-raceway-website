@@ -4,12 +4,12 @@ export const header = {
         {
             src: "/images/logos/outdoor.gjrsr.png",
             alt: "Outdoor Dirt Oval Logo",
-            width: 175,
+            width: 150,
             height: 50,
         }, {
             src: "/images/logos/indoor.gjrsr.png",
             alt: "Indoor Carpet Oval Logo",
-            width: 175,
+            width: 150,
             height: 50,
         }
     ],

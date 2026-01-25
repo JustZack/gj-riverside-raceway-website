@@ -123,10 +123,25 @@ export default class TrackScheduleUtils {
         return this.getEventStatusIconByName(this.getEventStatus(event));
     }
 
+    private static toBriefTitle(title: string): string {
+        const maxLength = 20;
+        const ellipsis = "...";
+        if (title.length <= maxLength) return title.trim();
+
+        const lastSpace = title.lastIndexOf(" ");
+        // If the last space is within the last 10 chars, cut at the last space and add ellipsis
+        if (lastSpace !== -1 && title.length - lastSpace <= 10) {
+            return title.substring(0, lastSpace).trim() + ellipsis;
+        }
+        // Otherwise, chop and add ellipsis
+        return title.substring(0, maxLength - ellipsis.length).trim() + ellipsis;
+    }
+
     static formatEvents(rawEvents: any[]): ScheduleEvent[] {
         return rawEvents.map((event: any) => ({
             id: event.id,
             title: event.name,
+            briefTitle: TrackScheduleUtils.toBriefTitle(event.name),
             start: new Date(event.start),
             end: new Date(event.end),
             cancelled: event.cancelled,
@@ -163,6 +178,7 @@ export default class TrackScheduleUtils {
 export interface ScheduleEvent extends RBCEvent {
     id: number
     title: string
+    briefTitle: string
     start: Date
     end: Date
     cancelled: boolean
