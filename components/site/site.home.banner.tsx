@@ -1,6 +1,7 @@
 'use client'
 
 import { Banner } from '@/components/ui/ui'
+import { Carousel } from '@/components/ui/carousel'
 import { bannerImages, BannerImage } from '@/content/content';
 
 export default function SiteHomeBanner() {
@@ -72,15 +73,22 @@ export default function SiteHomeBanner() {
         );
     }
 
+    // Render a banner image with the correct style
+    function renderBanner(img: BannerImage, key: string) {
+        return img.displayMode === "contain"
+            ? <BlurredBackgroundBanner img={img} key={key} />
+            : <FullWidthBackgroundBanner img={img} key={key} />;
+    }
+
     let img: BannerImage = getRandomBannerImage();
 
     return (
         <Banner
             style={{ height: "68vw", maxHeight: "600px", minHeight: "100px", position: "relative", overflow: "hidden" }}
             media={
-                img.displayMode === "contain"
-                    ? <BlurredBackgroundBanner img={img} />
-                    : <FullWidthBackgroundBanner img={img} />
+                <Carousel interval={15000} transitionDuration={1500}>
+                    {bannerImages.map((img, i) => renderBanner(img, String(i)))}
+                </Carousel>
             }
             mediaStyle={{ width: "100%", height: "100%" }}
         >
