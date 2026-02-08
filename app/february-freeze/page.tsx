@@ -1,8 +1,9 @@
+import './style.css';
 export default function FebruaryFreezePDF() {
   return (
-    <div style={{ height: '80vh', width: '100vw' }}>
-      <div style={{ textAlign: 'center', margin: '8px 0', fontSize: 14 }}>
-        If the PDF appears zoomed in, use your browser’s zoom or pinch to zoom out.
+    <div style={{ height: '1000px', width: '100vw' }}>
+      <div className="mobile-zoom-tip">
+        If the PDF appears too small or large, pinch to zoom in or out.
       </div>
       <iframe
         src="/results/February Freeze 2.7.2026 Results.pdf"
