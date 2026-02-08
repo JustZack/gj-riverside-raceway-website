@@ -16,7 +16,7 @@ export interface BannerProps {
 export default function Banner({ media, className = "", children, style={ height: "200px" }, mediaClassName = "", mediaStyle = {} }: BannerProps) {
 	return (
 		<div className={`relative w-full h-full overflow-hidden ${className}`} style={style} >
-			<div className="absolute inset-0 w-full h-full pointer-events-none select-none">
+			<div className="absolute inset-0 w-full h-full">
 				{React.isValidElement(media)
 					? React.cloneElement(media, {
 						className: `${media.props.className || ""} object-cover w-full h-full ${mediaClassName}`,

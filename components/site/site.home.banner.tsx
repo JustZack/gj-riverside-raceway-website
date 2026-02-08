@@ -11,83 +11,75 @@ export default function SiteHomeBanner() {
         textColor: 'white'
     }
 
-    function getRandomBannerImage(): BannerImage {
-        //const randomIndex = Math.floor(Math.random() * bannerImages.length);
-        //return bannerImages[randomIndex];
-        return bannerImages[1];
+    function onBannerClick(img: BannerImage) {
+        if (img.link) window.location.href = img.link;
     }
 
+    //The standard banner image style, based on the image's properties
+    function bannerStyle(img: BannerImage): React.CSSProperties {
+        return {
+            width: "100%",
+            height: "100%",
+            objectFit: img.objectFit,
+            objectPosition: img.objectPosition,
+            display: "block",
+            cursor: img.link ? "pointer" : "default",
+            position: "relative",
+            zIndex: 1
+        }
+    }
 
-    function BlurredBackgroundBanner({ img }: { img: BannerImage }) {
+    //Only used for blurred/contain images
+    function blurredBannerStyle(img: BannerImage): React.CSSProperties {
+        return {
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            objectPosition: img.objectPosition,
+            filter: "blur(2px) brightness(0.6)",
+            zIndex: 0,
+            pointerEvents: "none",
+            userSelect: "none"
+        }
+    }
+
+    //Standard banner image display, with click handling if a link is provided
+    function BannerImageDisplay({ img }: { img: BannerImage }) {
         return (
-            <div style={{ position: "relative", width: "100%", height: "100%" }}>
-                {/* Blurred background */}
-                <img
-                    src={img.src}
-                    style={{
-                        position: "absolute",
-                        top: 0,
-                        left: 0,
-                        width: "100%",
-                        height: "100%",
-                        objectFit: "cover",
-                        objectPosition: img.objectPosition,
-                        filter: "blur(2px) brightness(0.6)",
-                        zIndex: 0,
-                        pointerEvents: "none",
-                        userSelect: "none"
-                    }}
-                    aria-hidden="true"
-                />
-                {/* Main image, always fully visible, downloadable on hold click */}
-                <a href={img.src} download style={{ position: "relative", display: "block", width: "100%", height: "100%", zIndex: 1 }}>
-                    <img
-                        src={img.src}
-                        style={{
-                            width: "100%",
-                            height: "100%",
-                            objectFit: "contain",
-                            objectPosition: img.objectPosition,
-                            display: "block"
-                        }}
-                    />
-                </a>
-            </div>
+            <img src={img.src} style={bannerStyle(img)} 
+                onClick={() => onBannerClick(img)}
+            />
         );
     }
 
-    function FullWidthBackgroundBanner({ img }: { img: BannerImage }) {
-        return (
-            <a href={img.src} download style={{ display: "block", width: "100%", height: "100%" }}>
-                <img
-                    src={img.src}
-                    style={{
-                        width: "100%",
-                        height: "100%",
-                        objectFit: "cover",
-                        objectPosition: img.objectPosition,
-                        display: "block"
-                    }}
-                />
-            </a>
-        );
-    }
 
-    // Render a banner image with the correct style
-    function renderBanner(img: BannerImage, key: string) {
-        return img.displayMode === "contain"
-            ? <BlurredBackgroundBanner img={img} key={key} />
-            : <FullWidthBackgroundBanner img={img} key={key} />;
+    function BannerImageWithOptionalBlur({ img }: { img: BannerImage }, key: string) {
+        const isContain = img.objectFit === "contain";
+        if (isContain) {
+            return (
+                <div style={{ position: "relative", width: "100%", height: "100%" }}>
+                    {/* Blurred background */}
+                    <img src={img.src} style={blurredBannerStyle(img)} />
+                    {/* Main image, clickable if link exists */}
+                    <BannerImageDisplay img={img} />
+                </div>
+            );
+        } else {
+            return <BannerImageDisplay img={img} />;
+        }
     }
-
-    let img: BannerImage = getRandomBannerImage();
 
     return (
         <Banner
             style={{ height: "68vw", maxHeight: "600px", minHeight: "100px", position: "relative", overflow: "hidden" }}
             media={
                 <Carousel interval={15000} transitionDuration={1500}>
-                    {bannerImages.map((img, i) => renderBanner(img, String(i)))}
+                    {bannerImages.map((img, i) => 
+                        <BannerImageWithOptionalBlur img={img} key={String(i)} />
+                    )}
                 </Carousel>
             }
             mediaStyle={{ width: "100%", height: "100%" }}
