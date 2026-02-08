@@ -12,6 +12,8 @@ export default function FebruaryFreezePDF() {
     };
     if (checkMobile()) {
       setIsMobile(true);
+      // Set the previous history entry to home, then redirect
+      window.history.replaceState(null, '', '/');
       window.location.replace("/results/February Freeze 2.7.2026 Results.pdf");
     }
   }, []);
