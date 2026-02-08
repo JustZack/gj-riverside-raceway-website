@@ -1,16 +1,13 @@
 "use client";
 
+import BrowserUtils from '@/lib/utils/browser.utils';
 import { useEffect, useState } from 'react';
 
 export default function FebruaryFreezePDF() {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    const checkMobile = () => {
-      const ua = navigator.userAgent;
-      return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(ua);
-    };
-    if (checkMobile()) {
+    if (BrowserUtils.isMobileUserAgent()) {
       setIsMobile(true);
       // Set the previous history entry to home, then redirect
       window.history.replaceState(null, '', '/');
