@@ -11,7 +11,7 @@ export default function FebruaryFreezePDF() {
       setIsMobile(true);
       // Set the previous history entry to home, then redirect
       window.history.replaceState(null, '', '/');
-      window.location.replace("/results/February Freeze 2.7.2026 Results.pdf");
+      window.location.replace("/results/February.Freeze.pdf");
     }
   }, []);
 
@@ -21,7 +21,7 @@ export default function FebruaryFreezePDF() {
     return (
         <div style={{ height: '100%', width: '100vw' }}>
         <iframe
-            src="/results/February Freeze 2.7.2026 Results.pdf"
+            src="/results/February.Freeze.pdf"
             width="100%"
             height="100%"
             style={{ border: 'none' }}
