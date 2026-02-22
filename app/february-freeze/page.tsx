@@ -5,13 +5,14 @@ import { useEffect, useState } from 'react';
 
 export default function FebruaryFreezePDF() {
   const [isMobile, setIsMobile] = useState(false);
+  const pdfLink = "/results/February.Freeze.pdf";
 
   useEffect(() => {
     if (BrowserUtils.isMobileUserAgent()) {
       setIsMobile(true);
       // Set the previous history entry to home, then redirect
       window.history.replaceState(null, '', '/');
-      window.location.replace("/results/February.Freeze.pdf");
+      window.location.replace(pdfLink);
     }
   }, []);
 
@@ -21,7 +22,7 @@ export default function FebruaryFreezePDF() {
     return (
         <div style={{ height: '100%', width: '100vw' }}>
         <iframe
-            src="/results/February.Freeze.pdf"
+            src={pdfLink}
             width="100%"
             height="100%"
             style={{ border: 'none' }}
