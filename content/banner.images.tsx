@@ -17,4 +17,5 @@ export interface BannerImage {
     objectPosition: string;
     objectFit?: string | any;
     link?: string;
+    active?: boolean;
 }

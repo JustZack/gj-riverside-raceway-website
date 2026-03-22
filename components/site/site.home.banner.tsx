@@ -72,12 +72,18 @@ export default function SiteHomeBanner() {
         }
     }
 
+
+    function getActiveBannerImages() {
+        const activeImages = bannerImages.filter(img => img.active);
+        return activeImages.length > 0 ? activeImages : bannerImages;
+    }
+
     return (
         <Banner
             style={{ height: "68vw", maxHeight: "600px", minHeight: "100px", position: "relative", overflow: "hidden" }}
             media={
                 <Carousel interval={15000} transitionDuration={1500}>
-                    {bannerImages.map((img, i) => 
+                    {getActiveBannerImages().map((img, i) =>
                         <BannerImageWithOptionalBlur img={img} key={String(i)} />
                     )}
                 </Carousel>
