@@ -99,7 +99,7 @@ export default function RaceClass({eventClass}: {eventClass: EventClass}) {
     return (
         <div ref={containerRef} className="w-full">
             <ContentWithIcon icon={eventClass.icon}>
-                <div className="flex w-full items-top">
+                <div className="flex w-full mb-2 items-top">
                     <span className='flex-grow text-left'>{eventClass.name}</span>
                     <Button className={"text-sm ml-auto"} onClick={handleToggleRules}
                         icon={isOpen ? 'fa-solid fa-close' : 'fa-regular fa-file-lines'} 
