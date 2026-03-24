@@ -46,7 +46,7 @@ export default function TabbedContent({
           </button>
         ))}
       </div>
-      <div className="p-4 w-full min-w-0">
+      <div className="pt-4 w-full min-w-0">
         {tabs[selected]?.content}
       </div>
     </Card>
