@@ -107,7 +107,7 @@ export default function RaceClass({eventClass}: {eventClass: EventClass}) {
                         backgroundColor='red' hoverBackgroundColor='white'
                         textColor='white' hoverTextColor='red'
                         borderColor='red' hoverBorderColor='red'>
-                        {isOpen ? 'Close Rules' : 'Show Rules'}
+                        {isOpen ? 'Close' : 'Rules'}
                     </Button>
                 </div>
             </ContentWithIcon>
