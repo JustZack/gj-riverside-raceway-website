@@ -35,10 +35,11 @@ export default function TabbedContent({
           <button
             key={tab.label}
             className={
-              `flex-1 px-2 py-1 -mb-px border-b-3 transition-colors duration-200 font-semibold focus:outline-none ` +
+              `flex-1 px-2 py-1 -mb-px border-b-3 cursor-pointer`
+              + ` transition-colors duration-200 font-semibold focus:outline-none ` +
               (selected === idx
                 ? `${tab.color} ${tab.tabUnderlineColor ? tab.tabUnderlineColor : tab.color.replace('text-', 'border-b-') } bg-white`
-                : `border-transparent hover:bg-gray-100 cursor-pointer`)
+                : `border-transparent hover:bg-gray-100`)
             }
             onClick={() => setSelected(idx)}
             type="button"
