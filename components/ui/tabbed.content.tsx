@@ -13,11 +13,13 @@ export default function TabbedContent({
   initialTab = 0,
   className = '',
   style = {},
+  backgroundColor = '#fff',
 }: {
   tabs: Tab[];
   initialTab?: number;
   className?: string;
   style?: React.CSSProperties;
+  backgroundColor?: string;
 }) {
   const [selected, setSelected] = useState(initialTab);
 
@@ -27,13 +29,13 @@ export default function TabbedContent({
       borderRadius={16}
       shadow={true}
       style={style}
-      backgroundColor="#fff"
-      
+      backgroundColor={backgroundColor}
     >
       <div className="flex w-full overflow-hidden">
         {tabs.map((tab, idx) => (
           <button
             key={tab.label}
+            style={{ background: backgroundColor }}
             className={
               `flex-1 px-2 py-1 -mb-px border-b-3 cursor-pointer`
               + ` transition-colors duration-200 font-semibold focus:outline-none ` +

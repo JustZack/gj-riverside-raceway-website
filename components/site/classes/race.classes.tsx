@@ -29,8 +29,7 @@ export default function RaceClasses({className, style, width = "350px"}: {classN
     return (
         <Column className={className} style={{ maxWidth: width, width, ...style}} gap={2}>
             <BriefContentHeader icon="fa-solid fa-car">Classes & Rules</BriefContentHeader>
-            <TabbedContent tabs={tabs} initialTab={0}
-            />
+            <TabbedContent tabs={tabs} initialTab={0} backgroundColor='#efefef'/>
             <ContentWithIcon icon="fa-solid fa-info-circle">
                 <InfoWithSubtext subText="Classes may be combined or split based on entries">
                     <span className='font-semibold truncate'>Two or more similar cars form a class</span>
