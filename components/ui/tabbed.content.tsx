@@ -1,4 +1,5 @@
 import { useState, ReactNode } from 'react';
+import Card from './card';
 
 export interface Tab {
   label: string;
@@ -20,17 +21,23 @@ export default function TabbedContent({
   const [selected, setSelected] = useState(initialTab);
 
   return (
-    <div className={`bg-white rounded-xl shadow-md w-full flex flex-col min-w-0 ${className}`} style={style}>
+    <Card
+      className={`w-full flex flex-col min-w-0 ${className}`}
+      borderRadius={16}
+      shadow={true}
+      style={style}
+      backgroundColor="#fff"
+    >
       <div className="flex rounded-t-xl border-b border-gray-300 w-full overflow-hidden">
         {tabs.map((tab, idx) => (
           <button
             key={tab.label}
             className={
-                `flex-1 px-4 py-2 -mb-px border-b-4 transition-colors duration-200 font-semibold focus:outline-none ` +
-                + `${tab.color}`
-                + (selected === idx
-                  ? ` border-blue-700 bg-white` // visible border and color for selected
-                  : ` hover:bg-gray-100 cursor-pointer`) 
+              `flex-1 px-4 py-2 -mb-px border-b-4 transition-colors duration-200 font-semibold focus:outline-none ` +
+              `${tab.color}` +
+              (selected === idx
+                ? ` border-blue-700 bg-white`
+                : ` hover:bg-gray-100 cursor-pointer`)
             }
             onClick={() => setSelected(idx)}
             type="button"
@@ -42,6 +49,6 @@ export default function TabbedContent({
       <div className="p-4 w-full min-w-0">
         {tabs[selected]?.content}
       </div>
-    </div>
+    </Card>
   );
 }
