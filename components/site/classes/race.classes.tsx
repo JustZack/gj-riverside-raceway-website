@@ -5,7 +5,7 @@ import TabbedContent from '@/components/ui/tabbed.content';
 import BriefContentHeader from '@/components/site/brief/brief.content.header';
 import RaceClass from '@/components/site/classes/race.class';
 
-export default function RaceClasses({className, style, width = "380px"}: {className?: string, style?: React.CSSProperties, width?: string}) {
+export default function RaceClasses({className, style, width = "350px"}: {className?: string, style?: React.CSSProperties, width?: string}) {
     
     function ClassSection({type}: {type: 'outdoor' | 'indoor'}) {
         return Object.values(eventClasses[type] || {}).map((eventClass: EventClass) => (

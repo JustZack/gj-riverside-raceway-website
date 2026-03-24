@@ -5,6 +5,7 @@ export interface Tab {
   label: string;
   content: ReactNode;
   color: string;
+  tabUnderlineColor?: string;
 }
 
 export default function TabbedContent({
@@ -27,17 +28,17 @@ export default function TabbedContent({
       shadow={true}
       style={style}
       backgroundColor="#fff"
+      
     >
-      <div className="flex rounded-t-xl border-b border-gray-300 w-full overflow-hidden">
+      <div className="flex w-full overflow-hidden">
         {tabs.map((tab, idx) => (
           <button
             key={tab.label}
             className={
-              `flex-1 px-4 py-2 -mb-px border-b-4 transition-colors duration-200 font-semibold focus:outline-none ` +
-              `${tab.color}` +
+              `flex-1 px-2 py-1 -mb-px border-b-3 transition-colors duration-200 font-semibold focus:outline-none ` +
               (selected === idx
-                ? ` border-blue-700 bg-white`
-                : ` hover:bg-gray-100 cursor-pointer`)
+                ? `${tab.color} ${tab.tabUnderlineColor ? tab.tabUnderlineColor : tab.color.replace('text-', 'border-b-') } bg-white`
+                : `border-transparent hover:bg-gray-100 cursor-pointer`)
             }
             onClick={() => setSelected(idx)}
             type="button"
