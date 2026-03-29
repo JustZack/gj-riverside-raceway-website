@@ -1,8 +1,28 @@
 
 export const bannerImages: BannerImage[] = [
     {
-        src: "/images/indoor-track/dave-john-hackfab.jpg",
-        objectPosition: "center 55%",
+        src: "/images/outdoor-track/3.28.2026/410-sprint-lineup.jpg",
+        objectPosition: "center 10%",
+        objectFit: "cover",
+        active: true
+    }, {
+        src: "/images/outdoor-track/3.28.2026/pro-truck.jpg",
+        objectPosition: "center 80%",
+        objectFit: "cover",
+        active: true
+    }, {
+        src: "/images/outdoor-track/3.28.2026/side-by-side-truck.jpg",
+        objectPosition: "center 65%",
+        objectFit: "cover",
+        active: true
+    }, {
+        src: "/images/outdoor-track/3.28.2026/360-sprint.jpg",
+        objectPosition: "center 80%",
+        objectFit: "cover",
+        active: true
+    }, {
+        src: "/images/outdoor-track/3.28.2026/truck-rollover.jpg",
+        objectPosition: "center 50%",
         objectFit: "cover",
         active: true
     }, {
@@ -15,17 +35,6 @@ export const bannerImages: BannerImage[] = [
         objectPosition: "center 20%",
         objectFit: "cover",
         active: true
-    }, {
-        src: "/images/indoor-track/losi-nascar-lineup.jpg",
-        objectPosition: "center 80%",
-        objectFit: "cover",
-        active: true
-    }, {
-        src: "/images/fliers/february-freeze-2026.PNG",
-        objectPosition: "center 10%",
-        objectFit: "contain",
-        link: "/february-freeze",
-        active: false
     }
 ]
 
