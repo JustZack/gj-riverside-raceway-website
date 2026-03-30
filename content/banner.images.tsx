@@ -6,6 +6,16 @@ export const bannerImages: BannerImage[] = [
         objectFit: "cover",
         active: true
     }, {
+        src: "/images/outdoor-track/3.28.2026/nascar-turn-1.jpg",
+        objectPosition: "0% 85%",
+        objectFit: "cover",
+        active: true
+    }, {
+        src: "/images/outdoor-track/3.28.2026/mudboss.jpg",
+        objectPosition: "0% 70%",
+        objectFit: "cover",
+        active: true
+    }, {
         src: "/images/outdoor-track/3.28.2026/pro-truck.jpg",
         objectPosition: "center 80%",
         objectFit: "cover",
