@@ -75,6 +75,13 @@ export const eventClasses: Record<string, Record<string, EventClass>> = {
                 }
             ]
         },
+        modLosiNascar: {
+            id: "modLosiNascar",
+            name: "Modified Losi NASCAR",
+            icon: "fa-solid fa-flag-checkered",
+            chipClass: "bg-red-600 text-white",
+            rules: []
+        },
         lateModelHackfab: {
             id: "lateModelHackfab",
             name: "Late Model Hackfab",
@@ -230,6 +237,88 @@ export const eventClasses: Record<string, Record<string, EventClass>> = {
         },
     }, 
     outdoor: {
+        losiNascar: {
+            id: "losiNascar",
+            name: "Losi NASCAR",
+            icon: "fa-solid fa-flag-checkered",
+            chipClass: "bg-red-600 text-white",
+            rules: [ 
+                {
+                    type: "chassis",
+                    rules: [
+                        "Chassis must be in stock configuration.",
+                        "Battery must be in stock location; Power switch may be moved.",
+                        "All components on car must be used and un-modified including wiring, plugs, bodies, etc.",
+                        "No lightening of any parts."
+                    ]
+                }, {
+                    type: "electronics",
+                    rule: "Stock electronics only. Including radio, servo, speed control & receiver."
+                }, {
+                    type: "gearing",
+                    rule: "Stock gears only (59/19)"
+                }, {
+                    type: "suspension",
+                    rules: [ 
+                        "Shocks must move freely (I.E. not locked).", 
+                        "Must use stock springs.", 
+                        "Any shock oil may be used."
+                    ]
+                }, {
+                    type: "differential",
+                    rules: [
+                        "Must use stock differential, Part #ARA31177V2.", 
+                        "Differential must move freely (I.E. not locked).",
+                        "No spools or locked differentials.",
+                        "Any differential fluid may be used."
+                    ]
+                }, {
+                    type: "heat-sink",
+                    rules: [
+                        "Motor heat sink is allowed for longevity.",
+                        "Part #LOS-1920 is the only approved heat sink."
+                    ]
+                }, {
+                    type: "tires",
+                    rules: [
+                        "Soft or medium compound rubber slicks allowed.",
+                        "Rain tires, dirt tires, or foam tires are not allowed.",
+                        "May glue of tape the right front tire.",
+                        "Traction compound is allowed per track compound rules."
+                    ]
+                }, {
+                    type: "bodies",
+                    rules: [
+                        "Any losi brand NASCAR car or truck body manufactured for the Losi NASCAR chassis may be used.",
+                        "Bodies must be realistically painted, no clear bodies.",
+                        "Bodies may not be modified or trimmed."
+                    ]
+                }, {
+                    type: "battery",
+                    rules: [
+                        "Stock 1400mah 30c battery charged to 8.44v max.",
+                        "Must have stock plug and wire length.",
+                        "Must be charged with Specktrum Smart charger or equivalent."
+                    ]
+                }, {
+                    type: "servo-horn",
+                    rule: "Fixed, solid, or glued servo horn is allowed."
+                }, {
+                    type: "bearing",
+                    rules: [
+                        "Stock bearings preferred.",
+                        "Will not disqualify for ceramic bearings due to difficulty of teching."
+                    ]
+                }
+            ]
+        },
+        modLosiNascar: {
+            id: "modLosiNascar",
+            name: "Modified Losi NASCAR",
+            icon: "fa-solid fa-flag-checkered",
+            chipClass: "bg-red-600 text-white",
+            rules: []
+        },
         streetStock: {
             id: "streetStock",
             name: "Street Stock",
@@ -276,6 +365,22 @@ export const eventClasses: Record<string, Record<string, EventClass>> = {
                 }, {
                     type: "bodies",
                     rule: "Appropriate late model bodies should be used."
+                }
+            ]
+        },
+        losiSprint: {
+            id: "losiSprint",
+            name: "Losi Sprint",
+            icon: "fa-solid fa-rocket",
+            chipClass: "bg-purple-600 text-white",
+            rules: [
+                {
+                    type: "chassis",
+                    rule: "Box Stock Losi 360 sprint chassis only.",
+                },
+                {
+                    type: "electronics",
+                    rule: "Box stock electronics, including radio."
                 }
             ]
         },
@@ -328,8 +433,42 @@ export const eventClasses: Record<string, Record<string, EventClass>> = {
                 }
             ],
         },
+        mtx: {
+            id: "mtx",
+            name: "Motorcross",
+            icon: "fa-solid fa-motorcycle",
+            chipClass: "bg-brown-600 text-white",
+            rules: []
+        },
+        truck2wd: {
+            id: "2wdTruck",
+            name: "2WD Truck",
+            icon: "fa-solid fa-truck-pickup",
+            chipClass: "bg-gray-600 text-white",
+            rules: []
+        },
+        truckPro: {
+            id: "proTruck",
+            name: "Pro Truck",
+            icon: "fa-solid fa-truck-monster",
+            chipClass: "bg-red-600 text-white",
+            rules: []
+        }, 
+        buggyModified: {
+            id: "buggyModified",
+            name: "Modified Buggy",
+            icon: "fa-solid fa-car",
+            chipClass: "bg-green-600 text-white",
+            rules: []
+        }, 
+        scModified: {
+            id: "scModified",
+            name: "Short Course Modified",
+            icon: "fa-solid fa-truck-pickup",
+            chipClass: "bg-blue-600 text-white",
+            rules: []
+        }
     }
-    
 }
 
 export interface EventClass {

@@ -92,7 +92,11 @@ export default function RaceClass({eventClass}: {eventClass: EventClass}) {
                 )
             } 
         } else {
-            return (<i className="font-semibold capitalize">No rules defined for this class.</i>)
+            return (
+                <i className="font-semibold capitalize">
+                    No rules defined for this class, check back later.
+                </i>
+            )
         }
     }
 
@@ -112,7 +116,7 @@ export default function RaceClass({eventClass}: {eventClass: EventClass}) {
                 </div>
             </ContentWithIcon>
 
-            <div className={`transition-all duration-300 ease-in-out ${isOpen && eventClass.rules && eventClass.rules.length > 0 ? 'max-h-[5000px] opacity-100' : 'max-h-0 opacity-0'}`}>
+            <div className={`transition-all duration-300 ease-in-out ${isOpen ? 'max-h-[5000px] opacity-100' : 'max-h-0 opacity-0'}`}>
                 {showContent && eventClass.rules && eventClass.rules.length > 0 ? (
                     <Card shadow className="w-full text-sm mx-auto mt-2">
                         {eventClass.rules.map((ruleSet, idx) => (
@@ -122,7 +126,7 @@ export default function RaceClass({eventClass}: {eventClass: EventClass}) {
                 ) : (
                     showContent && (
                         <Card shadow className="w-full text-sm mx-auto mt-2">
-                            <i className="font-semibold capitalize">No rules defined for this class.</i>
+                            <i className="font-semibold capitalize">No rules defined for this class, check back later.</i>
                         </Card>
                     )
                 )}
