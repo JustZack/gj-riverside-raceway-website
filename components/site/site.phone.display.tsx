@@ -9,7 +9,7 @@ type SitePhoneDisplayProps = {
     style?: React.CSSProperties;
     className?: string;
 }
-export default function SitePhoneDisplay({contentBeforePhone, contentAfterPhone, style, className}: SitePhoneDisplayProps) {
+export function SitePhoneDisplay({contentBeforePhone, contentAfterPhone, style, className}: SitePhoneDisplayProps) {
     return (
         <ContentWithIcon icon="fas fa-phone" style={style} className={className}>{contentBeforePhone}{about.getPhoneAnchorTag()}{contentAfterPhone}</ContentWithIcon>
     )

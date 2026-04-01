@@ -1,12 +1,13 @@
 'use client'
 
-import { Column, Row } from '@/components/ui/ui'
+import { Column, ContentWithIcon, Row } from '@/components/ui/ui'
 import TrackScheduleUtils, { ScheduleEvent } from '@/lib/utils/track.schedule.utils'
 import { useState, useEffect } from 'react'
 import TimeUtils from '@/lib/utils/time'
-import { SitePhoneDisplayForPractice } from '../site.phone.display'
+import { SitePhoneDisplay } from '../site.phone.display'
 import SiteInfoContent from './site.info.content'
 import LiveTimeEventButton from '../buttons/livetime.event.button'
+import { facebook } from '@/content/content'
 
 export default function SiteInfoBanner() {
     const [loading, setLoading] = useState<boolean>(true);
@@ -16,7 +17,7 @@ export default function SiteInfoBanner() {
         setLoading(false);
     }, true, 1), []);
 
-    function SitePhone() { return (<SitePhoneDisplayForPractice className="px-4"/>) }
+    function SitePhone() { return (<SitePhoneDisplay className="px-4"/>) }
 
     function isLoading(): boolean                   { return loading; }
     function hasNextEvent(): boolean                { return nextEvent !== null; }
@@ -49,7 +50,12 @@ export default function SiteInfoBanner() {
     }
 
     function DefaultInfo() {
-        return <SiteInfoContent aIcon={`fa-solid fa-info-circle`} a={`No races scheduled, check back soon!`} c={<SitePhone/>} />
+        let socialContent = (
+            <a href={facebook.groupUrl} target="_blank" rel="noopener noreferrer" className='text-[#1877F2]'>
+                Check facebook for more info!
+            </a>
+        ); 
+        return <SiteInfoContent aIcon={`fa-brands fa-facebook`} a={socialContent} c={<SitePhone/>} />
     }
 
     function SiteInfo() {
