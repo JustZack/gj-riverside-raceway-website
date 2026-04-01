@@ -21,12 +21,11 @@ export default class ScheduledJobs {
     }
 
     static async startProgressiveJobRuns() {
-        ScheduledJobs.logger.info('Entered startProgressiveJobRuns');
         let numJobs = ScheduledJobs.getJobs().length;
         let interval = ScheduledJobs.DEFAULT_SYNC_INTERVAL_MS;
 
         if (numJobs === 0) return;
-        ScheduledJobs.logger.info(`Starting progressive job sync for ${numJobs} jobs every ${interval / 1000} seconds.`);
+        ScheduledJobs.logger.info(`Starting progressive job sync for ${numJobs} job(s) every ${interval / 1000} seconds.`);
 
         //We will run the job every DEFAULT_SYNC_INTERVAL_MS
         // BUT, we want the job to start running at the next interval boundary
@@ -34,7 +33,8 @@ export default class ScheduledJobs {
         let now = Date.now();
         let timeSinceLastInterval = now % interval;
         let timeUntilNextInterval = interval - timeSinceLastInterval;
-        ScheduledJobs.logger.info(`First job run will start in ${timeUntilNextInterval / 1000} seconds.`);
+        ScheduledJobs.logger.info(`First scheduled job run will start in ${timeUntilNextInterval / 1000} seconds.`);
+        ScheduledJobs.logger.info(`Running first job now.`);
 
         this.runNextJob();
         //Set a timeout to start at the next interval boundary
