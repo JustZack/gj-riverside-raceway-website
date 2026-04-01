@@ -4,6 +4,7 @@ import TrackScheduleUtils, { ScheduleEvent } from '@/lib/utils/track.schedule.ut
 import { ContentWithIcon, Column, Row } from '@/components/ui/ui'
 import BriefContentHeader from '@/components/site/brief/brief.content.header';
 import RaceUpcomingEvent from '@/components/site/schedule/race.upcoming.event';
+import { facebook } from '@/content/content';
 
 export default function TrackUpcomingSchedule({className, style, width = "350px"}: {className?: string, style?: React.CSSProperties, width?: string}) {
     const [events, setEvents] = useState<ScheduleEvent[]>([])
@@ -22,7 +23,9 @@ export default function TrackUpcomingSchedule({className, style, width = "350px"
                     <ContentWithIcon icon="fa-solid fa-arrows-rotate fa-spin">Loading upcoming races...</ContentWithIcon>
                 )}
                 {!isLoadingEvents && events.length === 0 && (
-                    <ContentWithIcon icon="fa-regular fa-calendar">No upcoming races.</ContentWithIcon>
+                    <ContentWithIcon icon="fa-brands fa-facebook">
+                        {facebook.checkMeContent()}
+                    </ContentWithIcon>
                 )}
                 {events.map((event) => (
                     <RaceUpcomingEvent key={event.id} event={event} />

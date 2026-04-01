@@ -50,12 +50,7 @@ export default function SiteInfoBanner() {
     }
 
     function DefaultInfo() {
-        let socialContent = (
-            <a href={facebook.groupUrl} target="_blank" rel="noopener noreferrer" className='text-[#1877F2]'>
-                Check facebook for more info!
-            </a>
-        ); 
-        return <SiteInfoContent aIcon={`fa-brands fa-facebook`} a={socialContent} c={<SitePhone/>} />
+        return <SiteInfoContent aIcon={`fa-brands fa-facebook`} a={facebook.checkMeContent()} c={<SitePhone/>} />
     }
 
     function SiteInfo() {
