@@ -1,6 +1,12 @@
 
 export const bannerImages: BannerImage[] = [
     {
+        src: "/images/fliers/april.2026.outdoor.flier.jpg",
+        objectPosition: "center 10%",
+        objectFit: "contain",
+        active: true
+    },
+    {
         src: "/images/outdoor-track/3.28.2026/410-sprint-lineup.jpg",
         objectPosition: "center 10%",
         objectFit: "cover",
