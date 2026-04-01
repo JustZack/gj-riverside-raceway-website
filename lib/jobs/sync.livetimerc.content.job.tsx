@@ -1,32 +1,13 @@
 import Events from "@/lib/db/events";
 import LiveTimeEvents from "@/lib/db/livetime";
-import { Prisma }  from "@prisma/client";
 import Logger from "@/lib/utils/logger";
 import { livetime } from "@/content/content";
-import { parse, HTMLElement } from 'node-html-parser';
+import { HTMLElement } from 'node-html-parser';
+import { ScraperUtils } from "../utils/scraper.utils";
 import { ScrapedLiveTimeEvent } from "@/lib/jobs/models/scraped.livetime.event";
 
 export default async function SyncLiveTimeContentJob() {
     const logger: Logger = new Logger('SyncLiveTimeContentJob');
-
-    function scrapeUrl(url: string): Promise<string> {
-        return new Promise((resolve, reject) => {
-            fetch(url).then(response => {
-                if (!response.ok) {
-                    reject(`Failed to fetch ${url}: ${response.statusText}`);
-                }
-                return response.text();
-            }).then(data => resolve(data)).catch(error => reject(error));
-        });
-    }
-
-    function scrapeLiveTimeUrl(path: string): Promise<string> {
-        return scrapeUrl(livetime.getLink(path));
-    }
-
-    function parseHTML(html: string): HTMLElement {
-        return parse(html);
-    }
 
     async function upsertTrackEvent(event: ScrapedLiveTimeEvent): Promise<void> {
         await Events.upsertByLiveTimeId(event.event_id, event.toTrackEvent());
@@ -37,10 +18,9 @@ export default async function SyncLiveTimeContentJob() {
     }
 
     //Extracts events from the livetime page
-    function extractEventsFromPage(html: string): ScrapedLiveTimeEvent[] {
+    function extractEventsFromPage(root: HTMLElement): ScrapedLiveTimeEvent[] {
         logger.info(`Scraping LiveTimeRC events page...`);
         let events: ScrapedLiveTimeEvent[] = [];
-        const root = parseHTML(html);
         const events_table = root.querySelector('table#events');
         if (!events_table) {
             logger.info('No events table found.');
@@ -69,7 +49,9 @@ export default async function SyncLiveTimeContentJob() {
 
     //Perform the scrape and upsert for events on livetime
     async function scrapeAndUpsertEvents(): Promise<void> {
-        await scrapeLiveTimeUrl(livetime.eventsPath).then(async (html) => {
+        logger.info(`Starting scrape and upsert of LiveTime events...`);
+        let eventsUrl = livetime.getLink(livetime.eventsPath);
+        await ScraperUtils.scrapeAsHTML(eventsUrl).then(async html => {
             //1. Extract events from the html
             const events: ScrapedLiveTimeEvent[] = extractEventsFromPage(html);
             //2. Upsert each event into the relevant tables
