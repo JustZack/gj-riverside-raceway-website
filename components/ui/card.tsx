@@ -3,6 +3,7 @@ import Image from 'next/image'
 
 type CardProps = {
   children: React.ReactNode
+  onClick?: () => void
   backgroundColor?: string
   borderColor?: string
   borderWidth?: number
@@ -18,6 +19,7 @@ type CardProps = {
 
 export default function Card({ 
   children, 
+  onClick,
   backgroundColor = '#ffffff', 
   borderColor = '#e5e7eb',
   borderWidth = 1,
@@ -48,10 +50,12 @@ export default function Card({
   return (
     <div 
       className={`p-4 rounded h-full flex flex-col relative overflow-hidden ${shadow ? 'shadow-lg' : ''} ${className}`}
+      onClick={onClick}
       style={{ 
         backgroundColor: backgroundImage ? 'transparent' : backgroundColor,
         border: `${borderWidth}px solid ${borderColor}`,
         borderRadius: `${borderRadius}px`,
+        cursor: onClick ? 'pointer' : 'auto',
         ...style
       }}
     >
