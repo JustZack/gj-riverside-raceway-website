@@ -82,7 +82,7 @@ export default function SiteHomeBanner() {
         <Banner
             style={{ height: "68vw", maxHeight: "600px", minHeight: "100px", position: "relative", overflow: "hidden" }}
             media={
-                <Carousel interval={15000} transitionDuration={1500}>
+                <Carousel interval={5000} transitionDuration={1500}>
                     {getActiveBannerImages().map((img, i) =>
                         <BannerImageWithOptionalBlur img={img} key={String(i)} />
                     )}
