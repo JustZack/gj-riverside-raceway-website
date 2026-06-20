@@ -20,7 +20,7 @@ export function Carousel({
   intervals,
   showTimeLeft = true,
   timeLeftVariant = 'clock',
-  timeLeftSize = 64,
+  timeLeftSize = 32,
   transitionDuration = 600,
   className = '',
   style = {},
