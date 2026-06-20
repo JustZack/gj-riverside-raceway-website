@@ -1,9 +1,14 @@
 
 import React, { useEffect, useRef, useState, ReactNode } from 'react';
+import Stopwatch, { StopwatchVariant } from './stopwatch';
 
 interface CarouselProps {
   children: ReactNode[];
   interval?: number; // ms
+  intervals?: number[]; // ms per slide
+  showTimeLeft?: boolean;
+  timeLeftVariant?: StopwatchVariant;
+  timeLeftSize?: number;
   transitionDuration?: number; // ms
   className?: string;
   style?: React.CSSProperties;
@@ -12,6 +17,10 @@ interface CarouselProps {
 export function Carousel({
   children,
   interval = 6000,
+  intervals,
+  showTimeLeft = true,
+  timeLeftVariant = 'clock',
+  timeLeftSize = 64,
   transitionDuration = 600,
   className = '',
   style = {},
@@ -19,19 +28,34 @@ export function Carousel({
   const [current, setCurrent] = useState(0);
   const [isSliding, setIsSliding] = useState(false);
   const [direction, setDirection] = useState<'left' | 'right'>('left');
+  const [remainingMs, setRemainingMs] = useState(interval);
+  const slideEndAtRef = useRef<number>(Date.now() + interval);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const slideRef = useRef<HTMLDivElement>(null);
   const count = children.length;
+  const slideIntervalMs = intervals?.[current] ?? interval;
 
   // Auto-slide
   useEffect(() => {
-    if (count <= 1) return;
-    const intv = setInterval(() => {
+    if (count <= 1 || isSliding) return;
+    slideEndAtRef.current = Date.now() + slideIntervalMs;
+    setRemainingMs(slideIntervalMs);
+    const intv = setTimeout(() => {
       setDirection('left');
       setIsSliding(true);
-    }, interval);
-    return () => clearInterval(intv);
-  }, [count, interval]);
+    }, slideIntervalMs);
+    return () => clearTimeout(intv);
+  }, [count, isSliding, slideIntervalMs]);
+
+  // Countdown in whole seconds for the current slide
+  useEffect(() => {
+    if (!showTimeLeft || count <= 1 || isSliding) return;
+    const tickMs = 100;
+    const timer = setInterval(() => {
+      setRemainingMs(Math.max(0, slideEndAtRef.current - Date.now()));
+    }, tickMs);
+    return () => clearInterval(timer);
+  }, [showTimeLeft, count, isSliding, current, slideIntervalMs]);
 
   // Handle transition
   useEffect(() => {
@@ -105,6 +129,15 @@ export function Carousel({
           </div>
         ))}
       </div>
+      {showTimeLeft && count > 1 && (
+        <Stopwatch
+          remainingMs={remainingMs}
+          totalMs={slideIntervalMs}
+          variant={timeLeftVariant}
+          size={timeLeftSize}
+          style={{ position: 'absolute', right: 14, bottom: 14, zIndex: 2 }}
+        />
+      )}
     </div>
   );
 }
