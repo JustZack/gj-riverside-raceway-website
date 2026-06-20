@@ -4,6 +4,7 @@ export const bannerImages: BannerImage[] = [
         src: "/images/fliers/summer-spintacular-2026.jpg",
         objectPosition: "center 50%",
         objectFit: "contain",
+        displayTimeMs: 10000,
         active: true
     },
     {
@@ -58,6 +59,7 @@ export interface BannerImage {
     src: string;
     objectPosition: string;
     objectFit?: string | any;
+    displayTimeMs?: number;
     link?: string;
     active?: boolean;
 }
