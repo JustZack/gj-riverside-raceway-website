@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 export type StopwatchVariant = 'clock' | 'pill' | 'bar';
 
@@ -17,9 +17,19 @@ export default function Stopwatch({
   size = 84,
   style = {},
 }: StopwatchProps) {
+  const [hasMounted, setHasMounted] = useState(false);
+
+  useEffect(() => {
+    const raf = requestAnimationFrame(() => setHasMounted(true));
+    return () => cancelAnimationFrame(raf);
+  }, []);
+
   const secondsLeft = Math.max(0, Math.ceil(remainingMs / 1000));
   const safeTotal = Math.max(1, totalMs);
   const progress = Math.max(0, Math.min(1, remainingMs / safeTotal));
+  const fadeWindowMs = Math.min(1000, safeTotal);
+  const fadeOutOpacity = Math.max(0, Math.min(1, remainingMs / fadeWindowMs));
+  const opacity = (hasMounted ? 1 : 0) * fadeOutOpacity;
 
   if (variant === 'pill') {
     return (
@@ -33,6 +43,8 @@ export default function Stopwatch({
           fontWeight: 800,
           letterSpacing: 0.5,
           lineHeight: 1,
+          opacity,
+          transition: 'opacity 220ms ease',
           pointerEvents: 'none',
           userSelect: 'none',
           ...style,
@@ -52,6 +64,8 @@ export default function Stopwatch({
           borderRadius: 12,
           backgroundColor: 'rgba(10, 10, 10, 0.62)',
           color: '#fff',
+          opacity,
+          transition: 'opacity 220ms ease',
           pointerEvents: 'none',
           userSelect: 'none',
           ...style,
@@ -93,6 +107,8 @@ export default function Stopwatch({
         alignItems: 'center',
         justifyContent: 'center',
         position: 'relative',
+        opacity,
+        transition: 'opacity 220ms ease',
         pointerEvents: 'none',
         userSelect: 'none',
         ...style,
