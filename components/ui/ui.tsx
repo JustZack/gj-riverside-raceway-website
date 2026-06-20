@@ -6,5 +6,6 @@ import Button from '@/components/ui/button'
 import InfoWithSubtext from '@/components/ui/info.with.subtext'
 import ContentWithIcon from '@/components/ui/content.with.icon'
 import Chip from '@/components/ui/chip'
+import Stopwatch from '@/components/ui/stopwatch'
 
-export { Row, Column, Card, Banner, Button, InfoWithSubtext, ContentWithIcon, Chip }
+export { Row, Column, Card, Banner, Button, InfoWithSubtext, ContentWithIcon, Chip, Stopwatch }
