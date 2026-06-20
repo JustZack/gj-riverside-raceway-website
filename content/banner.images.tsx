@@ -6,25 +6,19 @@ export const bannerImages: BannerImage[] = [
         objectFit: "contain",
         displayTimeMs: 10000,
         active: true
-    },
-    {
+    }, {
         src: "/images/outdoor-track/3.28.2026/410-sprint-lineup.jpg",
         objectPosition: "center 50%",
         objectFit: "cover",
         active: true
     }, {
+        src: "/images/outdoor-track/6.20.2026/jjs-410-and-lm.jpg",
+        objectPosition: "center 80%",
+        objectFit: "cover",
+        active: true
+    }, {
         src: "/images/outdoor-track/3.28.2026/nascar-turn-1.jpg",
         objectPosition: "0% 85%",
-        objectFit: "cover",
-        active: true
-    }, {
-        src: "/images/outdoor-track/3.28.2026/mudboss.jpg",
-        objectPosition: "0% 70%",
-        objectFit: "cover",
-        active: true
-    }, {
-        src: "/images/outdoor-track/3.28.2026/pro-truck.jpg",
-        objectPosition: "center 80%",
         objectFit: "cover",
         active: true
     }, {
@@ -48,11 +42,11 @@ export const bannerImages: BannerImage[] = [
         objectFit: "cover",
         active: true
     }, {
-        src: "/images/indoor-track/zack-eric-rob-nascar.jpg",
-        objectPosition: "center 20%",
+        src: "/images/outdoor-track/6.20.2026/indoor-track.jpg",
+        objectPosition: "center 70%",
         objectFit: "cover",
         active: true
-    }
+    },
 ]
 
 export interface BannerImage {
