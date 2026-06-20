@@ -2,6 +2,7 @@
 export const bannerImages: BannerImage[] = [
     {
         src: "/images/fliers/summer-spintacular-2026.jpg",
+        link: "/summer-spintacular",
         objectPosition: "center 50%",
         objectFit: "contain",
         displayTimeMs: 10000,
