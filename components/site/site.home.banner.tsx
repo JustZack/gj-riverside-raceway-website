@@ -5,6 +5,8 @@ import { Carousel } from '@/components/ui/carousel'
 import { bannerImages, BannerImage } from '@/content/content';
 
 export default function SiteHomeBanner() {
+    const defaultDisplayTimeMs = 5000;
+
     const sideContent = {
         backgroundColor: 'rgba(0, 0, 0, 0.8)',
         borderColor: 'rgba(0, 0, 0, 1)',
@@ -78,12 +80,15 @@ export default function SiteHomeBanner() {
         return activeImages.length > 0 ? activeImages : bannerImages;
     }
 
+    const activeBannerImages = getActiveBannerImages();
+    const bannerIntervals = activeBannerImages.map((img) => img.displayTimeMs ?? defaultDisplayTimeMs);
+
     return (
         <Banner
             style={{ height: "68vw", maxHeight: "600px", minHeight: "100px", position: "relative", overflow: "hidden" }}
             media={
-                <Carousel interval={5000} transitionDuration={1500}>
-                    {getActiveBannerImages().map((img, i) =>
+                <Carousel interval={defaultDisplayTimeMs} intervals={bannerIntervals} transitionDuration={1500} timeLeftVariant={'clock'}>
+                    {activeBannerImages.map((img, i) =>
                         <BannerImageWithOptionalBlur img={img} key={String(i)} />
                     )}
                 </Carousel>
